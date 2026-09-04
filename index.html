@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Архив СПбГТИ — Документация и варианты оформления</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --text: #f5f5f5;
+            --text-muted: #a0a0a8;
+            --gold: #c9a96e;
+            --border: #2a2a35;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 60px 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: var(--gold);
+        }
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 48px;
+        }
+        h2 {
+            font-size: 1.3rem;
+            margin: 48px 0 16px;
+            color: var(--gold);
+        }
+        p { margin-bottom: 16px; color: var(--text-muted); }
+        a { color: var(--gold); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: border-color 0.2s;
+        }
+        .card:hover { border-color: var(--gold); }
+        .card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .card p { font-size: 0.9rem; margin-bottom: 0; }
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        .badge-a { background: #b8945a22; color: #b8945a; border: 1px solid #b8945a44; }
+        .badge-b { background: #2c3e6b22; color: #5a7ab5; border: 1px solid #2c3e6b44; }
+        .badge-c { background: #c0392b22; color: #e74c3c; border: 1px solid #c0392b44; }
+        .badge-current { background: #c9a96e22; color: #c9a96e; border: 1px solid #c9a96e44; }
+        ul { margin: 16px 0; padding-left: 24px; }
+        li { margin-bottom: 8px; color: var(--text-muted); }
+        li a { color: var(--text); }
+        footer {
+            margin-top: 80px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Архив СПбГТИ</h1>
+    <p class="subtitle">Документация и варианты оформления catalog.ti200.ru</p>
+
+    <h2>Варианты дизайна</h2>
+    <p>Три концептуальных направления для презентации заказчику. Каждое — полностью рабочий интерфейс с demo-данными, фильтрами, лайтбоксом и переключением темы.</p>
+
+    <div class="cards">
+        <a href="gallery-preview-direction-a.html" class="card">
+            <span class="badge badge-a">Направление А</span>
+            <h3>Архивная мастерская</h3>
+            <p>Тёплая палитра (Aged Ebony), Source Serif 4, хронологический корешёк слева. Уютная библиотека исследователя.</p>
+        </a>
+        <a href="gallery-preview-direction-b.html" class="card">
+            <span class="badge badge-b">Направление Б</span>
+            <h3>Институциональное досье</h3>
+            <p>Светлая тема (Linen), PT Serif, метафора картотеки. Официальный документ с цветными табами.</p>
+        </a>
+        <a href="gallery-preview-direction-c.html" class="card">
+            <span class="badge badge-c">Направление В</span>
+            <h3>Хроника эпох</h3>
+            <p>Цветокод эпох (gold/red/blue), Cormorant Garamond, timeline-навигация. Каждая эпоха — свой визуальный мир.</p>
+        </a>
+        <a href="demo-current.html" class="card">
+            <span class="badge badge-current">Текущий</span>
+            <h3>Текущий demo</h3>
+            <p>Базовый вариант (dark + gold, Playfair Display). Для сравнения с новыми направлениями.</p>
+        </a>
+    </div>
+
+    <h2>Документация</h2>
+    <ul>
+        <li><a href="DESIGN_CONSULTATION.md">Консультация по дизайну</a> — аудит, 3 направления, сценарии, стратегия роста</li>
+        <li><a href="DESIGN.md">Дизайн-система</a> — токены, типографика, компоненты, motion</li>
+        <li><a href="TECHNICAL_REQUIREMENTS.md">Техническое задание</a> — модель данных, API, деплой</li>
+        <li><a href="REQUIREMENTS_ANALYSIS.md">GAP-анализ</a> — что нужно vs что есть</li>
+        <li><a href="SPEC.md">Спецификация</a> — полная ТЗ (v3.0)</li>
+    </ul>
+
+    <h2>О проекте</h2>
+    <p>Исторический архив СПбГТИ — каталог фото, видео и документов института с 1828 года. В 2028 году институту исполняется 200 лет.</p>
+    <p>Стек: Directus 10.12.0 + PostgreSQL 16 + nginx + FFmpeg. Деплой: Docker на сервере 85.143.101.97.</p>
+
+    <footer>
+        Архив СПбГТИ · 1828–2028 · 200 лет
+    </footer>
+</body>
+</html>

@@ -1,0 +1,2099 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Архив СПбГТИ — Каталог</title>
+    <meta name="description" content="Исторический каталог архива Санкт-Петербургского государственного технологического института — фото, видео и документы с 1828 года.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            var theme = localStorage.getItem('archive-theme');
+            if (!theme) {
+                theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <style>
+        /* ============================================
+           DESIGN TOKENS (DESIGN.md Section 2-4)
+           ============================================ */
+        :root {
+            /* Surface hierarchy — tonal depth, no shadows */
+            --surface-void: #0a0a0f;
+            --surface-primary: #12121a;
+            --surface-elevated: #1a1a25;
+            --surface-hover: #22222e;
+
+            /* Text */
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a8;
+            --text-muted: #8a8a93;
+
+            /* Accent — gold is sacred, primary CTA only */
+            --accent-gold: #c9a96e;
+            --accent-gold-light: #d4b87a;
+            --accent-gold-dark: #b8985a;
+
+            /* Borders — minimal, for dividers only */
+            --border-default: #2a2a35;
+            --border-hover: #3a3a45;
+
+            /* Status */
+            --status-success: #4ade80;
+            --status-error: #f87171;
+
+            /* Typography — font stacks */
+            --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            /* Spacing — 4px base unit (DESIGN.md Section 4) */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-20: 80px;
+            --space-24: 96px;
+
+            /* Motion — timing tokens (DESIGN.md Section 6) */
+            --ease-out: ease-out;
+            --ease-in-out: ease-in-out;
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-micro: 150ms;
+            --duration-standard: 250ms;
+            --duration-emphasis: 600ms;
+
+            /* Layout */
+            --content-max-width: 1280px;
+
+            /* Scrollbar styling for dark theme */
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-default) var(--surface-void);
+
+            /* Tap highlight for touch devices */
+            -webkit-tap-highlight-color: rgba(201, 169, 110, 0.2);
+        }
+
+        /* ============================================
+           LIGHT THEME OVERRIDES
+           ============================================ */
+        [data-theme="light"] {
+            /* Surface hierarchy — light tonal depth */
+            --surface-void: #f8f8f6;
+            --surface-primary: #ffffff;
+            --surface-elevated: #f0f0ee;
+            --surface-hover: #e8e8e6;
+
+            /* Text */
+            --text-primary: #1a1a1f;
+            --text-secondary: #5a5a63;
+            --text-muted: #8a8a93;
+
+            /* Accent — slightly darker gold for light bg contrast */
+            --accent-gold: #b8985a;
+            --accent-gold-light: #c9a96e;
+            --accent-gold-dark: #a08040;
+
+            /* Borders */
+            --border-default: #d5d5d0;
+            --border-hover: #b5b5b0;
+
+            /* Status */
+            --status-success: #16a34a;
+            --status-error: #dc2626;
+
+            /* Scrollbar */
+            scrollbar-color: var(--border-default) var(--surface-void);
+        }
+
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            scroll-padding-top: 72px; /* header height offset */
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--surface-void);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           SKIP-TO-CONTENT (Accessibility — first element)
+           ============================================ */
+        .skip-link {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10000;
+            padding: var(--space-3) var(--space-6);
+            background: var(--accent-gold);
+            color: var(--surface-void);
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transform: translateY(-100%);
+            transition: transform var(--duration-micro) var(--ease-out);
+        }
+
+        .skip-link:focus-visible {
+            transform: translateY(0);
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+
+        /* ============================================
+           FOCUS INDICATORS (WCAG 2.2 AA)
+           ============================================ */
+        *:focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+
+        /* ============================================
+           SR-ONLY UTILITY
+           ============================================ */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface-primary);
+            border-bottom: 1px solid var(--border-default);
+        }
+
+        .header__inner {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: var(--space-4) var(--space-6);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-4);
+        }
+
+        .header__logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            text-decoration: none;
+            color: var(--text-primary);
+            flex-shrink: 0;
+        }
+
+        .header__logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            border-radius: var(--space-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--surface-void);
+        }
+
+        .header__title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .header__subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            line-height: 1.4;
+        }
+
+        .header__stats {
+            display: flex;
+            gap: var(--space-8);
+        }
+
+        .header__stat {
+            text-align: center;
+        }
+
+        .header__stat-value {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            line-height: 1.2;
+        }
+
+        .header__stat-label {
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        @media (max-width: 640px) {
+            .header__stats {
+                display: none;
+            }
+            .header__inner {
+                padding: var(--space-3) var(--space-4);
+            }
+            .filters {
+                top: 56px;
+            }
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            background: var(--surface-primary);
+            padding: var(--space-20) var(--space-6);
+            text-align: center;
+        }
+
+        .hero__inner {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+        }
+
+        .hero__overline {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-gold);
+            margin-bottom: var(--space-4);
+            line-height: 1.3;
+        }
+
+        .hero__title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-6);
+            color: var(--text-primary);
+        }
+
+        .hero__description {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding: var(--space-12) var(--space-4);
+            }
+            .hero__description {
+                font-size: 1rem;
+            }
+        }
+
+        /* ============================================
+           FILTER BAR (DESIGN.md Section 5)
+           ============================================ */
+        .filters {
+            background: var(--surface-primary);
+            border-top: 1px solid var(--border-default);
+            border-bottom: 1px solid var(--border-default);
+            padding: var(--space-4) 0;
+            position: sticky;
+            top: 72px;
+            z-index: 90;
+        }
+
+        .filters__inner {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filters__inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filters__group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+            flex-shrink: 0;
+        }
+
+        .filters__label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* Pill tabs — role="tablist" */
+        .filters__pills {
+            display: flex;
+            gap: var(--space-2);
+            flex-wrap: nowrap;
+        }
+
+        .filter-pill {
+            background: transparent;
+            border: 1px solid var(--border-default);
+            border-radius: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            min-height: 44px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background-color var(--duration-micro) var(--ease-out),
+                        border-color var(--duration-micro) var(--ease-out),
+                        color var(--duration-micro) var(--ease-out);
+        }
+
+        .filter-pill:hover {
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+        }
+
+        .filter-pill[aria-selected="true"] {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--surface-void);
+            font-weight: 600;
+        }
+
+        .filter-pill[aria-selected="true"]:hover {
+            background: var(--accent-gold-light);
+            border-color: var(--accent-gold-light);
+        }
+
+        .filter-pill:active {
+            background: var(--accent-gold-dark);
+            border-color: var(--accent-gold-dark);
+        }
+
+        /* Search input */
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border-default);
+            border-radius: var(--space-3);
+            padding: var(--space-3) var(--space-3) var(--space-3) var(--space-10);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            transition: border-color var(--duration-micro) var(--ease-out);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:hover {
+            border-color: var(--border-hover);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px var(--accent-gold), 0 0 0 4px rgba(201, 169, 110, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .filters__inner {
+                gap: var(--space-3);
+                padding: 0 var(--space-4);
+            }
+            .filters {
+                top: 64px;
+            }
+            .search-input {
+                font-size: 16px;
+            }
+        }
+
+        /* ============================================
+           RESULTS INFO + STATISTICS BADGE
+           ============================================ */
+        .results {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: var(--space-6) var(--space-6) 0;
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .results__info {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .stat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-2);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent-gold);
+            background: rgba(201, 169, 110, 0.1);
+            border-radius: var(--space-2);
+        }
+
+        /* ============================================
+           GALLERY GRID
+           ============================================ */
+        .gallery {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        .gallery__grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-6);
+        }
+
+        @media (min-width: 640px) {
+            .gallery__grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-6);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .gallery__grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .gallery__grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* ============================================
+           CARD (DESIGN.md Section 5)
+           ============================================ */
+        .card {
+            background: var(--surface-elevated);
+            border-radius: var(--space-3);
+            overflow: hidden;
+            cursor: pointer;
+            transition: background-color var(--duration-standard) var(--ease-out);
+            /* Entry animation initial state */
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity var(--duration-emphasis) var(--ease-spring),
+                        transform var(--duration-emphasis) var(--ease-spring),
+                        background-color var(--duration-standard) var(--ease-out);
+        }
+
+        .card:hover {
+            background: var(--surface-hover);
+        }
+
+        .card:active {
+            background: var(--surface-hover);
+        }
+
+        /* Focus — 2px gold outline, 2px offset (WCAG 2.2 AA) */
+        .card:focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+
+        .card__image {
+            position: relative;
+            overflow: hidden;
+            background: var(--surface-primary);
+        }
+
+        .card__image--photo,
+        .card__image--document {
+            aspect-ratio: 4 / 3;
+        }
+
+        .card__image--video {
+            aspect-ratio: 16 / 9;
+        }
+
+        .card__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--duration-emphasis) var(--ease-spring);
+        }
+
+        .card:hover .card__image img {
+            transform: scale(1.05);
+        }
+
+        /* Type badge */
+        .card__type-badge {
+            position: absolute;
+            top: var(--space-2);
+            left: var(--space-2);
+            padding: var(--space-1) var(--space-2);
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: var(--space-1);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        /* Play icon for video */
+        .card__play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            background: rgba(10, 10, 15, 0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform var(--duration-micro) var(--ease-out),
+                        background-color var(--duration-micro) var(--ease-out);
+        }
+
+        .card:hover .card__play {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: var(--accent-gold);
+        }
+
+        .card__play svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-primary);
+            margin-left: 2px;
+        }
+
+        .card:hover .card__play svg {
+            fill: var(--surface-void);
+        }
+
+        /* Content area */
+        .card__content {
+            padding: var(--space-4);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .card__title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: var(--text-primary);
+        }
+
+        .card__meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+
+        .card__meta-item {
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .card__meta-item svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .card__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-1);
+        }
+
+        .card__tag {
+            padding: var(--space-1) var(--space-2);
+            background: var(--surface-primary);
+            border-radius: var(--space-1);
+            font-size: 0.6875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* ============================================
+           LIGHTBOX MODAL (DESIGN.md Section 5)
+           ============================================ */
+        .lightbox-dialog {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(8px);
+            border: none;
+            padding: 0;
+            max-width: none;
+            max-height: none;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            color: var(--text-primary);
+        }
+
+        .lightbox-dialog::backdrop {
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Animation */
+        .lightbox-dialog[open] {
+            animation: lightbox-backdrop-in 300ms var(--ease-out) forwards;
+        }
+
+        .lightbox-dialog[open] .lightbox__content {
+            animation: lightbox-content-in 400ms var(--ease-spring) forwards;
+        }
+
+        @keyframes lightbox-backdrop-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes lightbox-content-in {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .lightbox__close {
+            position: fixed;
+            top: calc(var(--space-6) + env(safe-area-inset-top, 0px));
+            right: var(--space-6);
+            width: 48px;
+            height: 48px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border-default);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color var(--duration-micro) var(--ease-out),
+                        border-color var(--duration-micro) var(--ease-out);
+            z-index: 1001;
+            color: var(--text-primary);
+        }
+
+        .lightbox__close:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
+        }
+
+        .lightbox__close svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Prev/Next navigation */
+        .lightbox__nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border-default);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color var(--duration-micro) var(--ease-out),
+                        border-color var(--duration-micro) var(--ease-out);
+            z-index: 1001;
+            color: var(--text-primary);
+        }
+
+        .lightbox__nav:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
+        }
+
+        .lightbox__nav--prev {
+            left: var(--space-6);
+        }
+
+        .lightbox__nav--next {
+            right: var(--space-6);
+        }
+
+        .lightbox__nav svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .lightbox__content {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: var(--space-8);
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: var(--space-12) var(--space-8);
+            min-height: 100vh;
+            align-content: center;
+        }
+
+        @media (max-width: 900px) {
+            .lightbox__content {
+                grid-template-columns: 1fr;
+                padding: var(--space-16) var(--space-4) var(--space-8);
+            }
+            .lightbox__nav--prev {
+                left: var(--space-3);
+            }
+            .lightbox__nav--next {
+                right: var(--space-3);
+            }
+        }
+
+        .lightbox__image-container {
+            background: var(--surface-primary);
+            border-radius: var(--space-3);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .lightbox__image-container img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+
+        @media (max-width: 640px) {
+            .lightbox__image-container {
+                min-height: 250px;
+            }
+        }
+
+        .lightbox__details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .lightbox__title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
+        }
+
+        .lightbox__description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .lightbox__section {
+            border-top: 1px solid var(--border-default);
+            padding-top: var(--space-6);
+        }
+
+        .lightbox__section-title {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: var(--space-4);
+            line-height: 1.3;
+        }
+
+        .lightbox__meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-4);
+        }
+
+        .lightbox__meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+
+        .lightbox__meta-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .lightbox__meta-value {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .lightbox__persons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+
+        .lightbox__person {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: var(--surface-elevated);
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--space-2);
+            transition: background-color var(--duration-micro) var(--ease-out);
+        }
+
+        .lightbox__person:hover {
+            background: var(--surface-hover);
+        }
+
+        .lightbox__person-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--surface-void);
+            flex-shrink: 0;
+        }
+
+        .lightbox__person-name {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           THEME TOGGLE
+           ============================================ */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            min-height: 44px;
+            background: transparent;
+            border: 1px solid var(--border-default);
+            border-radius: var(--space-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: background-color var(--duration-micro) var(--ease-out),
+                        border-color var(--duration-micro) var(--ease-out),
+                        color var(--duration-micro) var(--ease-out);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            background: rgba(201, 169, 110, 0.08);
+        }
+
+        .theme-toggle:active {
+            background: rgba(201, 169, 110, 0.15);
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+
+        .theme-toggle__icon {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            position: absolute;
+            transition: opacity var(--duration-micro) var(--ease-out),
+                        transform var(--duration-micro) var(--ease-out);
+        }
+
+        /* Show sun in dark mode, hide moon */
+        .theme-toggle__icon--sun {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        .theme-toggle__icon--moon {
+            opacity: 0;
+            transform: rotate(-90deg);
+        }
+
+        /* Light mode: show moon, hide sun */
+        [data-theme="light"] .theme-toggle__icon--sun {
+            opacity: 0;
+            transform: rotate(90deg);
+        }
+
+        [data-theme="light"] .theme-toggle__icon--moon {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        @media (max-width: 640px) {
+            .theme-toggle {
+                min-height: 40px;
+            }
+        }
+
+        /* ============================================
+           SCROLL TO TOP
+           ============================================ */
+        .scroll-top {
+            position: fixed;
+            bottom: calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+            right: calc(var(--space-8) + env(safe-area-inset-right, 0px));
+            width: 48px;
+            height: 48px;
+            background: var(--accent-gold);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--duration-standard) var(--ease-out),
+                        visibility var(--duration-standard) var(--ease-out),
+                        transform var(--duration-micro) var(--ease-out);
+            z-index: 50;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--accent-gold-light);
+            transform: translateY(-2px);
+        }
+
+        .scroll-top:active {
+            background: var(--accent-gold-dark);
+            transform: translateY(0);
+        }
+
+        .scroll-top svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--surface-void);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--surface-primary);
+            border-top: 1px solid var(--border-default);
+            padding: var(--space-8) var(--space-6);
+            padding-bottom: calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+            text-align: center;
+        }
+
+        .footer__text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .footer__accent {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* ============================================
+           REDUCED MOTION (DESIGN.md Section 6)
+           ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto !important;
+            }
+
+            .card {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .card.revealed {
+                transition: none;
+            }
+
+            .card__image img {
+                transition: none;
+            }
+
+            .card:hover .card__image img {
+                transform: none;
+            }
+
+            .lightbox-dialog[open] {
+                animation: none;
+            }
+
+            .lightbox-dialog[open] .lightbox__content {
+                animation: none;
+            }
+
+            .skip-link {
+                transition: none;
+            }
+
+            .scroll-top {
+                transition: none;
+            }
+
+            .theme-toggle__icon {
+                transition: none;
+            }
+        }
+
+        /* ============================================
+           EMPTY STATE
+           ============================================ */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: var(--space-16) var(--space-6);
+        }
+
+        .empty-state__icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto var(--space-6);
+            color: var(--text-muted);
+        }
+
+        .empty-state__title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+            color: var(--text-primary);
+        }
+
+        .empty-state__text {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip-to-content link (Accessibility — first element in body) -->
+    <a href="#main-content" class="skip-link">Перейти к содержимому</a>
+
+    <!-- ============================================
+         HEADER
+         ============================================ -->
+    <header class="header">
+        <div class="header__inner">
+            <a href="/" class="header__logo" aria-label="Архив СПбГТИ — на главную">
+                <div class="header__logo-icon" aria-hidden="true">А</div>
+                <div>
+                    <div class="header__title">Архив СПбГТИ</div>
+                    <div class="header__subtitle">Исторический каталог</div>
+                </div>
+            </a>
+
+            <section class="header__stats" aria-label="Статистика архива">
+                <div class="header__stat">
+                    <div class="header__stat-value" id="stat-total">1,247</div>
+                    <div class="header__stat-label">Записей</div>
+                </div>
+                <div class="header__stat">
+                    <div class="header__stat-value" id="stat-persons">892</div>
+                    <div class="header__stat-label">Персон</div>
+                </div>
+                <div class="header__stat">
+                    <div class="header__stat-value" id="stat-years">198</div>
+                    <div class="header__stat-label">Лет истории</div>
+                </div>
+            </section>
+
+            <button type="button" class="theme-toggle" aria-label="Переключить тему" title="Переключить тему" aria-pressed="false">
+                <!-- Sun icon (visible in dark mode) -->
+                <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5"/>
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+                <!-- Moon icon (visible in light mode) -->
+                <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- ============================================
+         HERO SECTION
+         ============================================ -->
+    <section class="hero" aria-label="О архиве">
+        <div class="hero__inner">
+            <p class="hero__overline">Исторический архив</p>
+            <h1 class="hero__title">Каталог СПбГТИ</h1>
+            <p class="hero__description">
+                Фотографии, видеозаписи и документы, хранящие историю Санкт-Петербургского
+                государственного технологического института с 1828 года. Более двух столетий
+                научных открытий, студенческой жизни и академических традиций.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FILTERS (role="tablist" for type pills)
+         ============================================ -->
+    <nav class="filters" aria-label="Фильтры каталога">
+        <div class="filters__inner">
+            <!-- Type filter — pills with tablist -->
+            <div class="filters__group">
+                <span class="filters__label" id="filter-type-label">Тип</span>
+                <div class="filters__pills" role="tablist" aria-labelledby="filter-type-label">
+                    <button type="button" class="filter-pill" role="tab" aria-selected="true" data-filter="type" data-value="all">Все</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="type" data-value="photo">Фото</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="type" data-value="video">Видео</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="type" data-value="document">Документ</button>
+                </div>
+            </div>
+
+            <!-- Year filter — pills -->
+            <div class="filters__group">
+                <span class="filters__label" id="filter-year-label">Год</span>
+                <div class="filters__pills" role="tablist" aria-labelledby="filter-year-label">
+                    <button type="button" class="filter-pill" role="tab" aria-selected="true" data-filter="year" data-value="all">Все</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="2020">2020-е</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="2010">2010-е</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="2000">2000-е</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="1990">1990-е</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="1980">1980-е</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="1970">1970-е</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="1960">1960-е</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="1950">1950-е</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="1940">1940-е</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="year" data-value="1930">1930-е</button>
+                </div>
+            </div>
+
+            <!-- Faculty filter — pills -->
+            <div class="filters__group">
+                <span class="filters__label" id="filter-faculty-label">Факультет</span>
+                <div class="filters__pills" role="tablist" aria-labelledby="filter-faculty-label">
+                    <button type="button" class="filter-pill" role="tab" aria-selected="true" data-filter="faculty" data-value="all">Все</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="faculty" data-value="ftk">ФТК</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="faculty" data-value="frtk">ФРТК</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="faculty" data-value="fitm">ФИТМ</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="faculty" data-value="fet">ФЭТ</button>
+                    <button type="button" class="filter-pill" role="tab" aria-selected="false" data-filter="faculty" data-value="fmo">ФМО</button>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="filters__group" style="flex: 1; min-width: 200px;">
+                <span class="filters__label" id="search-label">Поиск</span>
+                <div class="search-input-wrapper">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input
+                        type="search"
+                        class="search-input"
+                        id="search-input"
+                        aria-label="Поиск архива"
+                        placeholder="Поиск по названию, персоне, событию..."
+                    >
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         RESULTS INFO
+         ============================================ -->
+    <div class="results">
+        <p class="results__info">
+            Найдено: <span class="stat-badge" id="results-count" aria-live="polite">16 записей</span>
+        </p>
+    </div>
+
+    <!-- ============================================
+         GALLERY
+         ============================================ -->
+    <main id="main-content" class="gallery">
+        <div class="gallery__grid" id="gallery-grid">
+            <!-- Cards rendered via JS -->
+        </div>
+    </main>
+
+    <!-- ============================================
+         SCROLL TO TOP
+         ============================================ -->
+    <button type="button" class="scroll-top" id="scroll-top" aria-label="Наверх">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <!-- ============================================
+         LIGHTBOX DIALOG
+         ============================================ -->
+    <dialog class="lightbox-dialog" id="lightbox" aria-modal="true" aria-labelledby="lightbox-title">
+        <button type="button" class="lightbox__close" id="lightbox-close" aria-label="Закрыть">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <button type="button" class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" aria-label="Предыдущая запись">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+        </button>
+
+        <button type="button" class="lightbox__nav lightbox__nav--next" id="lightbox-next" aria-label="Следующая запись">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M9 18l6-6-6-6"/>
+            </svg>
+        </button>
+
+        <div class="lightbox__content">
+            <div class="lightbox__image-container">
+                <img id="lightbox-img" src="" alt="">
+            </div>
+
+            <div class="lightbox__details">
+                <h2 class="lightbox__title" id="lightbox-title">Просмотр записи</h2>
+
+                <p class="lightbox__description" id="lightbox-description"></p>
+
+                <div class="lightbox__section">
+                    <h3 class="lightbox__section-title">Метаданные</h3>
+                    <div class="lightbox__meta-grid">
+                        <div class="lightbox__meta-item">
+                            <span class="lightbox__meta-label">Год</span>
+                            <span class="lightbox__meta-value" id="lightbox-year"></span>
+                        </div>
+                        <div class="lightbox__meta-item">
+                            <span class="lightbox__meta-label">Факультет</span>
+                            <span class="lightbox__meta-value" id="lightbox-faculty"></span>
+                        </div>
+                        <div class="lightbox__meta-item">
+                            <span class="lightbox__meta-label">Место</span>
+                            <span class="lightbox__meta-value" id="lightbox-location"></span>
+                        </div>
+                        <div class="lightbox__meta-item">
+                            <span class="lightbox__meta-label">Тип</span>
+                            <span class="lightbox__meta-value" id="lightbox-type"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lightbox__section">
+                    <h3 class="lightbox__section-title">Персоны</h3>
+                    <div class="lightbox__persons" id="lightbox-persons"></div>
+                </div>
+
+                <div class="lightbox__section">
+                    <h3 class="lightbox__section-title">Событие</h3>
+                    <div id="lightbox-event" style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;"></div>
+                </div>
+
+                <div class="lightbox__section">
+                    <h3 class="lightbox__section-title">Теги</h3>
+                    <div class="card__tags" id="lightbox-tags"></div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <p class="footer__text">
+            <span class="footer__accent">Архив СПбГТИ</span> · Исторический каталог Санкт-Петербургского государственного технологического института
+        </p>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT
+         ============================================ -->
+    <script>
+        // ============================================
+        // THEME SWITCHER
+        // ============================================
+        const THEME_KEY = 'archive-theme';
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem(THEME_KEY, theme);
+            const toggle = document.querySelector('.theme-toggle');
+            if (toggle) {
+                toggle.setAttribute('aria-label',
+                    theme === 'dark' ? 'Переключить на светлую тему' : 'Переключить на тёмную тему'
+                );
+                toggle.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+            }
+        }
+
+        // Apply theme on script load (for SPAs or dynamic content)
+        setTheme(localStorage.getItem(THEME_KEY) || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+
+        // Toggle handler
+        document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // Listen for system theme changes (when no user preference is stored)
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+            if (!localStorage.getItem(THEME_KEY)) {
+                setTheme(e.matches ? 'light' : 'dark');
+            }
+        });
+
+        // ============================================
+        // DEMO DATA — 16 items (photos + videos + documents)
+        // ============================================
+        const demoData = [
+            {
+                id: 1,
+                title: "Выпускной вечер ФТК 1985 года",
+                description: "Торжественное вручение дипломов выпускникам факультета теплотехники и конструирования. На фотографии — группа выпускников с преподавателями у главного входа института.",
+                year: 1985,
+                faculty: "ФТК",
+                facultyId: "ftk",
+                location: "Главный корпус СПбГТИ",
+                type: "photo",
+                tags: ["students", "teachers"],
+                event: "Выпускной 1985",
+                persons: [
+                    { name: "Иванов И.И.", role: "выпускник" },
+                    { name: "Петров П.П.", role: "преподаватель" }
+                ],
+                image: "https://images.unsplash.com/photo-1523050854058-8df90110c476?w=600&h=450&fit=crop"
+            },
+            {
+                id: 2,
+                title: "Лаборатория физики, 1972",
+                description: "Студенты проводят эксперимент в лаборатории кафедры общей физики. Оборудование того времени: осциллографы, генераторы сигналов, аналоговые измерительные приборы.",
+                year: 1972,
+                faculty: "ФРТК",
+                facultyId: "frtk",
+                location: "Корпус №3, лаборатория 312",
+                type: "photo",
+                tags: ["labs", "students"],
+                event: "",
+                persons: [
+                    { name: "Сидоров А.В.", role: "студент" }
+                ],
+                image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&h=450&fit=crop"
+            },
+            {
+                id: 3,
+                title: "Приказ о зачислении студентов, 1990",
+                description: "Скан приказа декана факультета информатики и управления о зачислении группы студентов на 1 курс в 1990 году. Оригинал хранится в архивном отделе.",
+                year: 1990,
+                faculty: "ФИТМ",
+                facultyId: "fitm",
+                location: "",
+                type: "document",
+                tags: ["students"],
+                event: "",
+                persons: [],
+                image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&h=450&fit=crop"
+            },
+            {
+                id: 4,
+                title: "День открытых дверей 2023",
+                description: "Видеозапись с Дня открытых дверей института. Абитуриенты и их родители знакомятся с факультетами, лабораториями и студенческим городком.",
+                year: 2023,
+                faculty: "Все факультеты",
+                facultyId: "",
+                location: "Главный корпус",
+                type: "video",
+                tags: ["students"],
+                event: "День открытых дверей 2023",
+                persons: [],
+                image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&h=450&fit=crop"
+            },
+            {
+                id: 5,
+                title: "Профессор Козлов А.Н.",
+                description: "Портрет профессора Козлова Алексея Николаевича — заведующего кафедрой органической химии с 1965 по 1995 год. Заслуженный деятель науки РФ.",
+                year: 1980,
+                faculty: "ФТК",
+                facultyId: "ftk",
+                location: "Кабинет завкафедрой",
+                type: "photo",
+                tags: ["teachers"],
+                event: "",
+                persons: [
+                    { name: "Козлов А.Н.", role: "преподаватель" }
+                ],
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=450&fit=crop"
+            },
+            {
+                id: 6,
+                title: "Студенческий спортивный матч, 1988",
+                description: "Футбольный матч между командами ФТК и ФИТМ на институтском стадионе. Кубок института 1988 года. Финальная игра сезона.",
+                year: 1988,
+                faculty: "ФТК / ФИТМ",
+                facultyId: "ftk",
+                location: "Стадион СПбГТИ",
+                type: "photo",
+                tags: ["students", "buildings"],
+                event: "Кубок института 1988",
+                persons: [],
+                image: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&h=450&fit=crop"
+            },
+            {
+                id: 7,
+                title: "Главный корпус института, 1950-е",
+                description: "Вид на главное здание СПбГТИ (тогда ЛИХТИП) со стороны Московского проспекта. Здание построено в 1902 году по проекту архитектора А.И. фон Гогена.",
+                year: 1955,
+                faculty: "",
+                facultyId: "",
+                location: "Московский пр., 26",
+                type: "photo",
+                tags: ["buildings"],
+                event: "",
+                persons: [],
+                image: "https://images.unsplash.com/photo-1564429238961-bf4a5daa1d5d?w=600&h=450&fit=crop"
+            },
+            {
+                id: 8,
+                title: "Научная конференция «Полимеры будущего»",
+                description: "Видеозапись доклада на секции «Синтетические полимеры» ежегодной научной конференции студентов и аспирантов. Докладчик — магистрант Новикова Е.С.",
+                year: 2019,
+                faculty: "ФРТК",
+                facultyId: "frtk",
+                location: "Актовый зал",
+                type: "video",
+                tags: ["labs", "students"],
+                event: "Научная конференция 2019",
+                persons: [
+                    { name: "Новикова Е.С.", role: "студент" }
+                ],
+                image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=450&fit=crop"
+            },
+            {
+                id: 9,
+                title: "Дипломная работа по автоматизации, 1968",
+                description: "Защита дипломной работы студента кафедры автоматики и телемеханики. Руководитель — доцент Волков Б.М. Тема: «Автоматизация технологического процесса».",
+                year: 1968,
+                faculty: "ФИТМ",
+                facultyId: "fitm",
+                location: "Корпус №2, ауд. 214",
+                type: "photo",
+                tags: ["students", "teachers"],
+                event: "",
+                persons: [
+                    { name: "Волков Б.М.", role: "преподаватель" },
+                    { name: "Кузнецов С.А.", role: "студент" }
+                ],
+                image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&h=450&fit=crop"
+            },
+            {
+                id: 10,
+                title: "Вручение дипломов магистрам ФРТК, 2015",
+                description: "Церемония вручения дипломов магистрам факультета radically new technologies и компьютерных наук. 42 выпускника получили дипломы с отличием.",
+                year: 2015,
+                faculty: "ФРТК",
+                facultyId: "frtk",
+                location: "Актовый зал",
+                type: "photo",
+                tags: ["students", "teachers"],
+                event: "Выпускной 2015",
+                persons: [],
+                image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=450&fit=crop"
+            },
+            {
+                id: 11,
+                title: "Учебник по термодинамике, 1947",
+                description: "Титульный страница учебного пособия по термодинамике, подготовленного кафедрой теплотехники. Издательство «Химия», тираж 3000 экземпляров.",
+                year: 1947,
+                faculty: "ФТК",
+                facultyId: "ftk",
+                location: "",
+                type: "document",
+                tags: ["teachers"],
+                event: "",
+                persons: [
+                    { name: "Григорьев П.Д.", role: "автор" }
+                ],
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=450&fit=crop"
+            },
+            {
+                id: 12,
+                title: "Лаборатория робототехники, 2021",
+                description: "Видеотур по лаборатории робототехники и систем автоматического управления. Студенты демонстрируют промышленных манипуляторов.",
+                year: 2021,
+                faculty: "ФИТМ",
+                facultyId: "fitm",
+                location: "Корпус №4, лаб. 401",
+                type: "video",
+                tags: ["labs", "students"],
+                event: "",
+                persons: [],
+                image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=450&fit=crop"
+            },
+            {
+                id: 13,
+                title: "Студенческая практика на заводе, 1975",
+                description: "Группа студентов ФТК во время производственной практики на Ленинградском электромеханическом заводе «Красный знамя».",
+                year: 1975,
+                faculty: "ФТК",
+                facultyId: "ftk",
+                location: "Завод «Красный знамя»",
+                type: "photo",
+                tags: ["students"],
+                event: "",
+                persons: [],
+                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=600&h=450&fit=crop"
+            },
+            {
+                id: 14,
+                title: "Протокол заседания учёного совета, 1962",
+                description: "Протокол очередного заседания учёного совета института. Повестка: утверждение тем диссертаций, отчёт о научно-исследовательской работе кафедр.",
+                year: 1962,
+                faculty: "",
+                facultyId: "",
+                location: "",
+                type: "document",
+                tags: ["teachers"],
+                event: "",
+                persons: [],
+                image: "https://images.unsplash.com/photo-1568667256549-094345857637?w=600&h=450&fit=crop"
+            },
+            {
+                id: 15,
+                title: "Конкурс студенческих проектов, 2018",
+                description: "Жюри оценивает проекты участников ежегодного конкурса инженерных решений. Призовой фонд — стажировка на предприятии-партнёре.",
+                year: 2018,
+                faculty: "ФРТК",
+                facultyId: "frtk",
+                location: "Выставочный зал",
+                type: "photo",
+                tags: ["students", "teachers"],
+                event: "Конкурс проектов 2018",
+                persons: [],
+                image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=450&fit=crop"
+            },
+            {
+                id: 16,
+                title: "Экскурсия в музей института, 2020",
+                description: "Видеозапись экскурсии по музею истории СПбГТИ для первокурсников. Экскурсовод — доцент кафедры истории науки Смирнова Т.В.",
+                year: 2020,
+                faculty: "Все факультеты",
+                facultyId: "",
+                location: "Музей СПбГТИ",
+                type: "video",
+                tags: ["students", "teachers"],
+                event: "День первокурсника 2020",
+                persons: [
+                    { name: "Смирнова Т.В.", role: "преподаватель" }
+                ],
+                image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=450&fit=crop"
+            }
+        ];
+
+        // ============================================
+        // STATE
+        // ============================================
+        const currentFilters = {
+            type: 'all',
+            year: 'all',
+            faculty: 'all',
+            search: ''
+        };
+        let filteredData = [...demoData];
+        let currentLightboxIndex = -1;
+
+        // ============================================
+        // DOM REFS
+        // ============================================
+        const galleryGrid = document.getElementById('gallery-grid');
+        const resultsCount = document.getElementById('results-count');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxPrev = document.getElementById('lightbox-prev');
+        const lightboxNext = document.getElementById('lightbox-next');
+        const scrollTopBtn = document.getElementById('scroll-top');
+        const searchInput = document.getElementById('search-input');
+
+        // ============================================
+        // TYPE HELPERS
+        // ============================================
+
+        function getTypeName(type) {
+            switch(type) {
+                case 'photo': return 'Фотография';
+                case 'video': return 'Видеозапись';
+                case 'document': return 'Документ';
+                default: return type;
+            }
+        }
+
+        function getTagLabel(tag) {
+            const names = {
+                'labs': 'Лаборатории',
+                'buildings': 'Здания',
+                'students': 'Студенты',
+                'teachers': 'Преподаватели'
+            };
+            return names[tag] || tag;
+        }
+
+        // ============================================
+        // RENDERING
+        // ============================================
+        function renderGallery(data) {
+            galleryGrid.innerHTML = '';
+            resultsCount.textContent = `${data.length} ${getRecordWord(data.length)}`;
+
+            if (data.length === 0) {
+                galleryGrid.innerHTML = `
+                        <div class="empty-state">
+                        <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <h3 class="empty-state__title">Ничего не найдено</h3>
+                        <p class="empty-state__text">Попробуйте изменить параметры фильтрации или поисковый запрос.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            data.forEach((item, index) => {
+                const card = document.createElement('article');
+                card.className = 'card';
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `Просмотр: ${item.title}`);
+                card.dataset.id = item.id;
+                card.dataset.index = index;
+
+                const imageClass = item.type === 'video' ? 'card__image--video' : 'card__image--photo';
+                const playButton = item.type === 'video' ? `
+                    <span class="card__play" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </span>
+                ` : '';
+
+                card.innerHTML = `
+                    <div class="card__image ${imageClass}">
+                        <img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async">
+                        <span class="card__type-badge">${getTypeName(item.type)}</span>
+                        ${playButton}
+                    </div>
+                    <div class="card__content">
+                        <h3 class="card__title">${item.title}</h3>
+                        <div class="card__meta">
+                            ${item.faculty ? `
+                            <span class="card__meta-item">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                                ${item.faculty}
+                            </span>` : ''}
+                            ${item.location ? `
+                            <span class="card__meta-item">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                ${item.location}
+                            </span>` : ''}
+                            <span class="card__meta-item">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                ${item.year}
+                            </span>
+                        </div>
+                        <div class="card__tags">
+                            ${item.tags.map(tag => `<span class="card__tag">${getTagLabel(tag)}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => openLightbox(index));
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openLightbox(index);
+                    }
+                });
+
+                galleryGrid.appendChild(card);
+            });
+
+            // Trigger staggered reveal animation
+            requestAnimationFrame(() => {
+                const cards = galleryGrid.querySelectorAll('.card');
+                cards.forEach((card, i) => {
+                    setTimeout(() => {
+                        card.classList.add('revealed');
+                    }, i * 60); // 60ms stagger
+                });
+            });
+        }
+
+        function getRecordWord(n) {
+            const mod10 = n % 10;
+            const mod100 = n % 100;
+            if (mod100 >= 11 && mod100 <= 19) return 'записей';
+            if (mod10 === 1) return 'запись';
+            if (mod10 >= 2 && mod10 <= 4) return 'записи';
+            return 'записей';
+        }
+
+        // ============================================
+        // FILTERS
+        // ============================================
+        function applyFilters() {
+            let result = [...demoData];
+
+            // Type filter
+            if (currentFilters.type !== 'all') {
+                result = result.filter(item => item.type === currentFilters.type);
+            }
+
+            // Year filter (decade)
+            if (currentFilters.year !== 'all') {
+                const decade = parseInt(currentFilters.year, 10);
+                result = result.filter(item => item.year >= decade && item.year < decade + 10);
+            }
+
+            // Faculty filter
+            if (currentFilters.faculty !== 'all') {
+                result = result.filter(item => item.facultyId === currentFilters.faculty);
+            }
+
+            // Search filter
+            if (currentFilters.search) {
+                const q = currentFilters.search.toLowerCase();
+                result = result.filter(item =>
+                    item.title.toLowerCase().includes(q) ||
+                    item.description.toLowerCase().includes(q) ||
+                    item.faculty.toLowerCase().includes(q) ||
+                    item.location.toLowerCase().includes(q) ||
+                    item.tags.some(t => getTagLabel(t).toLowerCase().includes(q)) ||
+                    item.persons.some(p => p.name.toLowerCase().includes(q)) ||
+                    item.event.toLowerCase().includes(q)
+                );
+            }
+
+            filteredData = result;
+            renderGallery(filteredData);
+        }
+
+        // Pill click handlers
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const group = pill.closest('.filters__pills');
+                const filterType = pill.dataset.filter;
+                const value = pill.dataset.value;
+
+                // Update aria-selected in this group
+                group.querySelectorAll('.filter-pill').forEach(p => {
+                    p.setAttribute('aria-selected', 'false');
+                });
+                pill.setAttribute('aria-selected', 'true');
+
+                // Update state
+                currentFilters[filterType] = value;
+                applyFilters();
+            });
+        });
+
+        // Search input
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentFilters.search = e.target.value;
+                applyFilters();
+            }, 200);
+        });
+
+        // Keyboard navigation in pill groups
+        document.querySelectorAll('.filters__pills').forEach(group => {
+            group.addEventListener('keydown', (e) => {
+                const pills = Array.from(group.querySelectorAll('.filter-pill'));
+                const currentIndex = pills.indexOf(document.activeElement);
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const next = (currentIndex + 1) % pills.length;
+                    pills[next].focus();
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prev = (currentIndex - 1 + pills.length) % pills.length;
+                    pills[prev].focus();
+                }
+            });
+        });
+
+        // ============================================
+        // LIGHTBOX
+        // ============================================
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const item = filteredData[index];
+            if (!item) return;
+
+            document.getElementById('lightbox-img').src = item.image;
+            document.getElementById('lightbox-img').alt = item.title;
+            document.getElementById('lightbox-title').textContent = item.title;
+            document.getElementById('lightbox-description').textContent = item.description;
+            document.getElementById('lightbox-year').textContent = item.year;
+            document.getElementById('lightbox-faculty').textContent = item.faculty || '—';
+            document.getElementById('lightbox-location').textContent = item.location || '—';
+            document.getElementById('lightbox-type').textContent = getTypeName(item.type);
+
+            // Persons
+            const personsContainer = document.getElementById('lightbox-persons');
+            if (item.persons.length > 0) {
+                personsContainer.innerHTML = item.persons.map(p => `
+                    <div class="lightbox__person" tabindex="0" aria-label="${p.name}, ${p.role}">
+                        <span class="lightbox__person-avatar" aria-hidden="true">${p.name.charAt(0)}</span>
+                        <span class="lightbox__person-name">${p.name}</span>
+                    </div>
+                `).join('');
+            } else {
+                personsContainer.innerHTML = '<span style="color: var(--text-muted); font-size: 0.875rem;">Нет данных о персонах</span>';
+            }
+
+            // Event
+            document.getElementById('lightbox-event').textContent = item.event || 'Не привязано к событию';
+
+            // Tags
+            document.getElementById('lightbox-tags').innerHTML = item.tags.map(tag =>
+                `<span class="card__tag">${getTagLabel(tag)}</span>`
+            ).join('');
+
+            // Show/hide nav buttons
+            lightboxPrev.style.display = index > 0 ? 'flex' : 'none';
+            lightboxNext.style.display = index < filteredData.length - 1 ? 'flex' : 'none';
+
+            // Open dialog
+            lightbox.showModal();
+            document.body.style.overflow = 'hidden';
+
+            // Focus trap
+            lightboxClose.focus();
+        }
+
+        function closeLightbox() {
+            lightbox.close();
+            document.body.style.overflow = '';
+
+            // Return focus to the card that opened the lightbox
+            if (currentLightboxIndex >= 0) {
+                const card = galleryGrid.querySelector(`[data-index="${currentLightboxIndex}"]`);
+                if (card) card.focus();
+            }
+            currentLightboxIndex = -1;
+        }
+
+        function navigateLightbox(direction) {
+            const newIndex = currentLightboxIndex + direction;
+            if (newIndex >= 0 && newIndex < filteredData.length) {
+                openLightbox(newIndex);
+            }
+        }
+
+        // Close handlers
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // Keyboard: Escape + Arrow keys
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.open) return;
+
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                navigateLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                navigateLightbox(1);
+            }
+        });
+
+        // Nav buttons
+        lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
+        lightboxNext.addEventListener('click', () => navigateLightbox(1));
+
+        // ============================================
+        // SCROLL TO TOP
+        // ============================================
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        }, { passive: true });
+
+        scrollTopBtn.addEventListener('click', () => {
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+        });
+
+        // ============================================
+        // SCROLL REVEAL (IntersectionObserver)
+        // ============================================
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -60px 0px',
+            threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // ============================================
+        // INIT
+        // ============================================
+        renderGallery(demoData);
+
+        // Dynamic year count — SPbGTI founded 1828
+        const FOUNDING_YEAR = 1828;
+        const yearsElement = document.getElementById('stat-years');
+        if (yearsElement) {
+            yearsElement.textContent = new Date().getFullYear() - FOUNDING_YEAR;
+        }
+    </script>
+</body>
+</html>
