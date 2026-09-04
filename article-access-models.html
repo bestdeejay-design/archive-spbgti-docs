@@ -7,9 +7,63 @@
     <title>Модели доступа: кому что можно показывать — Архив СПбГТИ</title>
 </head>
 <body>
+    <div class="layout">    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Архив СПбГТИ</h1>
+            <p>1828–2028 · 200 лет</p>
+        </div>
+        <nav>
+            <div class="nav-section open">
+                <div class="nav-section-title" onclick="toggleSection(this)">Обзор</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Главная</a></li>
+                </ul>
+            </div>
+            <div class="nav-section open">
+                <div class="nav-section-title" onclick="toggleSection(this)">Исследования</div>
+                <ul class="nav-links">
+                    <li><a href="article-best-practices.html">Лучшие практики</a></li>
+                    <li><a href="article-privacy.html">Конфиденциальность</a></li>
+                    <li><a href="article-access-models.html">Модели доступа</a></li>
+                    <li><a href="article-preservation.html">Долгосрочное хранение</a></li>
+                    <li><a href="article-strategy.html">Стратегия и план</a></li>
+                </ul>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title" onclick="toggleSection(this)">Архитектура</div>
+                <ul class="nav-links">
+                    <li><a href="architecture.html">Обзор системы</a></li>
+                    <li><a href="frontend.html">Интерфейс</a></li>
+                    <li><a href="api.html">Сервер и поиск</a></li>
+                    <li><a href="storage.html">Данные и файлы</a></li>
+                    <li><a href="infrastructure.html">Сервер и безопасность</a></li>
+                </ul>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title" onclick="toggleSection(this)">Дизайн</div>
+                <ul class="nav-links">
+                    <li><a href="gallery-preview-direction-a.html">Архивная мастерская</a></li>
+                    <li><a href="gallery-preview-direction-b.html">Институциональное досье</a></li>
+                    <li><a href="gallery-preview-direction-c.html">Хроника эпох</a></li>
+                </ul>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title" onclick="toggleSection(this)">Документы</div>
+                <ul class="nav-links">
+                    <li><a href="TECHNICAL_REQUIREMENTS.md">Техническое задание</a></li>
+                    <li><a href="DESIGN_CONSULTATION.md">Аудит и рекомендации</a></li>
+                    <li><a href="SPEC.md">Полная ТЗ</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <div class="layout">
     <div class="breadcrumb"><a href="index.html">← На главную</a> · <a href="article-privacy.html">← Статья 2</a></div>
 
-    <div class="hero">
+    <main class="main">
+            <div class="hero">
         <div class="label">Статья 3 из 5</div>
         <h1>Модели доступа: кому что можно показывать</h1>
         <p class="meta">Почему единый доступ = плохо, и как построить систему, которая защищает и даёт находить</p>
@@ -237,5 +291,17 @@
         <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
         <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
     </footer>
+        </main>
+    </div>
+    
+    <script>
+    function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('open');
+        document.querySelector('.sidebar-overlay').classList.toggle('open');
+    }
+    function toggleSection(el) {
+        el.parentElement.classList.toggle('open');
+    }
+    </script>
 </body>
 </html>

@@ -7,201 +7,254 @@
     <title>Архив СПбГТИ — Проект</title>
 </head>
 <body>
-
-    <!-- HERO -->
-    <div class="hero">
-        <h1>Архив СПбГТИ</h1>
-        <p class="tagline">Исторический каталог фото, видео и документов института с 1828 года.<br>Подготовка к 200-летию — 2028 год.</p>
-        <a href="#designs" class="cta">Смотреть варианты оформления</a>
-    </div>
-
-    <!-- ЧТО ДЕЛАЕМ -->
-    <div class="section">
-        <h2 class="section-title">Что мы делаем</h2>
-        <p class="section-subtitle">Превращаем архив из простого хранилища в удобный портал для поиска и навигации</p>
-
-        <div class="build-grid">
-            <div class="build-card">
-                <div class="icon">🔍</div>
-                <h3>Умный поиск</h3>
-                <p>Найти фото по году, факультету, человеку, событию. Выпускник находит свой выпуск за 3 клика.</p>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>Архив СПбГТИ</h1>
+                <p>1828–2028 · 200 лет</p>
             </div>
-            <div class="build-card">
-                <div class="icon">👤</div>
-                <h3>Справочник людей</h3>
-                <p>Студенты, преподаватели, выпускники. Каждая запись связана с людьми, которые на ней.</p>
-            </div>
-            <div class="build-card">
-                <div class="icon">🏫</div>
-                <h3>Структура института</h3>
-                <p>9 факультетов с историей. Навигация по подразделениям и кафедрам.</p>
-            </div>
-            <div class="build-card">
-                <div class="icon">📅</div>
-                <h3>Хронология событий</h3>
-                <p>Выпускные, конференции, праздники. Временная лента от 1828 до наших дней.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- СРАВНЕНИЕ -->
-    <div class="section">
-        <h2 class="section-title">Как сейчас и как будет</h2>
-        <p class="section-subtitle">Что уже работает и что мы добавим</p>
-
-        <div class="compare">
-            <div class="compare-side now">
-                <h4>Сейчас (v1.0.0)</h4>
-                <ul>
-                    <li>Простая галерея с фото</li>
-                    <li>4 фильтра (категория, десятилетие, поиск, год)</li>
-                    <li>Нет справочников людей</li>
-                    <li>Нет связей между записями</li>
-                    <li>Нет навигации по факультетам</li>
-                    <li>Тёмная тема, не настроена под институт</li>
-                </ul>
-            </div>
-            <div class="compare-side future">
-                <h4>Будет (v2.0)</h4>
-                <ul>
-                    <li>Полноценный каталог с метаданными</li>
-                    <li>6 фильтров + персональный поиск</li>
-                    <li>Справочник персон (500+ карточек)</li>
-                    <li>Связи: фото ↔ люди ↔ события ↔ факультеты</li>
-                    <li>Навигация по 5 осям (хронология, структура, люди)</li>
-                    <li>3 варианта дизайна на выбор</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- ВАРИАНТЫ ДИЗАЙНА -->
-    <div class="section" id="designs">
-        <h2 class="section-title">Варианты оформления</h2>
-        <p class="section-subtitle">Три концепции дизайна. Каждая — рабочий интерфейс с demo-данными.</p>
-
-        <div class="design-grid">
-            <a href="gallery-preview-direction-a.html" class="design-card">
-                <div class="design-preview a">📚</div>
-                <div class="design-info">
-                    <h4>Архивная мастерская</h4>
-                    <p>Тёплые тона, дерево, бумага. Уютная библиотека исследователя.</p>
+            <nav>
+                <div class="nav-section open">
+                    <div class="nav-section-title" onclick="toggleSection(this)">Обзор</div>
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="active">Главная</a></li>
+                    </ul>
                 </div>
-            </a>
-            <a href="gallery-preview-direction-b.html" class="design-card">
-                <div class="design-preview b">📋</div>
-                <div class="design-info">
-                    <h4>Институциональное досье</h4>
-                    <p>Светлая тема, строгий стиль. Как official document с цветными табами.</p>
+                <div class="nav-section open">
+                    <div class="nav-section-title" onclick="toggleSection(this)">Исследования</div>
+                    <ul class="nav-links">
+                        <li><a href="article-best-practices.html">Лучшие практики</a></li>
+                        <li><a href="article-privacy.html">Конфиденциальность</a></li>
+                        <li><a href="article-access-models.html">Модели доступа</a></li>
+                        <li><a href="article-preservation.html">Долгосрочное хранение</a></li>
+                        <li><a href="article-strategy.html">Стратегия и план</a></li>
+                    </ul>
                 </div>
-            </a>
-            <a href="gallery-preview-direction-c.html" class="design-card">
-                <div class="design-preview c">⏳</div>
-                <div class="design-info">
-                    <h4>Хроника эпох</h4>
-                    <p>Цветовая кодировка эпох. Timeline как основная навигация.</p>
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="toggleSection(this)">Архитектура</div>
+                    <ul class="nav-links">
+                        <li><a href="architecture.html">Обзор системы</a></li>
+                        <li><a href="frontend.html">Интерфейс</a></li>
+                        <li><a href="api.html">Сервер и поиск</a></li>
+                        <li><a href="storage.html">Данные и файлы</a></li>
+                        <li><a href="infrastructure.html">Сервер и безопасность</a></li>
+                    </ul>
                 </div>
-            </a>
-        </div>
-    </div>
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="toggleSection(this)">Дизайн</div>
+                    <ul class="nav-links">
+                        <li><a href="gallery-preview-direction-a.html">Архивная мастерская</a></li>
+                        <li><a href="gallery-preview-direction-b.html">Институциональное досье</a></li>
+                        <li><a href="gallery-preview-direction-c.html">Хроника эпох</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="toggleSection(this)">Документы</div>
+                    <ul class="nav-links">
+                        <li><a href="TECHNICAL_REQUIREMENTS.md">Техническое задание</a></li>
+                        <li><a href="DESIGN_CONSULTATION.md">Аудит и рекомендации</a></li>
+                        <li><a href="SPEC.md">Полная ТЗ</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
 
-    <!-- СРОКИ -->
-    <div class="section">
-        <h2 class="section-title">Этапы работы</h2>
-        <p class="section-subtitle">Порядок действий от текущего состояния до результата</p>
-
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="time">Этап 1 — 2 недели</div>
-                <h4>Модель данных</h4>
-                <p>Создаём справочники (факультеты, люди, события, теги) и связи между ними.</p>
+        <!-- MAIN -->
+        <main class="main">
+            <div class="hero">
+                <div class="label">Проект</div>
+                <h1>Архив СПбГТИ</h1>
+                <p class="tagline">Исторический каталог фото, видео и документов института с 1828 года. Подготовка к 200-летию — 2028 год.</p>
+                <a href="#designs" class="cta">Смотреть варианты оформления</a>
             </div>
-            <div class="timeline-item">
-                <div class="time">Этап 2 — 3 недели</div>
-                <h4>Интерфейс</h4>
-                <p>Разрабатываем галерею, загрузку и админ-панель по выбранному дизайну.</p>
+
+            <div class="section">
+                <h2 class="section-title">Что мы делаем</h2>
+                <p class="section-subtitle">Превращаем архив из простого хранилища в удобный портал для поиска и навигации</p>
+                <div class="build-grid">
+                    <div class="build-card">
+                        <div class="icon">🔍</div>
+                        <h3>Умный поиск</h3>
+                        <p>Найти фото по году, факультету, человеку, событию. Выпускник находит свой выпуск за 3 клика.</p>
+                    </div>
+                    <div class="build-card">
+                        <div class="icon">👤</div>
+                        <h3>Справочник людей</h3>
+                        <p>Студенты, преподаватели, выпускники. Каждая запись связана с людьми, которые на ней.</p>
+                    </div>
+                    <div class="build-card">
+                        <div class="icon">🏫</div>
+                        <h3>Структура института</h3>
+                        <p>9 факультетов с историей. Навигация по подразделениям и кафедрам.</p>
+                    </div>
+                    <div class="build-card">
+                        <div class="icon">📅</div>
+                        <h3>Хронология событий</h3>
+                        <p>Выпускные, конференции, праздники. Временная лента от 1828 до наших дней.</p>
+                    </div>
+                </div>
             </div>
-            <div class="timeline-item">
-                <div class="time">Этап 3 — 2 недели</div>
-                <h4>Наполнение</h4>
-                <p>Заполняем справочники, связываем записи, загружаем метаданные.</p>
+
+            <div class="section">
+                <h2 class="section-title">Как сейчас и как будет</h2>
+                <p class="section-subtitle">Что уже работает и что мы добавим</p>
+                <div class="compare">
+                    <div class="compare-side now">
+                        <h4>Сейчас (v1.0.0)</h4>
+                        <ul>
+                            <li>Простая галерея с фото</li>
+                            <li>4 фильтра (категория, десятилетие, поиск, год)</li>
+                            <li>Нет справочников людей</li>
+                            <li>Нет связей между записями</li>
+                            <li>Нет навигации по факультетам</li>
+                            <li>Тёмная тема, не настроена под институт</li>
+                        </ul>
+                    </div>
+                    <div class="compare-side future">
+                        <h4>Будет (v2.0)</h4>
+                        <ul>
+                            <li>Полноценный каталог с метаданными</li>
+                            <li>6 фильтров + персональный поиск</li>
+                            <li>Справочник персон (500+ карточек)</li>
+                            <li>Связи: фото ↔ люди ↔ события ↔ факультеты</li>
+                            <li>Навигация по 5 осям (хронология, структура, люди)</li>
+                            <li>3 варианта дизайна на выбор</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="timeline-item">
-                <div class="time">Этап 4 — 1 неделя</div>
-                <h4>Запуск</h4>
-                <p>Тестирование, настройка доступа, обучение сотрудников.</p>
+
+            <div class="section" id="designs">
+                <h2 class="section-title">Варианты оформления</h2>
+                <p class="section-subtitle">Три концепции дизайна. Каждая — рабочий интерфейс с demo-данными.</p>
+                <div class="design-grid">
+                    <a href="gallery-preview-direction-a.html" class="design-card">
+                        <div class="design-preview a">📚</div>
+                        <div class="design-info">
+                            <h4>Архивная мастерская</h4>
+                            <p>Тёплые тона, дерево, бумага. Уютная библиотека исследователя.</p>
+                        </div>
+                    </a>
+                    <a href="gallery-preview-direction-b.html" class="design-card">
+                        <div class="design-preview b">📋</div>
+                        <div class="design-info">
+                            <h4>Институциональное досье</h4>
+                            <p>Светлая тема, строгий стиль. Как official document с цветными табами.</p>
+                        </div>
+                    </a>
+                    <a href="gallery-preview-direction-c.html" class="design-card">
+                        <div class="design-preview c">⏳</div>
+                        <div class="design-info">
+                            <h4>Хроника эпох</h4>
+                            <p>Цветовая кодировка эпох. Timeline как основная навигация.</p>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
+
+            <div class="section">
+                <h2 class="section-title">Этапы работы</h2>
+                <p class="section-subtitle">Порядок действий от текущего состояния до результата</p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="time">Этап 1 — 2 недели</div>
+                        <h4>Модель данных</h4>
+                        <p>Создаём справочники (факультеты, люди, события, теги) и связи между ними.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">Этап 2 — 3 недели</div>
+                        <h4>Интерфейс</h4>
+                        <p>Разрабатываем галерею, загрузку и админ-панель по выбранному дизайну.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">Этап 3 — 2 недели</div>
+                        <h4>Наполнение</h4>
+                        <p>Заполняем справочники, связываем записи, загружаем метаданные.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">Этап 4 — 1 неделя</div>
+                        <h4>Запуск</h4>
+                        <p>Тестирование, настройка доступа, обучение сотрудников.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Исследования</h2>
+                <p class="section-subtitle">5 статей для принятия решений: лучшие практики, безопасность, доступ, хранение, план</p>
+                <div class="docs-grid">
+                    <a href="article-best-practices.html" class="doc-card">
+                        <span class="tag">Статья 1</span>
+                        <h4>Лучшие практики мировых архивов</h4>
+                        <p>MIT, Yale, Stanford, Oxford, Harvard — что работает и что взять для СПбГТИ</p>
+                    </a>
+                    <a href="article-privacy.html" class="doc-card">
+                        <span class="tag">Статья 2</span>
+                        <h4>Конфиденциальность и ПДн</h4>
+                        <p>Почему нельзя публиковать всё: ФЗ-152, GDPR, риски, матрица доступа</p>
+                    </a>
+                    <a href="article-access-models.html" class="doc-card">
+                        <span class="tag">Статья 3</span>
+                        <h4>Модели доступа</h4>
+                        <p>Public / Authenticated / Restricted — кому что показывать</p>
+                    </a>
+                    <a href="article-preservation.html" class="doc-card">
+                        <span class="tag">Статья 4</span>
+                        <h4>Долгосрочное хранение</h4>
+                        <p>Форматы, стратегия 3-2-1, миграция — архив на 200 лет</p>
+                    </a>
+                    <a href="article-strategy.html" class="doc-card">
+                        <span class="tag">Статья 5</span>
+                        <h4>Стратегия и план запуска</h4>
+                        <p>10 недель, бюджет, риски, метрики — от идеи до результата</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Техническая документация</h2>
+                <p class="section-subtitle">Для внутреннего использования (разработчики, архивисты)</p>
+                <div class="docs-grid">
+                    <a href="architecture.html" class="doc-card">
+                        <span class="tag">Для понимания</span>
+                        <h4>Как устроена система</h4>
+                        <p>Простая схема: интерфейс → сервер → база данных</p>
+                    </a>
+                    <a href="TECHNICAL_REQUIREMENTS.md" class="doc-card">
+                        <span class="tag">Требования</span>
+                        <h4>Техническое задание</h4>
+                        <p>Что нужно сделать: модель данных, интерфейсы, права</p>
+                    </a>
+                    <a href="DESIGN_CONSULTATION.md" class="doc-card">
+                        <span class="tag">Дизайн</span>
+                        <h4>Аудит и рекомендации</h4>
+                        <p>Анализ текущего UI, 3 направления, сценарии использования</p>
+                    </a>
+                    <a href="SPEC.md" class="doc-card">
+                        <span class="tag">Спецификация</span>
+                        <h4>Полная ТЗ</h4>
+                        <p>Детальное описание всех функций и требований</p>
+                    </a>
+                </div>
+            </div>
+
+            <footer>
+                <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+                <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+            </footer>
+        </main>
     </div>
-
-    <!-- ИССЛЕДОВАНИЯ -->
-    <div class="section">
-        <h2 class="section-title">Исследования</h2>
-        <p class="section-subtitle">5 статей для принятия решений: лучшие практики, безопасность, доступ, хранение, план</p>
-
-        <div class="docs-grid">
-            <a href="article-best-practices.html" class="doc-card">
-                <span class="tag">Статья 1</span>
-                <h4>Лучшие практики мировых архивов</h4>
-                <p>MIT, Yale, Stanford, Oxford, Harvard — что работает и что взять для СПбГТИ</p>
-            </a>
-            <a href="article-privacy.html" class="doc-card">
-                <span class="tag">Статья 2</span>
-                <h4>Конфиденциальность и ПДн</h4>
-                <p>Почему нельзя публиковать всё: ФЗ-152, GDPR, риски, матрица доступа</p>
-            </a>
-            <a href="article-access-models.html" class="doc-card">
-                <span class="tag">Статья 3</span>
-                <h4>Модели доступа</h4>
-                <p>Public / Authenticated / Restricted — кому что показывать</p>
-            </a>
-            <a href="article-preservation.html" class="doc-card">
-                <span class="tag">Статья 4</span>
-                <h4>Долгосрочное хранение</h4>
-                <p>Форматы, стратегия 3-2-1, миграция — архив на 200 лет</p>
-            </a>
-            <a href="article-strategy.html" class="doc-card">
-                <span class="tag">Статья 5</span>
-                <h4>Стратегия и план запуска</h4>
-                <p>10 недель, бюджет, риски, метрики — от идеи до результата</p>
-            </a>
-        </div>
-    </div>
-
-    <!-- ДОКУМЕНТАЦИЯ -->
-    <div class="section">
-        <h2 class="section-title">Техническая документация</h2>
-        <p class="section-subtitle">Для внутреннего использования (разработчики, архивисты)</p>
-
-        <div class="docs-grid">
-            <a href="architecture.html" class="doc-card">
-                <span class="tag">Для понимания</span>
-                <h4>Как устроена система</h4>
-                <p>Простая схема: интерфейс → сервер → база данных</p>
-            </a>
-            <a href="TECHNICAL_REQUIREMENTS.md" class="doc-card">
-                <span class="tag">Требования</span>
-                <h4>Техническое задание</h4>
-                <p>Что нужно сделать: модель данных, интерфейсы, права</p>
-            </a>
-            <a href="DESIGN_CONSULTATION.md" class="doc-card">
-                <span class="tag">Дизайн</span>
-                <h4>Аудит и рекомендации</h4>
-                <p>Анализ текущего UI, 3 направления, сценарии использования</p>
-            </a>
-            <a href="SPEC.md" class="doc-card">
-                <span class="tag">Спецификация</span>
-                <h4>Полная ТЗ</h4>
-                <p>Детальное описание всех функций и требований</p>
-            </a>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
-        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
-    </footer>
-
+    <script>
+    function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('open');
+        document.querySelector('.sidebar-overlay').classList.toggle('open');
+    }
+    function toggleSection(el) {
+        el.parentElement.classList.toggle('open');
+    }
+    </script>
 </body>
 </html>
