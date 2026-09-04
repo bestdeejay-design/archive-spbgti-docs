@@ -178,7 +178,7 @@ body {
 
 .article {
     max-width: 860px;
-    padding: 0 48px 80px;
+    padding: 48px 48px 80px;
 }
 .article h2 {
     font-size: 1.6rem;
