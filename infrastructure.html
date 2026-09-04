@@ -3,55 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Сервер и безопасность — Архив СПбГТИ</title>
-    <style>
-        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35;--green:#4ade80;--red:#f87171}
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-        .breadcrumb{max-width:900px;margin:0 auto;padding:24px 24px 0;font-size:0.9rem}
-        .breadcrumb a{color:var(--gold);text-decoration:none}
-        .hero{padding:40px 24px;max-width:900px;margin:0 auto}
-        .hero h1{font-size:2rem;margin-bottom:8px;color:var(--gold)}
-        .hero p{color:var(--text-muted);font-size:1rem}
-        .section{max-width:900px;margin:0 auto;padding:40px 24px}
-        .section h2{font-size:1.3rem;margin-bottom:8px;color:var(--gold)}
-        .section .sub{color:var(--text-muted);margin-bottom:32px}
-        p{margin-bottom:16px;color:var(--text-muted)}
-
-        .compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start;margin:24px 0}
-        .compare-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
-        .compare-box h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
-        .compare-box.now h4{color:var(--red)}
-        .compare-box.future h4{color:var(--green)}
-        .compare-box ul{list-style:none;padding:0}
-        .compare-box li{padding:6px 0;font-size:0.9rem;color:var(--text-muted);border-bottom:1px solid var(--border)}
-        .compare-box li:last-child{border:none}
-        .compare-box.now li::before{content:"✗ ";color:var(--red)}
-        .compare-box.future li::before{content:"✓ ";color:var(--green)}
-        .compare-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.5rem;padding-top:40px}
-
-        .simple-diagram{display:flex;flex-direction:column;gap:4px;margin:24px 0;max-width:500px}
-        .simple-layer{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
-        .simple-layer .emoji{font-size:1.8rem;flex-shrink:0}
-        .simple-layer .info h4{font-size:1rem;margin-bottom:2px}
-        .simple-layer .info p{font-size:0.85rem;color:var(--text-muted);margin:0}
-        .arrow{text-align:center;color:var(--border);font-size:1.2rem}
-
-        .modes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
-        .mode{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
-        .mode h4{margin-bottom:8px}
-        .mode p{font-size:0.9rem;margin:0}
-        .mode .tag{display:inline-block;font-size:0.7rem;padding:2px 8px;border-radius:4px;margin-bottom:8px}
-        .mode .tag.current{background:#f8717122;color:var(--red);border:1px solid #f8717144}
-        .mode .tag.target{background:#4ade8022;color:var(--green);border:1px solid #4ade8044}
-
-        footer{max-width:900px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;text-align:center}
-        footer a{color:var(--gold);text-decoration:none}
-        @media(max-width:640px){.compare-row,.modes{grid-template-columns:1fr}.compare-arrow{transform:rotate(90deg);padding:8px 0}}
-    </style>
 </head>
 <body>
-    <div class="breadcrumb"><a href="architecture.html">← Как устроена система</a></div>
+    <div class="layout">    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Архив СПбГТИ</h1>
+            <p>1828–2028 · 200 лет</p>
+        </div>
+        <nav>
+            <div class="nav-section open">
+                <div class="nav-section-title" onclick="toggleSection(this)">Обзор</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Главная</a></li>
+                </ul>
+            </div>
+            <div class="nav-section open">
+                <div class="nav-section-title" onclick="toggleSection(this)">Исследования</div>
+                <ul class="nav-links">
+                    <li><a href="article-best-practices.html">Лучшие практики</a></li>
+                    <li><a href="article-privacy.html">Конфиденциальность</a></li>
+                    <li><a href="article-access-models.html">Модели доступа</a></li>
+                    <li><a href="article-preservation.html">Долгосрочное хранение</a></li>
+                    <li><a href="article-strategy.html">Стратегия и план</a></li>
+                </ul>
+            </div>
+            <div class="nav-section open">
+                <div class="nav-section-title" onclick="toggleSection(this)">Архитектура</div>
+                <ul class="nav-links">
+                    <li><a href="architecture.html">Обзор системы</a></li>
+                    <li><a href="frontend.html">Интерфейс</a></li>
+                    <li><a href="api.html">Сервер и поиск</a></li>
+                    <li><a href="storage.html">Данные и файлы</a></li>
+                    <li><a href="infrastructure.html">Сервер и безопасность</a></li>
+                </ul>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title" onclick="toggleSection(this)">Дизайн</div>
+                <ul class="nav-links">
+                    <li><a href="gallery-preview-direction-a.html">Архивная мастерская</a></li>
+                    <li><a href="gallery-preview-direction-b.html">Институциональное досье</a></li>
+                    <li><a href="gallery-preview-direction-c.html">Хроника эпох</a></li>
+                </ul>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title" onclick="toggleSection(this)">Документы</div>
+                <ul class="nav-links">
+                    <li><a href="TECHNICAL_REQUIREMENTS.md">Техническое задание</a></li>
+                    <li><a href="DESIGN_CONSULTATION.md">Аудит и рекомендации</a></li>
+                    <li><a href="SPEC.md">Полная ТЗ</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+        <main class="main">
+            
 
     <div class="hero">
         <h1>Сервер и безопасность</h1>
@@ -167,5 +176,15 @@
         <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
         <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
     </footer>
+        </main>
+    </div>    <script>
+    function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('open');
+        document.querySelector('.sidebar-overlay').classList.toggle('open');
+    }
+    function toggleSection(el) {
+        el.parentElement.classList.toggle('open');
+    }
+    </script>
 </body>
 </html>
