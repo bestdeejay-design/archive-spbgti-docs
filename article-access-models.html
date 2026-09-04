@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модели доступа: кому что можно показывать — Архив СПбГТИ</title>
+    <style>
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35;--green:#4ade80;--red:#f87171;--blue:#60a5fa}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;font-size:17px}
+        .breadcrumb{max-width:780px;margin:0 auto;padding:24px 24px 0;font-size:0.85rem;font-family:-apple-system,sans-serif}
+        .breadcrumb a{color:var(--gold);text-decoration:none}
+        .hero{padding:60px 24px 40px;max-width:780px;margin:0 auto}
+        .hero .label{display:inline-block;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-family:-apple-system,sans-serif}
+        .hero h1{font-size:2.2rem;margin-bottom:16px;line-height:1.3}
+        .hero .meta{color:var(--text-muted);font-size:0.9rem;font-family:-apple-system,sans-serif}
+        .toc{max-width:780px;margin:0 auto;padding:0 24px 40px}
+        .toc h3{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:12px;font-family:-apple-system,sans-serif}
+        .toc ol{padding-left:20px}
+        .toc li{margin-bottom:6px}
+        .toc a{color:var(--text-muted);text-decoration:none;font-size:0.95rem}
+        .toc a:hover{color:var(--gold)}
+        .article{max-width:780px;margin:0 auto;padding:0 24px 80px}
+        .article h2{font-size:1.6rem;margin:48px 0 16px;color:var(--gold);line-height:1.3}
+        .article h3{font-size:1.2rem;margin:32px 0 12px}
+        .article p{margin-bottom:20px;color:var(--text-muted)}
+        .article strong{color:var(--text)}
+        .article ul,.article ol{margin-bottom:20px;padding-left:24px}
+        .article li{margin-bottom:8px;color:var(--text-muted)}
+        .article li strong{color:var(--text)}
+        .callout{background:var(--surface);border-left:3px solid var(--gold);padding:20px 24px;margin:24px 0;border-radius:0 8px 8px 0}
+        .callout p{margin:0;color:var(--text-muted)}
+        .callout strong{color:var(--text)}
+        .model-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0}
+        .model-card h4{font-size:1.1rem;margin-bottom:4px;font-family:-apple-system,sans-serif}
+        .model-card .tag{display:inline-block;font-size:0.7rem;padding:2px 8px;border-radius:4px;margin-bottom:12px}
+        .model-card .tag.green{background:#4ade8022;color:var(--green);border:1px solid #4ade8044}
+        .model-card .tag.blue{background:#60a5fa22;color:var(--blue);border:1px solid #60a5fa44}
+        .model-card .tag.red{background:#f8717122;color:var(--red);border:1px solid #f8717144}
+        .model-card .tag.gold{background:#c9a96e22;color:var(--gold);border:1px solid #c9a96e44}
+        .recommendation{background:var(--surface-elevated);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0}
+        .recommendation h4{color:var(--green);margin-bottom:8px;font-family:-apple-system,sans-serif}
+        table{width:100%;border-collapse:collapse;margin:24px 0;font-family:-apple-system,sans-serif;font-size:0.9rem}
+        th{text-align:left;padding:12px 16px;background:var(--surface-elevated);color:var(--gold);border-bottom:2px solid var(--border);font-weight:600}
+        td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+        tr:hover td{background:var(--surface)}
+        footer{max-width:780px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;text-align:center;font-family:-apple-system,sans-serif}
+        footer a{color:var(--gold);text-decoration:none}
+        @media(max-width:640px){.hero h1{font-size:1.6rem}table{font-size:0.8rem}th,td{padding:8px}}
+    </style>
+</head>
+<body>
+    <div class="breadcrumb"><a href="index.html">← На главную</a> · <a href="article-privacy.html">← Статья 2</a></div>
+
+    <div class="hero">
+        <div class="label">Статья 3 из 5</div>
+        <h1>Модели доступа: кому что можно показывать</h1>
+        <p class="meta">Почему единый доступ = плохо, и как построить систему, которая защищает и даёт находить</p>
+    </div>
+
+    <nav class="toc">
+        <h3>Содержание</h3>
+        <ol>
+            <li><a href="#one-bad">Почему единый доступ — плохо</a></li>
+            <li><a href="#model-a">Модель A: Полностью публичный</a></li>
+            <li><a href="#model-b">Модель B: Аутентифицированный</a></li>
+            <li><a href="#model-c">Модель C: Закрытый</a></li>
+            <li><a href="#model-d">Модель D: Гибридная (рекомендуемая)</a></li>
+            <li><a href="#verification">Верификация пользователей</a></li>
+            <li><a href="#split">Разделение архива: 20/70/10</a></li>
+            <li><a href="#implementation">План внедрения</a></li>
+        </ol>
+    </nav>
+
+    <article class="article">
+
+        <h2 id="one-bad">1. Почему единый доступ — плохо</h2>
+
+        <p>Есть два крайних варианта, и оба — плохо:</p>
+
+        <ul>
+            <li><strong>Всё открыто:</strong> утечка персональных данных, штрафы, скандалы. Студенты видят чужие дипломы, приказы о увольнении, личные фото.</li>
+            <li><strong>Всё закрыто:</strong> архив мёртв. Никто не пользуется. Выпускники не могут найти себя. Пресса не может написать о юбилее. Спонсоры не видят лицо института.</li>
+        </ul>
+
+        <div class="callout">
+            <p><strong>Правильный путь:</strong> Гибридная модель. Часть данных — открыта для мира. Часть — доступна сотрудникам и выпускникам. Часть — только для архивистов. Это баланс между безопасностью и полезностью.</p>
+        </div>
+
+        <h2 id="model-a">2. Модель A: Полностью публичный</h2>
+
+        <div class="model-card">
+            <span class="tag green">Открытый доступ</span>
+            <h4>Open Access</h4>
+            <p><strong>Кто видит:</strong> любой посетитель сайта, поисковики, пресса, спонсоры.</p>
+            <p><strong>Что видит:</strong> маркетинговые фото, общие планы, пресс-релизы, фото зданий, тематические подборки без персон.</p>
+            <p><strong>Примеры:</strong> MIT Distinctive Collections, Stanford Digital Repository, Yale Open Access.</p>
+        </div>
+
+        <h3>Плюсы</h3>
+        <ul>
+            <li>Максимальная видимость: поисковики индексируют, пресса находит</li>
+            <li>Престиж: институт показывает свою историю миру</li>
+            <li>Привлечение: абитуриенты и спонсоры видят лицо института</li>
+        </ul>
+
+        <h3>Минусы</h3>
+        <ul>
+            <li>Нельзя публиковать персональные данные без согласия</li>
+            <li>Риск: «почти публичные» данные могут быть интерпретированы как нарушение</li>
+        </ul>
+
+        <h2 id="model-b">3. Модель B: Аутентифицированный</h2>
+
+        <div class="model-card">
+            <span class="tag blue">Аутентификация</span>
+            <h4>Authenticated Access</h4>
+            <p><strong>Кто видит:</strong> сотрудники, студенты, выпускники — все, кто может подтвердить связь с институтом.</p>
+            <p><strong>Что видит:</strong> все фото с их участием, внутренние документы, справочники людей, события.</p>
+            <p><strong>Как работает:</strong> вход по вузовскому email, SSO, или ручная верификация.</p>
+        </div>
+
+        <h3>Плюсы</h3>
+        <ul>
+            <li>Сообщество: выпускники находят себя и друг друга</li>
+            <li>Безопасность: только верифицированные пользователи</li>
+            <li>Ценность: архив становится полезным для живого сообщества</li>
+        </ul>
+
+        <h3>Минусы</h3>
+        <ul>
+            <li>Сложнее технически: нужна система аутентификации</li>
+            <li>Барьер: не каждый выпускник готов «регистрироваться»</li>
+        </ul>
+
+        <h2 id="model-c">4. Модель C: Закрытый</h2>
+
+        <div class="model-card">
+            <span class="tag red">Закрытый доступ</span>
+            <h4>Restricted Access</h4>
+            <p><strong>Кто видит:</strong> только архивисты, администраторы, юристы.</p>
+            <p><strong>Что видит:</strong> личные дела, приказы, дипломы с оценками, полные метаданные.</p>
+            <p><strong>Когда:</strong> запрос на исследование, юридическая проверка, внутренний аудит.</p>
+        </div>
+
+        <h3>Когда нужно</h3>
+        <ul>
+            <li>Запрос от правоохранительных органов</li>
+            <li>Юридические споры (трудовые, наследственные)</li>
+            <li>Исследовательские запросы с обоснованием</li>
+        </ul>
+
+        <h2 id="model-d">5. Модель D: Гибридная (рекомендуемая)</h2>
+
+        <div class="callout">
+            <p><strong>Рекомендация:</strong> Использовать все три уровня одновременно. Каждый уровень — своя «стена» с правилами доступа.</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Уровень</th>
+                    <th>Кто видит</th>
+                    <th>Что видит</th>
+                    <th>Как получить доступ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color:var(--green)">Public</strong></td>
+                    <td>Мир</td>
+                    <td>Здания, буклеты, маркетинг, общие фото событий</td>
+                    <td>Никаких барьеров</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:var(--blue)">Authenticated</strong></td>
+                    <td>Сотрудники + выпускники</td>
+                    <td>Фото с участием, внутренние события, справочники</td>
+                    <td>Email вуза / верификация</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:var(--red)">Restricted</strong></td>
+                    <td>Архивисты</td>
+                    <td>Личные дела, приказы, дипломы</td>
+                    <td>Заявка + одобрение</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="verification">6. Верификация пользователей</h2>
+
+        <p>Ключевой вопрос: <strong>как доказать, что ты выпускник или сотрудник?</strong></p>
+
+        <h3>Вариант 1: Вузовский email</h3>
+        <p>Самый простой. Сотрудники имеют @ti200.ru. Выпускники — нет. Не подходит для alumni.</p>
+
+        <h3>Вариант 2: Ручная верификация</h3>
+        <p>Пользователь отправляет заявку: ФИО, год выпуска/работы, факультет. Админ проверяет по базе и одобряет. Трудоёмко, но точно.</p>
+
+        <h3>Вариант 3: Справка от отдела кадров</h3>
+        <p>Пользователь загружает скан справки. Админ подтверждает. Быстро, но требует ручной работы.</p>
+
+        <h3>Вариант 4: Связь через LinkedIn/VK</h3>
+        <p>Авторизация через соцсети. Быстро для пользователя, но сложнее технически и зависит от третьих сторон.</p>
+
+        <div class="callout">
+            <p><strong>Для СПбГТИ:</strong> Начните с варианта 2 (ручная верификация). Позже автоматизируйте через email-домен @ti200.ru для сотрудников.</p>
+        </div>
+
+        <h2 id="split">7. Разделение архива: 20/70/10</h2>
+
+        <p>Рекомендуемое распределение данных по уровням:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Уровень</th>
+                    <th>Доля</th>
+                    <th>Содержимое</th>
+                    <th>Цель</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color:var(--green)">Public</strong></td>
+                    <td>20%</td>
+                    <td>Здания, маркетинг, пресса, общие фото</td>
+                    <td>Привлечение, престиж, SEO</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:var(--blue)">Authenticated</strong></td>
+                    <td>70%</td>
+                    <td>Фото людей, события, справочники</td>
+                    <td>Сообщество, ценность для alumni</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:var(--red)">Restricted</strong></td>
+                    <td>10%</td>
+                    <td>Личные дела, приказы, дипломы</td>
+                    <td>Безопасность, юридика</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="implementation">8. План внедрения</h2>
+
+        <h3>Этап 1: Публичный слой (неделя 1-2)</h3>
+        <ul>
+            <li>Выставить фото зданий, корпусов, общие планы</li>
+            <li>Добавить пресс-релизы, буклеты, презентации</li>
+            <li>Настроить SEO: мета-теги, OG, sitemap</li>
+        </ul>
+
+        <h3>Этап 2: Аутентификация (неделя 3-4)</h3>
+        <ul>
+            <li>Настроить вход по email для сотрудников</li>
+            <li>Добавить форму заявки для выпускников</li>
+            <li>Открыть внутренний слой для верифицированных</li>
+        </ul>
+
+        <h3>Этап 3: Закрытый слой (неделя 5)</h3>
+        <ul>
+            <li>Настроить роли: guest / user / editor / admin</li>
+            <li>Переместить личные данные в restricted</li>
+            <li>Добавить аудит-лог действий</li>
+        </ul>
+
+        <div class="recommendation">
+            <h4>Главный принцип</h4>
+            <p>Начните с малого: 20% публичных данных. Это даёт результат за 2 недели. Остальные 80% — постепенно, по мере получения согласий и верификации сообщества.</p>
+        </div>
+
+        <div class="callout">
+            <p><strong>Следующая статья:</strong> <a href="article-preservation.html" style="color:var(--gold)">Долгосрочное хранение: как сохранить архив на 200 лет →</a></p>
+        </div>
+
+    </article>
+
+    <footer>
+        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+    </footer>
+</body>
+</html>

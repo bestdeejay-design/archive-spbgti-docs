@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цифровые архивы вузов: лучшие практики мира — Архив СПбГТИ</title>
+    <style>
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35;--green:#4ade80;--red:#f87171;--blue:#60a5fa}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;font-size:17px}
+        .breadcrumb{max-width:780px;margin:0 auto;padding:24px 24px 0;font-size:0.85rem;font-family:-apple-system,sans-serif}
+        .breadcrumb a{color:var(--gold);text-decoration:none}
+        .hero{padding:60px 24px 40px;max-width:780px;margin:0 auto}
+        .hero .label{display:inline-block;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-family:-apple-system,sans-serif}
+        .hero h1{font-size:2.2rem;margin-bottom:16px;line-height:1.3}
+        .hero .meta{color:var(--text-muted);font-size:0.9rem;font-family:-apple-system,sans-serif}
+        .toc{max-width:780px;margin:0 auto;padding:0 24px 40px}
+        .toc h3{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:12px;font-family:-apple-system,sans-serif}
+        .toc ol{padding-left:20px}
+        .toc li{margin-bottom:6px}
+        .toc a{color:var(--text-muted);text-decoration:none;font-size:0.95rem}
+        .toc a:hover{color:var(--gold)}
+        .article{max-width:780px;margin:0 auto;padding:0 24px 80px}
+        .article h2{font-size:1.6rem;margin:48px 0 16px;color:var(--gold);line-height:1.3}
+        .article h3{font-size:1.2rem;margin:32px 0 12px}
+        .article p{margin-bottom:20px;color:var(--text-muted)}
+        .article strong{color:var(--text)}
+        .article ul,.article ol{margin-bottom:20px;padding-left:24px}
+        .article li{margin-bottom:8px;color:var(--text-muted)}
+        .article li strong{color:var(--text)}
+        .callout{background:var(--surface);border-left:3px solid var(--gold);padding:20px 24px;margin:24px 0;border-radius:0 8px 8px 0}
+        .callout p{margin:0;color:var(--text-muted)}
+        .callout strong{color:var(--text)}
+        table{width:100%;border-collapse:collapse;margin:24px 0;font-family:-apple-system,sans-serif;font-size:0.9rem}
+        th{text-align:left;padding:12px 16px;background:var(--surface-elevated);color:var(--gold);border-bottom:2px solid var(--border);font-weight:600}
+        td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+        tr:hover td{background:var(--surface)}
+        .university-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0}
+        .university-card h4{font-size:1.1rem;margin-bottom:4px;font-family:-apple-system,sans-serif}
+        .university-card .url{font-size:0.8rem;color:var(--gold);margin-bottom:12px;font-family:-apple-system,sans-serif}
+        .university-card p{font-size:0.95rem;margin-bottom:8px}
+        .university-card ul{list-style:none;padding:0;margin:0}
+        .university-card li{padding:4px 0;font-size:0.9rem;color:var(--text-muted)}
+        .university-card li::before{content:"→ ";color:var(--gold)}
+        .recommendation{background:var(--surface-elevated);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0}
+        .recommendation h4{color:var(--green);margin-bottom:8px;font-family:-apple-system,sans-serif}
+        footer{max-width:780px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;text-align:center;font-family:-apple-system,sans-serif}
+        footer a{color:var(--gold);text-decoration:none}
+        @media(max-width:640px){.hero h1{font-size:1.6rem}table{font-size:0.8rem}th,td{padding:8px}}
+    </style>
+</head>
+<body>
+    <div class="breadcrumb"><a href="index.html">← На главную</a></div>
+
+    <div class="hero">
+        <div class="label">Статья 1 из 5</div>
+        <h1>Цифровые архивы вузов: лучшие практики мира</h1>
+        <p class="meta">Обзор лучших университетских архивов MIT, Yale, Stanford, Oxford, Harvard и что из этого можно взять для СПбГТИ</p>
+    </div>
+
+    <nav class="toc">
+        <h3>Содержание</h3>
+        <ol>
+            <li><a href="#why">Зачем вузам цифровые архивы</a></li>
+            <li><a href="#mit">MIT Institute Archives</a></li>
+            <li><a href="#yale">Yale University — Archives at Yale</a></li>
+            <li><a href="#stanford">Stanford Special Collections</a></li>
+            <li><a href="#oxford">Oxford Bodleian Libraries</a></li>
+            <li><a href="#harvard">Harvard Library</a></li>
+            <li><a href="#russian">Российский опыт</a></li>
+            <li><a href="#standards">Метаданные и стандарты</a></li>
+            <li><a href="#lessons">Что взять для СПбГТИ</a></li>
+            <li><a href="#200years">Вызов 200-летнего архива</a></li>
+        </ol>
+    </nav>
+
+    <article class="article">
+
+        <h2 id="why">1. Зачем вузам цифровые архивы</h2>
+
+        <p>Цифровой архив — это не просто «положить фото на сервер». Это <strong>система долгосрочного хранения</strong>, которая обеспечивает поиск, доступ, сохранность и передачу информации через поколения.</p>
+
+        <p>Университетские архивы выполняют три ключевые функции:</p>
+
+        <ul>
+            <li><strong>Идентичность:</strong> институт помнит свою историю — от основания до наших дней</li>
+            <li><strong>Исследования:</strong> историки, журналисты, выпускники находят первоисточники</li>
+            <li><strong>Коммуникация:</strong> архив — лицо вуза для внешнего мира, прессы, спонсоров</li>
+        </ul>
+
+        <div class="callout">
+            <p><strong>Ключевой инсайт:</strong> Лучшие архивы мира — это не самые дорогие, а самые <em>продуманные</em>. MIT и Yale потратили меньше, чем многие коммерческие проекты, но создали системы, которыми пользуются миллионы.</p>
+        </div>
+
+        <h2 id="mit">2. MIT Institute Archives</h2>
+
+        <div class="university-card">
+            <h4>MIT — Distinctive Collections</h4>
+            <div class="url">libraries.mit.edu/distinctive-collections</div>
+            <p>MIT создал модель, которой следуют десятки вузов. Их подход: <strong>минимум барьеров, максимум доступа</strong>.</p>
+            <ul>
+                <li>Используют <strong>ArchivesSpace</strong> — open-source система управления архивами</li>
+                <li>Метаданные лицензированы под <strong>CC0 Public Domain</strong> — их описания можно свободно использовать</li>
+                <li>Все записи доступны через единый поиск по каталогу</li>
+                <li>Онлайн-запрос на чтение материалов из коллекции</li>
+                <li>Виртуальные консультации с архивистами</li>
+                <li>Цифровые копии редких материалов</li>
+            </ul>
+        </div>
+
+        <p><strong>Что берём:</strong> MIT показал, что метаданные архива должны быть открытыми. Это не данные людей — это <em>описания</em> материалов. Когда описание открыто, архив становится видимым для поисковиков и исследователей.</p>
+
+        <h2 id="yale">3. Yale — Archives at Yale</h2>
+
+        <div class="university-card">
+            <h4>Yale — Archives at Yale</h4>
+            <div class="url">archives.yale.edu</div>
+            <p>Yale объединил <strong>10 архивных хранилищ</strong> в единую систему поиска. Это масштабная интеграция.</p>
+            <ul>
+                <li>10 репозиториев: Yale Library, Beinecke, Center for British Art, Peabody Museum</li>
+                <li>Единый поиск по всем коллекциям с фильтрами по типу, году, коллекции</li>
+                <li>Находки (finding aids) лицензированы под <strong>CC0</strong></li>
+                <li>Каждый репозиторий хранит свои часы работы и правила доступа</li>
+                <li>Онлайн-запрос на материалы, включая off-site storage</li>
+            </ul>
+        </div>
+
+        <p><strong>Что берём:</strong> Yale показал, что можно объединить <em>разные</em> коллекции в единую систему. Для СПбГТИ это значит: фото, видео, документы — всё в одном месте с единым поиском.</p>
+
+        <h2 id="stanford">4. Stanford Special Collections</h2>
+
+        <div class="university-card">
+            <h4>Stanford Libraries — Special Collections</h4>
+            <div class="url">library.stanford.edu/libraries/special-collections</div>
+            <p>Stanford — пионер в цифровых коллекциях. Их архив — это <strong>технологический шоурум</strong>.</p>
+            <ul>
+                <li>Собственная платформа для оцифровки и публикации</li>
+                <li>Высокое качество сканирования (600+ DPI для документов)</li>
+                <li>Интеграция с Google Books и HathiTrust</li>
+                <li>Метаданные в Dublin Core и MODS</li>
+                <li>Тесная связь с исследовательскими программами</li>
+            </ul>
+        </div>
+
+        <p><strong>Что берём:</strong> Stanford делает ставку на <em>качество оцифровки</em>. Для 200-летнего архива это критично: если оцифровать плохо, через 50 лет будет нечитаемо.</p>
+
+        <h2 id="oxford">5. Oxford — Bodleian Libraries</h2>
+
+        <div class="university-card">
+            <h4>Oxford — Bodleian Libraries</h4>
+            <div class="url">bodleian.ox.ac.uk</div>
+            <p>Старейшая библиотека Европы (1602 год) с цифровым архивом мирового уровня.</p>
+            <ul>
+                <li>Bodleian Digital Library — сотни тысяч оцифрованных материалов</li>
+                <li>Программа сохранения: консервация + оцифровка + метаданные</li>
+                <li>Партнёрства с Microsoft, Google для оцифровки</li>
+                <li>IIIF (International Image Interoperability Framework) для совместного использования изображений</li>
+                <li>Строгие правила хранения: климат-контроль, огнезащита</li>
+            </ul>
+        </div>
+
+        <p><strong>Что берём:</strong> Oxford показал, что <strong>сохранение и доступ — это две стороны одной монеты</strong>. Недостаточно отсканировать — нужно ещё и хранить правильно.</p>
+
+        <h2 id="harvard">6. Harvard Library</h2>
+
+        <div class="university-card">
+            <h4>Harvard Library — HOLLIS</h4>
+            <div class="url">hollis.harvard.edu</div>
+            <p>Крупнейшая академическая библиотека мира: 17 млн+ единиц хранения.</p>
+            <ul>
+                <li>HOLLIS — единый каталог всех библиотек и архивов</li>
+                <li>Digital Access program — оцифровка по запросу</li>
+                <li>Открытый доступ к метаданным через API</li>
+                <li>Стандаризованные описания: EAD, MARC, Dublin Core</li>
+                <li>Программа обучения цифровой грамотности для сотрудников</li>
+            </ul>
+        </div>
+
+        <div class="callout">
+            <p><strong>Важно:</strong> Harvard тратит более $10 млн в год на оцифровку. Это не значит, что СПбГТИ нужно столько же — но показывает масштаб проблемы. Даже 1% от этого бюджета = $100K = отличный старт.</p>
+        </div>
+
+        <h2 id="russian">7. Российский опыт</h2>
+
+        <h3>Российская государственная библиотека (РГБ)</h3>
+        <p>Крупнейшая библиотека России. Цифровой архив включает manuscripts.ru — доступ к рукописям. Проблемы: закрытость, сложный интерфейс, медленная оцифровка.</p>
+
+        <h3>Российская национальная библиотека (РНБ)</h3>
+        <p>Электронный каталог rnb.ru. Лучший российский опыт в области метаданных, но доступ ограничен.</p>
+
+        <h3>Томский политехнический университет</h3>
+        <p>Один из лучших примеров регионального университетского архива. Оцифровали исторические фото, создали тематические выставки.</p>
+
+        <h3>МГУ</h3>
+        <p>Электронный архив莫斯科大学 на nstu.ru (пусто). Ситуация типична для многих вузов: ресурсы есть, систем нет.</p>
+
+        <h2 id="standards">8. Метаданные и стандарты</h2>
+
+        <p>Все успешные архивы используют <strong>стандарты метаданных</strong>. Это не формальность — это язык, на котором системы понимают друг друга.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Стандарт</th>
+                    <th>Что описывает</th>
+                    <th>Кто использует</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Dublin Core</strong></td>
+                    <td>15 базовых полей: название, автор, дата, тип, формат</td>
+                    <td>MIT, Yale, Stanford, Harvard</td>
+                </tr>
+                <tr>
+                    <td><strong>EAD</strong></td>
+                    <td>Иерархические описания архивных единиц</td>
+                    <td>Yale, Library of Congress</td>
+                </tr>
+                <tr>
+                    <td><strong>MODS</strong></td>
+                    <td>Расширенные метаданные для цифровых объектов</td>
+                    <td>Stanford, Library of Congress</td>
+                </tr>
+                <tr>
+                    <td><strong>ArchivesSpace</strong></td>
+                    <td>Платформа управления архивами (не стандарт, но экосистема)</td>
+                    <td>MIT, 500+ архивов мира</td>
+                </tr>
+                <tr>
+                    <td><strong>IIIF</strong></td>
+                    <td>Международный стандарт для изображений</td>
+                    <td>Oxford, Stanford, Harvard</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <p><strong>Для СПбГТИ:</strong> Начните с <strong>Dublin Core</strong> — минимум 15 полей. Этого хватит для 80% задач. Позже можно расширить до MODS или EAD.</p>
+        </div>
+
+        <h2 id="lessons">9. Что взять для СПбГТИ</h2>
+
+        <div class="recommendation">
+            <h4>Рекомендация 1: Единая точка входа</h4>
+            <p>Как Yale объединил 10 хранилищ — СПбГТИ должен объединить фото, видео и документы в <strong>одном интерфейсе</strong>. Единый поиск, единые фильтры, единый просмотр.</p>
+        </div>
+
+        <div class="recommendation">
+            <h4>Рекомендация 2: Открытые метаданные</h4>
+            <p>Как MIT лицензировал описания под CC0 — СПбГТИ должен позволить поисковикам индексировать описания. Это бесплатно даёт трафик и видимость.</p>
+        </div>
+
+        <div class="recommendation">
+            <h4>Рекомендация 3: Качество оцифровки</h4>
+            <p>Как Stanford делает 600+ DPI — СПбГТИ должен установить стандарты качества для новых загрузок. Минимум 300 DPI для фото, 600 DPI для документов.</p>
+        </div>
+
+        <div class="recommendation">
+            <h4>Рекомендация 4: Связи между записями</h4>
+            <p>Ни один успешный архив не работает без связей. Фото → Человек → Событие → Факультет. Это превращает «пачку файлов» в <em>знание</em>.</p>
+        </div>
+
+        <div class="recommendation">
+            <h4>Рекомендация 5: План оцифровки</h4>
+            <p>Oxford и Harvard оцифровывают по плану, а не хаотично. СПбГТИ нужен план: что оцифровать первым (самое ценное/уникальное), какие стандарты, какой бюджет.</p>
+        </div>
+
+        <h2 id="200years">10. Вызов 200-летнего архива</h2>
+
+        <p>СПбГТИ основан в 1828 году. Через два года — 200 лет. Это не просто дата — это <strong>ответственность</strong>.</p>
+
+        <h3>Проблемы 200-летнего горизонта</h3>
+
+        <ul>
+            <li><strong>Форматы устаревают:</strong> JPEG может не читаться через 100 лет. TIFF — более стабилен, но не гарантировано</li>
+            <li><strong>Носители умирают:</strong> HDD → SSD → ...? Через 50 лет текущий сервер будет музейным экспонатом</li>
+            <li><strong>Софт меняется:</strong> Directus может исчезнуть через 10 лет. Нужен экспорт в открытые форматы</li>
+            <li><strong>Люди уходят:</strong> знание о структуре архива хранится в головах. Нужна документация</li>
+        </ul>
+
+        <h3>Решения</h3>
+
+        <ul>
+            <li><strong>Master-форматы:</strong> TIFF для фото, FFV1/MKV для видео, PDF/A для документов</li>
+            <li><strong>Стратегия 3-2-1:</strong> 3 копии, 2 носителя, 1 offsite</li>
+            <li><strong>Миграция каждые 5-7 лет:</strong> конвертация в новые форматы до того, как старые устареют</li>
+            <li><strong>Экспорт:</strong> все метаданные хранятся в XML/JSON — не привязаны к конкретной системе</li>
+        </ul>
+
+        <div class="callout">
+            <p><strong>Философия:</strong> Архив, который нельзя найти — не существует. Архив, который нельзя прочитать — мёртв. Архив, который нельзя скопировать — хрупок. СПбГТИ должен строить архив, который <em>найти, прочитать и скопировать</em> можно всегда.</p>
+        </div>
+
+        <div class="callout">
+            <p><strong>Следующая статья:</strong> <a href="article-privacy.html" style="color:var(--gold)">Конфиденциальность и персональные данные — почему нельзя публиковать всё →</a></p>
+        </div>
+
+    </article>
+
+    <footer>
+        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Долгосрочное хранение: архив на 200 лет — Архив СПбГТИ</title>
+    <style>
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35;--green:#4ade80;--red:#f87171;--blue:#60a5fa}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;font-size:17px}
+        .breadcrumb{max-width:780px;margin:0 auto;padding:24px 24px 0;font-size:0.85rem;font-family:-apple-system,sans-serif}
+        .breadcrumb a{color:var(--gold);text-decoration:none}
+        .hero{padding:60px 24px 40px;max-width:780px;margin:0 auto}
+        .hero .label{display:inline-block;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-family:-apple-system,sans-serif}
+        .hero h1{font-size:2.2rem;margin-bottom:16px;line-height:1.3}
+        .hero .meta{color:var(--text-muted);font-size:0.9rem;font-family:-apple-system,sans-serif}
+        .toc{max-width:780px;margin:0 auto;padding:0 24px 40px}
+        .toc h3{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:12px;font-family:-apple-system,sans-serif}
+        .toc ol{padding-left:20px}
+        .toc li{margin-bottom:6px}
+        .toc a{color:var(--text-muted);text-decoration:none;font-size:0.95rem}
+        .toc a:hover{color:var(--gold)}
+        .article{max-width:780px;margin:0 auto;padding:0 24px 80px}
+        .article h2{font-size:1.6rem;margin:48px 0 16px;color:var(--gold);line-height:1.3}
+        .article h3{font-size:1.2rem;margin:32px 0 12px}
+        .article p{margin-bottom:20px;color:var(--text-muted)}
+        .article strong{color:var(--text)}
+        .article ul,.article ol{margin-bottom:20px;padding-left:24px}
+        .article li{margin-bottom:8px;color:var(--text-muted)}
+        .article li strong{color:var(--text)}
+        .callout{background:var(--surface);border-left:3px solid var(--gold);padding:20px 24px;margin:24px 0;border-radius:0 8px 8px 0}
+        .callout p{margin:0;color:var(--text-muted)}
+        .callout strong{color:var(--text)}
+        .callout.danger{border-left-color:var(--red)}
+        .callout.success{border-left-color:var(--green)}
+        table{width:100%;border-collapse:collapse;margin:24px 0;font-family:-apple-system,sans-serif;font-size:0.9rem}
+        th{text-align:left;padding:12px 16px;background:var(--surface-elevated);color:var(--gold);border-bottom:2px solid var(--border);font-weight:600}
+        td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+        tr:hover td{background:var(--surface)}
+        .recommendation{background:var(--surface-elevated);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0}
+        .recommendation h4{color:var(--green);margin-bottom:8px;font-family:-apple-system,sans-serif}
+        .timeline{position:relative;margin:32px 0;padding-left:32px}
+        .timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border)}
+        .timeline-item{position:relative;padding:0 0 32px 24px}
+        .timeline-item::before{content:'';position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+        .timeline-item h4{font-size:1rem;margin-bottom:4px;font-family:-apple-system,sans-serif}
+        .timeline-item p{font-size:0.9rem;color:var(--text-muted);margin:0}
+        footer{max-width:780px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;text-align:center;font-family:-apple-system,sans-serif}
+        footer a{color:var(--gold);text-decoration:none}
+        @media(max-width:640px){.hero h1{font-size:1.6rem}table{font-size:0.8rem}th,td{padding:8px}}
+    </style>
+</head>
+<body>
+    <div class="breadcrumb"><a href="index.html">← На главную</a> · <a href="article-access-models.html">← Статья 3</a></div>
+
+    <div class="hero">
+        <div class="label">Статья 4 из 5</div>
+        <h1>Долгосрочное хранение: как сохранить архив на 200 лет</h1>
+        <p class="meta">Цифровая деградация, форматы, резервное копирование и стратегия, которая переживёт поколения</p>
+    </div>
+
+    <nav class="toc">
+        <h3>Содержание</h3>
+        <ol>
+            <li><a href="#degradation">Цифровая деградация: файлы не вечны</a></li>
+            <li><a href="#formats">Форматы для долгосрочного хранения</a></li>
+            <li><a href="#strategy-321">Стратегия 3-2-1</a></li>
+            <li><a href="#migration">Миграция форматов</a></li>
+            <li><a href="#infra">Инфраструктура хранения</a></li>
+            <li><a href="#world">Как это делают в мире</a></li>
+            <li><a href="#plan">План для СПбГТИ</a></li>
+        </ol>
+    </nav>
+
+    <article class="article">
+
+        <h2 id="degradation">1. Цифровая деградация: файлы не вечны</h2>
+
+        <p>Мы привыкли думать, что «цифровое = вечное». Это неправда. Цифровые данные умирают <strong>быстрее бумажных</strong>:</p>
+
+        <ul>
+            <li><strong>Физическая деградация:</strong> HDD — 3-5 лет, SSD — 5-10 лет, оптические диски — 5-20 лет</li>
+            <li><strong>Обновление форматов:</strong> JPEG может не читаться через 50 лет. Flash-анимации уже не читаются</li>
+            <li><strong>Устаревание софта:</strong> Directus может исчезнуть через 10 лет. Файлы станут недоступны</li>
+            <li><strong>Ошибка хранения:</strong> одно повреждённое место на диске = потеря данных</li>
+        </ul>
+
+        <div class="callout danger">
+            <p><strong>Факт:</strong> Library of Congress оценивает, что <strong>средний срок жизни цифрового формата — 15-20 лет</strong>. После этого нужна миграция. Для 200-летнего архива это значит минимум 10 миграций.</p>
+        </div>
+
+        <p>Но есть хорошая новость: с правильной стратегией цифровые данные можно хранить <strong>бесконечно</strong>. Секрет — в трёх принципах: правильные форматы, резервные копии, регулярная миграция.</p>
+
+        <h2 id="formats">2. Форматы для долгосрочного хранения</h2>
+
+        <p>Не все форматы равны. Вот рекомендации по типам данных:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Тип</th>
+                    <th>Master-формат</th>
+                    <th>Публичный формат</th>
+                    <th>Почему именно эти</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Фото</strong></td>
+                    <td>TIFF (без сжатия)</td>
+                    <td>JPEG / WebP</td>
+                    <td>TIFF — открытый стандарт, не зависит от софта. JPEG — универсален</td>
+                </tr>
+                <tr>
+                    <td><strong>Видео</strong></td>
+                    <td>FFV1 / MKV</td>
+                    <td>H.264 / MP4</td>
+                    <td>FFV1 — lossless, открытый. H.264 — воспроизводится везде</td>
+                </tr>
+                <tr>
+                    <td><strong>Документы</strong></td>
+                    <td>PDF/A</td>
+                    <td>PDF</td>
+                    <td>PDF/A — архивный стандарт, не зависит от шрифтов/софта</td>
+                </tr>
+                <tr>
+                    <td><strong>Текст</strong></td>
+                    <td>Plain text (UTF-8)</td>
+                    <td>HTML</td>
+                    <td>Plain text читается всегда и везде</td>
+                </tr>
+                <tr>
+                    <td><strong>Метаданные</strong></td>
+                    <td>XML (Dublin Core)</td>
+                    <td>JSON</td>
+                    <td>XML — стандарт, парсится любым языком</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <p><strong>Принцип:</strong> Всегда хранить <strong>два экземпляра</strong>: master (максимальное качество) и рабочий (оптимизированный для просмотра). Master-файл трогать нельзя. Рабочий — можно конвертировать.</p>
+        </div>
+
+        <h2 id="strategy-321">3. Стратегия 3-2-1</h2>
+
+        <p>Это «золотой стандарт» резервного копирования, который используют архивы всего мира:</p>
+
+        <div class="recommendation">
+            <h4>3 копии данных</h4>
+            <p>Оригинал + две резервные копии. Если одна пропадёт — две других спасают.</p>
+        </div>
+
+        <div class="recommendation">
+            <h4>2 разных типа носителя</h4>
+            <p>Диск + облако. Или диск + лента. Если один тип носителя выйдет из употребления — второй продолжит работать.</p>
+        </div>
+
+        <div class="recommendation">
+            <h4>1 копия offsite</h4>
+            <p>Вне основного здания. Пожар, затопление, кража — offsite-копия остаётся.</p>
+        </div>
+
+        <h3>Расписание бэкапов</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Тип</th>
+                    <th>Частота</th>
+                    <th>Хранение</th>
+                    <th>Цель</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Ежедневный</strong></td>
+                    <td>Каждую ночь</td>
+                    <td>7 дней</td>
+                    <td>Откат за последний день</td>
+                </tr>
+                <tr>
+                    <td><strong>Еженедельный</strong></td>
+                    <td>Каждое воскресенье</td>
+                    <td>4 недели</td>
+                    <td>Откат за последнюю неделю</td>
+                </tr>
+                <tr>
+                    <td><strong>Ежемесячный</strong></td>
+                    <td>1 числа</td>
+                    <td>12 месяцев</td>
+                    <td>Откат за месяц</td>
+                </tr>
+                <tr>
+                    <td><strong>Ежегодный</strong></td>
+                    <td>31 декабря</td>
+                    <td>Бессрочно</td>
+                    <td>Архивная копия года</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="migration">4. Миграция форматов</h2>
+
+        <p>Каждые 5-7 лет нужно проверять: <strong>все ли форматы ещё читаются?</strong></p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>Год 0 — Запуск</h4>
+                <p>Все файлы в актуальных форматах: TIFF, PDF/A, MKV. Система работает.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Год 5 — Первая проверка</h4>
+                <p>Проверяем читаемость всех форматов. Конвертируем устаревшие. Обновляем софт.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Год 10 — Миграция</h4>
+                <p>Если формат устарел — конвертируем master-копии. Публичные форматы обновляем автоматически.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Год 20 — Капитальная миграция</h4>
+                <p>Возможно, меняется вся система хранения. Экспорт в открытые форматы. Переезд на новую платформу.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Год 50+ — Поколенческая миграция</h4>
+                <p>Технологии могут измениться кардинально. Принцип: данные в открытых форматах можно перенести на любую новую систему.</p>
+            </div>
+        </div>
+
+        <h2 id="infra">5. Инфраструктура хранения</h2>
+
+        <h3>Текущий стек СПбГТИ</h3>
+        <ul>
+            <li><strong>PostgreSQL 16:</strong> хранит метаданные (справочники, связи, описания)</li>
+            <li><strong>Directus 10.12.0:</strong> API + админка + интерфейс</li>
+            <li><strong>Docker:</strong> контейнеризация (легко перенести на другой сервер)</li>
+            <li><strong>nginx:</strong> раздача статики, SSL, проксирование</li>
+            <li><strong>Диск сервера:</strong> хранение файлов (фото, видео)</li>
+        </ul>
+
+        <h3>Что нужно добавить</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Компонент</th>
+                    <th>Зачем</th>
+                    <th>Стоимость</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Автоматический pg_dump</strong></td>
+                    <td>Бэкап базы данных раз в сутки</td>
+                    <td>0 руб (cron job)</td>
+                </tr>
+                <tr>
+                    <td><strong>rsync → offsite</strong></td>
+                    <td>Копирование файлов на второй сервер</td>
+                    <td>~2000 руб/мес (аренда VPS)</td>
+                </tr>
+                <tr>
+                    <td><strong>Облачный бэкап</strong></td>
+                    <td>3-я копия в облаке (S3/MinIO)</td>
+                    <td>~1000 руб/мес</td>
+                </tr>
+                <tr>
+                    <td><strong>Checksums</strong></td>
+                    <td>Проверка целостности файлов</td>
+                    <td>0 руб (встроенные инструменты)</td>
+                </tr>
+                <tr>
+                    <td><strong>Мониторинг</strong></td>
+                    <td>Уведомления о проблемах</td>
+                    <td>0 руб (Uptime Kuma)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <p><strong>Итого:</strong> ~3000 руб/мес (~36 000 руб/год) для полноценной стратегии 3-2-1. Это <strong> инвестиция в сохранность 200-летнего наследия</strong>.</p>
+        </div>
+
+        <h2 id="world">6. Как это делают в мире</h2>
+
+        <h3>LOCKSS (Lots of Copies Keep Stuff Safe)</h3>
+        <p>Программа Стэнфорда. Принцип: чем больше копий, тем безопаснее. Участвуют 500+ библиотек мира. Каждая хранит свою копию + копии соседей.</p>
+
+        <h3>CLOCKSS (Controlled LOCKSS)</h3>
+        <p>«Тёмный архив». Срабатывает только если оригиналы уничтожены. Хранит копии всех научных журналов. Страховка для цивилизации.</p>
+
+        <h3>Portico</h3>
+        <p>Архив научных публикаций. Хранит миллионы статей. Используется, когда журнал прекращает выходить или сайт падает.</p>
+
+        <h3>National Digital Preservation (NDPP)</h3>
+        <p>Программы национального уровня: Library of Congress (США), National Archives (UK), Национальная библиотека (Россия). Государственное финансирование долгосрочного хранения.</p>
+
+        <h2 id="plan">7. План для СПбГТИ</h2>
+
+        <div class="recommendation">
+            <h4>Немедленно (неделя 1)</h4>
+            <p>Настроить ежедневный pg_dump + rsync файлов. Это базовая защита от потери данных. Стоимость: 0 руб.</p>
+        </div>
+
+        <div class="recommendation">
+            <h4>Краткосрочно (месяц 1-3)</h4>
+            <p>Подключить облачный бэкап (Яндекс.Облако / Selectel). Настроить checksums. Внедрить мониторинг. Стоимость: ~3000 руб/мес.</p>
+        </div>
+
+        <div class="recommendation">
+            <h4>Среднесрочно (год 1)</h4>
+            <p>Установить стандарты форматов: TIFF для фото, PDF/A для документов. При загрузке — автоматическая конвертация master-копии. Проверить все существующие файлы.</p>
+        </div>
+
+        <div class="recommendation">
+            <h4>Долгосрочно (год 3-5)</h4>
+            <p>Первая проверка читаемости форматов. Обновление master-копий при необходимости. План миграции на следующие 5 лет.</p>
+        </div>
+
+        <div class="callout success">
+            <p><strong>Принцип:</strong> Архив, который невозможно найти — не существует. Архив, который невозможно прочитать — мёртв. Архив, который невозможно скопировать — хрупок. СПбГТИ должен строить архив, который <em>найти, прочитать и скопировать</em> можно всегда.</p>
+        </div>
+
+        <div class="callout">
+            <p><strong>Следующая статья:</strong> <a href="article-strategy.html" style="color:var(--gold)">Стратегия: от идеи до запуска за 10 недель →</a></p>
+        </div>
+
+    </article>
+
+    <footer>
+        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+    </footer>
+</body>
+</html>
