@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API слой — Архив СПбГТИ</title>
+    <style>
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:60px 24px;max-width:900px;margin:0 auto}
+        a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+        h1{font-size:2.2rem;margin-bottom:8px;color:var(--gold)}
+        h2{font-size:1.3rem;margin:48px 0 16px;color:var(--gold)}
+        .subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:48px}
+        .breadcrumb{margin-bottom:32px;font-size:0.9rem}
+        p{margin-bottom:16px;color:var(--text-muted)}
+        .explain-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0}
+        .explain-box strong{color:var(--text)}
+        table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.9rem}
+        th{text-align:left;padding:12px 16px;background:var(--surface);border:1px solid var(--border);color:var(--gold);font-weight:500}
+        td{padding:12px 16px;border:1px solid var(--border);color:var(--text-muted)}
+        .code-block{background:var(--surface-elevated);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0;font-family:monospace;font-size:0.85rem;color:var(--text-muted);overflow-x:auto}
+        .code-label{font-size:0.8rem;color:var(--gold);margin-bottom:4px;font-family:-apple-system,sans-serif}
+        ul{margin:12px 0;padding-left:24px}
+        li{margin-bottom:8px;color:var(--text-muted)}
+        footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem}
+    </style>
+</head>
+<body>
+    <div class="breadcrumb"><a href="architecture.html">← К архитектуре</a></div>
+
+    <h1>API слой</h1>
+    <p class="subtitle">Как интерфейс «говорит» с базой данных</p>
+
+    <h2>Что такое API</h2>
+    <div class="explain-box">
+        <p><strong>API</strong> — это «язык» между интерфейсом и базой данных. Когда вы ищете фото по факультету, интерфейс отправляет запрос через API, а API возвращает подходящие записи.</p>
+        <p style="margin:0">Представьте: вы звоните в справочное бюро и говорите «Покажите мне все фото ФЭТ за 1985 год». API — это оператор, который принимает ваш запрос и возвращает результат.</p>
+    </div>
+
+    <h2>Текущее состояние</h2>
+    <p>Сейчас API отвечает только на запросы по записям и файлам:</p>
+
+    <table>
+        <tr><th>Метод</th><th>Эндпоинт</th><th>Описание</th><th>Доступ</th></tr>
+        <tr><td>GET</td><td>/items/Archive</td><td>Список записей</td><td>Публичный</td></tr>
+        <tr><td>GET</td><td>/items/Archive/:id</td><td>Детали записи</td><td>Публичный</td></tr>
+        <tr><td>POST</td><td>/auth/login</td><td>Авторизация</td><td>Открытый</td></tr>
+        <tr><td>POST</td><td>/files</td><td>Загрузка файла</td><td>Авторизованный</td></tr>
+        <tr><td>GET</td><td>/files</td><td>Список файлов</td><td>Авторизованный</td></tr>
+    </table>
+
+    <h2>Целевой API</h2>
+    <p>Расширенный API с группировкой по назначению:</p>
+
+    <table>
+        <tr><th>Группа</th><th>Эндпоинты</th><th>Описание</th></tr>
+        <tr><td><strong>Записи</strong></td><td>/items/Archive</td><td>CRUD + фильтры (год, факультет, тип, персона, событие, теги)</td></tr>
+        <tr><td><strong>Персоны</strong></td><td>/items/persons</td><td>Справочник людей (студенты, преподаватели, выпускники)</td></tr>
+        <tr><td><strong>Факультеты</strong></td><td>/items/faculties</td><td>Справочник факультетов (9 шт.)</td></tr>
+        <tr><td><strong>События</strong></td><td>/items/events</td><td>Справочник событий (выпускные, конференции)</td></tr>
+        <tr><td><strong>Теги</strong></td><td>/items/tags</td><td>Тематические метки (8 шт.)</td></tr>
+        <tr><td><strong>Связи</strong></td><td>/items/archive_persons, archive_events, archive_tags</td><td>Many-to-many связи</td></tr>
+    </table>
+
+    <h2>Фильтрация</h2>
+    <p>API поддерживает комбинированные запросы:</p>
+
+    <div class="code-label">Поиск по году:</div>
+    <div class="code-block">GET /items/Archive?filter[date_taken][_gte]=1980&filter[date_taken][_lte]=1989</div>
+
+    <div class="code-label">Поиск по факультету:</div>
+    <div class="code-block">GET /items/Archive?filter[faculty_id][_eq]=&lt;uuid&gt;</div>
+
+    <div class="code-label">Комбинированный поиск:</div>
+    <div class="code-block">GET /items/Archive?filter[faculty_id][_eq]=&lt;uuid&gt;&filter[tags][_in]=&lt;tag_uuid&gt;</div>
+
+    <h2>Авторизация и доступ</h2>
+    <table>
+        <tr><th>Роль</th><th>Доступ</th><th>Описание</th></tr>
+        <tr><td><strong>Гость</strong></td><td>Чтение галереи</td><td>Просмотр опубликованных записей</td></tr>
+        <tr><td><strong>Uploader</strong></td><td>Загрузка</td><td>Загрузка файлов (статус draft)</td></tr>
+        <tr><td><strong>Editor</strong></td><td>Полный CRUD</td><td>Создание, редактирование, публикация</td></tr>
+        <tr><td><strong>Admin</strong></td><td>Управление системой</td><td>Настройка прав, справочников, пользователей</td></tr>
+    </table>
+
+    <h2>Текущее vs Целевое</h2>
+    <table>
+        <tr><th>Аспект</th><th>Сейчас</th><th>Целевое</th></tr>
+        <tr><td>Эндпоинты</td><td>5</td><td>15+</td></tr>
+        <tr><td>Фильтры</td><td>4 (категория, десятилетие, поиск, год)</td><td>6 (год, факультет, тип, персона, событие, теги)</td></tr>
+        <tr><td>Связи</td><td>Нет</td><td>M2M (записи ↔ персоны, события, теги)</td></tr>
+        <tr><td>Документация</td><td>Нет</td><td>OpenAPI 3.0 (автогенерация)</td></tr>
+        <tr><td>Rate limiting</td><td>Нет</td><td>100 req/min</td></tr>
+    </table>
+
+    <footer>
+        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Архитектура проекта — Архив СПбГТИ</title>
+    <style>
+        :root { --bg:#0a0a0f; --surface:#12121a; --surface-elevated:#1a1a25; --text:#f5f5f5; --text-muted:#a0a0a8; --gold:#c9a96e; --border:#2a2a35; }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:60px 24px;max-width:900px;margin:0 auto}
+        a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+        h1{font-size:2.2rem;margin-bottom:8px;color:var(--gold)}
+        h2{font-size:1.3rem;margin:48px 0 16px;color:var(--gold)}
+        h3{font-size:1.1rem;margin:24px 0 12px;color:var(--text)}
+        .subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:48px}
+        .breadcrumb{margin-bottom:32px;font-size:0.9rem}
+        p{margin-bottom:16px;color:var(--text-muted)}
+        .layer-diagram{display:flex;flex-direction:column;gap:2px;margin:24px 0}
+        .layer{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;transition:border-color 0.2s}
+        .layer:hover{border-color:var(--gold)}
+        .layer a{display:block;color:var(--text)}
+        .layer-icon{font-size:1.5rem;margin-bottom:8px}
+        .layer-title{font-weight:600;color:var(--text);margin-bottom:4px}
+        .layer-desc{font-size:0.9rem;color:var(--text-muted)}
+        table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.9rem}
+        th{text-align:left;padding:12px 16px;background:var(--surface);border:1px solid var(--border);color:var(--gold);font-weight:500}
+        td{padding:12px 16px;border:1px solid var(--border);color:var(--text-muted)}
+        .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+        .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .card h4{margin-bottom:8px;color:var(--text)}
+        .card p{margin:0;font-size:0.9rem}
+        ul{margin:12px 0;padding-left:24px}
+        li{margin-bottom:8px;color:var(--text-muted)}
+        footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem}
+        @media(max-width:640px){.cards{grid-template-columns:1fr}h1{font-size:1.6rem}}
+    </style>
+</head>
+<body>
+    <div class="breadcrumb"><a href="index.html">← На главную</a></div>
+
+    <h1>Архитектура проекта</h1>
+    <p class="subtitle">Из чего состоит система archive.ti200.ru — все слои от интерфейса до сервера</p>
+
+    <h2>Обзор системы</h2>
+    <p>Проект состоит из 4 слоёв, каждый из которых отвечает за свою задачу:</p>
+
+    <div class="layer-diagram">
+        <a href="frontend.html" class="layer">
+            <div class="layer-icon">🖥</div>
+            <div class="layer-title">Клиентская часть</div>
+            <div class="layer-desc">Галерея · Загрузка · Поиск · Фильтры</div>
+        </a>
+        <a href="api.html" class="layer">
+            <div class="layer-icon">🔌</div>
+            <div class="layer-title">API слой</div>
+            <div class="layer-desc">Авторизация · Фильтры · CRUD · Роли</div>
+        </a>
+        <a href="storage.html" class="layer">
+            <div class="layer-icon">💾</div>
+            <div class="layer-title">Хранилище и базы данных</div>
+            <div class="layer-desc">Записи · Справочники · Связи · Файлы</div>
+        </a>
+        <a href="infrastructure.html" class="layer">
+            <div class="layer-icon">🏗</div>
+            <div class="layer-title">Инфраструктура</div>
+            <div class="layer-desc">Сервер · Docker · nginx · SSL</div>
+        </a>
+    </div>
+
+    <h2>Текущее состояние vs Целевое</h2>
+
+    <table>
+        <tr><th>Слой</th><th>Сейчас (v1.0.0)</th><th>Целевое состояние</th></tr>
+        <tr><td><strong>Клиентская часть</strong></td><td>Базовая галерея с 4 фильтрами, vanilla JS, Playfair + Inter</td><td>Кастомный UI с 6 фильтрами, персональный поиск, timeline-навигация</td></tr>
+        <tr><td><strong>API</strong></td><td>Directus REST API (только Archive + Files)</td><td>Расширенный API: персоны, факультеты, события, теги, M2M-связи</td></tr>
+        <tr><td><strong>Хранилище</strong></td><td>1 таблица (Archive), нет справочников</td><td>7 таблиц + 3 таблицы связей, индексы, начальные данные</td></tr>
+        <tr><td><strong>Инфраструктура</strong></td><td>3 контейнера (nginx, Directus, PostgreSQL) + FFmpeg</td><td>Health-checks, backup-скрипты, мониторинг, rate limiting</td></tr>
+    </table>
+
+    <h2>Режимы эксплуатации</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h4>🔒 Внутренний архив</h4>
+            <p>Текущий режим. Доступ через VPN или локальную сеть. 5–10 сотрудников. Базовая авторизация.</p>
+        </div>
+        <div class="card">
+            <h4>🌐 Публичный архив</h4>
+            <p>Целевой режим. Доступ из интернета. 50–200 пользователей (выпускники, студенты). JWT, rate limiting, CDN.</p>
+        </div>
+    </div>
+
+    <h2>Навигация по слоям</h2>
+    <ul>
+        <li><a href="frontend.html">Клиентская часть →</a> — UI, поиск, фильтры, галерея</li>
+        <li><a href="api.html">API слой →</a> — эндпоинты, авторизация, фильтрация</li>
+        <li><a href="storage.html">Хранилище и базы данных →</a> — модель данных, PostgreSQL, файлы</li>
+        <li><a href="infrastructure.html">Инфраструктура →</a> — Docker, nginx, SSL, деплой</li>
+    </ul>
+
+    <footer>
+        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+    </footer>
+</body>
+</html>

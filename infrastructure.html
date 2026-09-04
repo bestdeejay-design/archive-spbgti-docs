@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инфраструктура — Архив СПбГТИ</title>
+    <style>
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:60px 24px;max-width:900px;margin:0 auto}
+        a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+        h1{font-size:2.2rem;margin-bottom:8px;color:var(--gold)}
+        h2{font-size:1.3rem;margin:48px 0 16px;color:var(--gold)}
+        .subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:48px}
+        .breadcrumb{margin-bottom:32px;font-size:0.9rem}
+        p{margin-bottom:16px;color:var(--text-muted)}
+        .diagram{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0;font-family:monospace;font-size:0.8rem;color:var(--text-muted);overflow-x:auto;white-space:pre;line-height:1.8}
+        .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+        .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .card h4{margin-bottom:8px;color:var(--text)}
+        .card p{margin:0;font-size:0.9rem}
+        table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.9rem}
+        th{text-align:left;padding:12px 16px;background:var(--surface);border:1px solid var(--border);color:var(--gold);font-weight:500}
+        td{padding:12px 16px;border:1px solid var(--border);color:var(--text-muted)}
+        ul{margin:12px 0;padding-left:24px}
+        li{margin-bottom:8px;color:var(--text-muted)}
+        footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem}
+        @media(max-width:640px){.cards{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="breadcrumb"><a href="architecture.html">← К архитектуре</a></div>
+
+    <h1>Инфраструктура</h1>
+    <p class="subtitle">Сервер, Docker, nginx, SSL — как всё работает под капотом</p>
+
+    <h2>Как всё работает</h2>
+
+    <div class="diagram">Пользователь (браузер)
+     │
+     ▼
+┌─────────────┐     ┌──────────────┐
+│    nginx    │────►│   Directus   │
+│  (порт 443) │     │  (порт 8055) │
+│  SSL + HTTP │     │  API + UI    │
+└─────────────┘     └──────┬───────┘
+                           │
+                    ┌──────▼───────┐     ┌──────────────┐
+                    │  PostgreSQL  │     │  thumbnails  │
+                    │  (порт 5432) │     │  (FFmpeg)    │
+                    └──────────────┘     └──────────────┘</div>
+
+    <h2>Текущее состояние</h2>
+    <ul>
+        <li><strong>Сервер:</strong> Ubuntu 24.04 LTS на 85.143.101.97</li>
+        <li><strong>Docker Compose:</strong> 3 сервиса (nginx, directus, directus-db) + 1 внутренний (thumbnails)</li>
+        <li><strong>SSL:</strong> Let's Encrypt (до сентября 2026)</li>
+        <li><strong>Домен:</strong> archive.ti200.ru</li>
+        <li><strong>Образы:</strong> Directus 10.12.0, PostgreSQL 16-alpine, nginx:alpine, FFmpeg (alpine)</li>
+        <li><strong>Объёмы:</strong> 3 Docker volume (db-data, uploads, database)</li>
+        <li><strong>Нет health-checks</strong></li>
+        <li><strong>Нет автоматических бэкапов</strong></li>
+        <li><strong>Нет мониторинга</strong></li>
+    </ul>
+
+    <h2>Целевая инфраструктура</h2>
+    <ul>
+        <li>Docker Compose с health-checks для всех сервисов</li>
+        <li>Автоматические бэкапы: PostgreSQL (pg_dump) + uploads (rsync) — ежедневно</li>
+        <li>SSL: автоматическое обновление (certbot)</li>
+        <li>Мониторинг: uptime + disk space + Docker stats</li>
+        <li>Rate limiting на nginx (100 req/min для API)</li>
+        <li>CORS: настроен для archive.ti200.ru</li>
+        <li>Кэширование: статика (1 год), API (no-cache)</li>
+    </ul>
+
+    <h2>Два режима</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h4>🔒 Внутренний архив</h4>
+            <p><strong>Текущий режим</strong></p>
+            <ul style="margin:8px 0;padding-left:20px">
+                <li>Доступ: VPN / локальная сеть</li>
+                <li>Пользователи: 5–10 сотрудников</li>
+                <li>Авторизация: статический токен</li>
+                <li>SSL: не обязателен</li>
+                <li>Бэкап: ручной</li>
+                <li>Мониторинг: нет</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>🌐 Публичный архив</h4>
+            <p><strong>Целевой режим</strong></p>
+            <ul style="margin:8px 0;padding-left:20px">
+                <li>Доступ: интернет (archive.ti200.ru)</li>
+                <li>Пользователи: 50–200</li>
+                <li>Авторизация: JWT + роли</li>
+                <li>SSL: обязателен (Let's Encrypt)</li>
+                <li>Бэкап: ежедневный автоматический</li>
+                <li>Мониторинг: uptime, disk, Docker</li>
+                <li>Rate limiting: 100 req/min</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Docker-сервисы</h2>
+    <table>
+        <tr><th>Сервис</th><th>Образ</th><th>Порт</th><th>Назначение</th><th>Память</th></tr>
+        <tr><td><strong>nginx</strong></td><td>nginx:alpine</td><td>80, 443</td><td>Веб-сервер, SSL, прокси</td><td>~5MB</td></tr>
+        <tr><td><strong>directus</strong></td><td>directus/directus:10.12.0</td><td>8055</td><td>API + админка</td><td>~177MB</td></tr>
+        <tr><td><strong>directus-db</strong></td><td>postgres:16-alpine</td><td>5432</td><td>PostgreSQL</td><td>~47MB</td></tr>
+        <tr><td><strong>thumbnails</strong></td><td>alpine + ffmpeg</td><td>—</td><td>Генератор превью видео</td><td>&lt;1MB</td></tr>
+    </table>
+
+    <h2>Текущее vs Целевое</h2>
+    <table>
+        <tr><th>Аспект</th><th>Сейчас</th><th>Целевое</th></tr>
+        <tr><td>Health-checks</td><td>Нет</td><td>Да (все сервисы)</td></tr>
+        <tr><td>Бэкапы</td><td>Ручной</td><td>Ежедневный автоматический</td></tr>
+        <tr><td>SSL</td><td>Let's Encrypt (ручной)</td><td>Let's Encrypt (автообновление)</td></tr>
+        <tr><td>Rate limiting</td><td>Нет</td><td>100 req/min</td></tr>
+        <tr><td>Мониторинг</td><td>Нет</td><td>Uptime + disk + Docker</td></tr>
+        <tr><td>Логи</td><td>stdout</td><td>Файловые + ротация</td></tr>
+        <tr><td>CI/CD</td><td>GitHub Actions (deploy)</td><td>+ тесты + linting</td></tr>
+    </table>
+
+    <footer>
+        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+    </footer>
+</body>
+</html>
