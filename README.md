@@ -2,7 +2,7 @@
 
 **Сайт для клиента: https://bestdeejay-design.github.io/archive-spbgti-docs/**
 
-Документация и варианты оформления catalog.ti200.ru
+Документация и варианты оформления archive.ti200.ru
 
 ## Варианты дизайна
 
