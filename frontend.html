@@ -3,127 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Клиентская часть — Архив СПбГТИ</title>
+    <title>Интерфейс — Архив СПбГТИ</title>
     <style>
-        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35}
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35;--green:#4ade80;--red:#f87171}
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:60px 24px;max-width:900px;margin:0 auto}
-        a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
-        h1{font-size:2.2rem;margin-bottom:8px;color:var(--gold)}
-        h2{font-size:1.3rem;margin:48px 0 16px;color:var(--gold)}
-        .subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:48px}
-        .breadcrumb{margin-bottom:32px;font-size:0.9rem}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+        .breadcrumb{max-width:900px;margin:0 auto;padding:24px 24px 0;font-size:0.9rem}
+        .breadcrumb a{color:var(--gold);text-decoration:none}
+        .hero{padding:40px 24px;max-width:900px;margin:0 auto}
+        .hero h1{font-size:2rem;margin-bottom:8px;color:var(--gold)}
+        .hero p{color:var(--text-muted);font-size:1rem}
+        .section{max-width:900px;margin:0 auto;padding:40px 24px}
+        .section h2{font-size:1.3rem;margin-bottom:8px;color:var(--gold)}
+        .section .sub{color:var(--text-muted);margin-bottom:32px}
         p{margin-bottom:16px;color:var(--text-muted)}
-        .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
-        .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
-        .card h4{margin-bottom:8px;color:var(--text)}
-        .card .url{font-family:monospace;font-size:0.8rem;color:var(--gold);margin-bottom:8px}
-        .card p{margin:0;font-size:0.9rem}
-        table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.9rem}
-        th{text-align:left;padding:12px 16px;background:var(--surface);border:1px solid var(--border);color:var(--gold);font-weight:500}
-        td{padding:12px 16px;border:1px solid var(--border);color:var(--text-muted)}
-        ul{margin:12px 0;padding-left:24px}
-        li{margin-bottom:8px;color:var(--text-muted)}
-        .demo-links{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
-        .demo-link{display:block;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;color:var(--text);transition:border-color 0.2s}
-        .demo-link:hover{border-color:var(--gold);text-decoration:none}
-        .demo-link .badge{display:inline-block;font-size:0.7rem;padding:2px 8px;border-radius:4px;margin-bottom:8px}
-        .badge-a{background:#b8945a22;color:#b8945a;border:1px solid #b8945a44}
-        .badge-b{background:#2c3e6b22;color:#5a7ab5;border:1px solid #2c3e6b44}
-        .badge-c{background:#c0392b22;color:#e74c3c;border:1px solid #c0392b44}
-        .badge-cur{background:#c9a96e22;color:#c9a96e;border:1px solid #c9a96e44}
-        footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem}
-        @media(max-width:640px){.cards{grid-template-columns:1fr}.demo-links{grid-template-columns:1fr}}
+
+        /* WIREFRAMES */
+        .wireframes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+        .wireframe{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+        .wireframe-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:0.8rem;color:var(--gold);font-family:monospace}
+        .wireframe-body{padding:20px;min-height:200px}
+        .wireframe-title{font-size:0.95rem;margin-bottom:12px}
+        .wireframe-desc{font-size:0.85rem;color:var(--text-muted)}
+
+        /* MOCK UI */
+        .mock-search{display:flex;gap:8px;margin-bottom:16px}
+        .mock-input{flex:1;background:var(--surface-elevated);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text-muted);font-size:0.8rem}
+        .mock-btn{background:var(--gold);color:var(--bg);border:none;border-radius:6px;padding:8px 16px;font-size:0.8rem;cursor:pointer}
+        .mock-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+        .mock-pill{background:var(--surface-elevated);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:0.75rem;color:var(--text-muted)}
+        .mock-pill.active{border-color:var(--gold);color:var(--gold)}
+        .mock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+        .mock-card{background:var(--surface-elevated);border:1px solid var(--border);border-radius:8px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+
+        /* COMPARE */
+        .compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start;margin:24px 0}
+        .compare-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .compare-box h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+        .compare-box.now h4{color:var(--red)}
+        .compare-box.future h4{color:var(--green)}
+        .compare-box ul{list-style:none;padding:0}
+        .compare-box li{padding:6px 0;font-size:0.9rem;color:var(--text-muted);border-bottom:1px solid var(--border)}
+        .compare-box li:last-child{border:none}
+        .compare-box.now li::before{content:"✗ ";color:var(--red)}
+        .compare-box.future li::before{content:"✓ ";color:var(--green)}
+        .compare-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.5rem;padding-top:40px}
+
+        /* DESIGNS */
+        .design-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+        .design-link{display:block;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;color:var(--text);text-decoration:none;transition:border-color 0.2s}
+        .design-link:hover{border-color:var(--gold);text-decoration:none}
+        .design-link h4{font-size:0.9rem;margin-bottom:4px}
+        .design-link p{font-size:0.8rem;color:var(--text-muted);margin:0}
+
+        footer{max-width:900px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;text-align:center}
+        footer a{color:var(--gold);text-decoration:none}
+        @media(max-width:640px){.wireframes,.design-grid{grid-template-columns:1fr}.compare-row{grid-template-columns:1fr}.compare-arrow{transform:rotate(90deg);padding:8px 0}}
     </style>
 </head>
 <body>
-    <div class="breadcrumb"><a href="architecture.html">← К архитектуре</a></div>
+    <div class="breadcrumb"><a href="architecture.html">← Как устроена система</a></div>
 
-    <h1>Клиентская часть</h1>
-    <p class="subtitle">Что видит пользователь: галерея, загрузка, поиск, фильтры</p>
+    <div class="hero">
+        <h1>Интерфейс</h1>
+        <p>То, что видит пользователь: галерея, поиск, фильтры, загрузка</p>
+    </div>
 
-    <h2>Что видит пользователь</h2>
+    <div class="section">
+        <h2>Три основных экрана</h2>
+        <p class="sub">Каждый экран — отдельная страница со своей задачей</p>
 
-    <div class="cards">
-        <div class="card">
-            <div class="url">/</div>
-            <h4>Галерея</h4>
-            <p>Masonry-сетка, фильтры, лайтбокс, слайд-шоу. Основной интерфейс просмотра.</p>
-        </div>
-        <div class="card">
-            <div class="url">/upload</div>
-            <h4>Загрузка</h4>
-            <p>Drag & drop, метаданные, прогресс. Только для авторизованных.</p>
-        </div>
-        <div class="card">
-            <div class="url">/admin</div>
-            <h4>Админ-панель</h4>
-            <p>Управление справочниками, статистика, публикация записей.</p>
+        <div class="wireframes">
+            <!-- ГАЛЕРЕЯ -->
+            <div class="wireframe">
+                <div class="wireframe-header">/ (главная)</div>
+                <div class="wireframe-body">
+                    <div class="wireframe-title">📷 Галерея</div>
+                    <div class="mock-search">
+                        <div class="mock-input">Поиск по имени, году...</div>
+                        <div class="mock-btn">Найти</div>
+                    </div>
+                    <div class="mock-filters">
+                        <span class="mock-pill active">Все</span>
+                        <span class="mock-pill">Фото</span>
+                        <span class="mock-pill">Видео</span>
+                        <span class="mock-pill">Документы</span>
+                    </div>
+                    <div class="mock-grid">
+                        <div class="mock-card">📷</div>
+                        <div class="mock-card">🎬</div>
+                        <div class="mock-card">📷</div>
+                        <div class="mock-card">📷</div>
+                        <div class="mock-card">📄</div>
+                        <div class="mock-card">📷</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ЗАГРУЗКА -->
+            <div class="wireframe">
+                <div class="wireframe-header">/upload</div>
+                <div class="wireframe-body">
+                    <div class="wireframe-title">📤 Загрузка</div>
+                    <div style="border:2px dashed var(--border);border-radius:8px;padding:24px;text-align:center;margin-bottom:12px">
+                        <div style="font-size:2rem;margin-bottom:8px">📁</div>
+                        <div style="font-size:0.8rem;color:var(--text-muted)">Перетащите файлы сюда</div>
+                    </div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px">Название *</div>
+                    <div class="mock-input" style="width:100%;margin-bottom:8px">Фото выпускного 1985</div>
+                    <div style="display:flex;gap:8px">
+                        <div class="mock-input" style="flex:1">Год: 1985</div>
+                        <div class="mock-input" style="flex:1">Факультет: ФЭТ</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- АДМИНКА -->
+            <div class="wireframe">
+                <div class="wireframe-header">/admin</div>
+                <div class="wireframe-body">
+                    <div class="wireframe-title">⚙️ Управление</div>
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                        <div class="mock-input" style="width:100%">👥 Люди (512)</div>
+                        <div class="mock-input" style="width:100%">🏛 Факультеты (9)</div>
+                        <div class="mock-input" style="width:100%">📅 События (87)</div>
+                        <div class="mock-input" style="width:100()">🏷 Теги (8)</div>
+                        <div class="mock-input" style="width:100%">📋 Записи (2,847)</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <h2>Текущее состояние</h2>
-    <ul>
-        <li>Vanilla HTML/CSS/JS, zero dependencies</li>
-        <li>4 фильтра: категория, десятилетие, поиск, год</li>
-        <li>Шрифты: Playfair Display (заголовки) + Inter (текст)</li>
-        <li>Тёмная тема с gold акцентами (#c9a96e)</li>
-        <li>Masonry-сетка: 4→3→2→1 колонки (адаптив)</li>
-        <li>Лайтбокс с метаданными (дата, категория, описание)</li>
-        <li>Видео: кастомный плеер + FFmpeg миниатюры</li>
-        <li>Авторизация через JWT (только загрузка)</li>
-        <li>Статический токен для чтения галереи</li>
-        <li>Слайд-шоу (5 сек, фото только)</li>
-        <li>Ленивая загрузка изображений</li>
-    </ul>
+    <div class="section">
+        <h2>Как сейчас и как будет</h2>
+        <p class="sub">Что уже работает и что мы добавим</p>
 
-    <h2>Целевой интерфейс</h2>
-    <ul>
-        <li>Кастомный UI (не стандартная админка Directus)</li>
-        <li>6 фильтров: год, факультет, тип, персона, событие, теги</li>
-        <li>Timeline-навигация по десятилетиям</li>
-        <li>Персональный поиск (найти себя по ФИО)</li>
-        <li>Цветовая кодировка эпох (до 1917 / 1917–1991 / после 1991)</li>
-        <li>Адаптивный дизайн (mobile-first)</li>
-        <li>Доступность WCAG 2.2 AA</li>
-        <li>Переключатель темы (light/dark)</li>
-        <li>Связанные записи (люди на фото → все фото с этим человеком)</li>
-    </ul>
+        <div class="compare-row">
+            <div class="compare-box now">
+                <h4>Сейчас</h4>
+                <ul>
+                    <li>Простая сетка фото</li>
+                    <li>4 фильтра</li>
+                    <li>Нет поиска по людям</li>
+                    <li>Загрузка без метаданных</li>
+                </ul>
+            </div>
+            <div class="compare-arrow">→</div>
+            <div class="compare-box future">
+                <h4>Будет</h4>
+                <ul>
+                    <li>Умная сетка с превью</li>
+                    <li>6 фильтров + текстовый поиск</li>
+                    <li>Поиск «Найти себя по ФИО»</li>
+                    <li>Загрузка с заполнением полей</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-    <h2>Технологии</h2>
-    <table>
-        <tr><th>Компонент</th><th>Текущее</th><th>Целевое</th></tr>
-        <tr><td>Язык</td><td>Vanilla JS</td><td>Vanilla JS (без фреймворков)</td></tr>
-        <tr><td>Стили</td><td>CSS3</td><td>CSS3 + design tokens</td></tr>
-        <tr><td>Шрифты</td><td>Playfair + Inter</td><td>Source Serif / PT Serif / Cormorant</td></tr>
-        <tr><td>Сборка</td><td>Нет</td><td>Нет (zero deps)</td></tr>
-        <tr><td>Тесты</td><td>Нет</td><td>Playwright smoke tests</td></tr>
-    </table>
+    <div class="section">
+        <h2>Попробовать</h2>
+        <p class="sub">Три варианта дизайна — посмотрите, какой нравится</p>
 
-    <h2>Примеры интерфейсов</h2>
-    <p>Три варианта дизайна + текущий demo для сравнения:</p>
-
-    <div class="demo-links">
-        <a href="gallery-preview-direction-a.html" class="demo-link">
-            <span class="badge badge-a">Направление А</span>
-            <strong>Архивная мастерская</strong><br>
-            <span style="font-size:0.85rem;color:var(--text-muted)">Тёплая палитра, Source Serif 4, хронологический корешёк</span>
-        </a>
-        <a href="gallery-preview-direction-b.html" class="demo-link">
-            <span class="badge badge-b">Направление Б</span>
-            <strong>Институциональное досье</strong><br>
-            <span style="font-size:0.85rem;color:var(--text-muted)">Светлая тема, PT Serif, метафора картотеки</span>
-        </a>
-        <a href="gallery-preview-direction-c.html" class="demo-link">
-            <span class="badge badge-c">Направление В</span>
-            <strong>Хроника эпох</strong><br>
-            <span style="font-size:0.85rem;color:var(--text-muted)">Цветокод эпох, Cormorant Garamond, timeline</span>
-        </a>
-        <a href="demo-current.html" class="demo-link">
-            <span class="badge badge-cur">Текущий</span>
-            <strong>Базовый demo</strong><br>
-            <span style="font-size:0.85rem;color:var(--text-muted)">Dark + gold, Playfair Display (для сравнения)</span>
-        </a>
+        <div class="design-grid">
+            <a href="gallery-preview-direction-a.html" class="design-link">
+                <h4>📚 Архивная мастерская</h4>
+                <p>Тёплые тона, дерево, уютная библиотека</p>
+            </a>
+            <a href="gallery-preview-direction-b.html" class="design-link">
+                <h4>📋 Институциональное досье</h4>
+                <p>Светлая тема, строгий официальный стиль</p>
+            </a>
+            <a href="gallery-preview-direction-c.html" class="design-link">
+                <h4>⏳ Хроника эпох</h4>
+                <p>Цветовая кодировка эпох, timeline</p>
+            </a>
+        </div>
     </div>
 
     <footer>

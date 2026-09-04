@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Архив СПбГТИ — Документация и варианты оформления</title>
+    <title>Архив СПбГТИ — Проект</title>
     <style>
         :root {
             --bg: #0a0a0f;
             --surface: #12121a;
+            --surface-elevated: #1a1a25;
             --text: #f5f5f5;
             --text-muted: #a0a0a8;
             --gold: #c9a96e;
             --border: #2a2a35;
+            --green: #4ade80;
+            --blue: #60a5fa;
+            --red: #f87171;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -19,147 +23,421 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
-            padding: 60px 24px;
-            max-width: 900px;
+        }
+
+        /* HERO */
+        .hero {
+            padding: 80px 24px 60px;
+            text-align: center;
+            max-width: 800px;
             margin: 0 auto;
         }
-        h1 {
-            font-size: 2.5rem;
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            color: var(--gold);
+        }
+        .hero .tagline {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+        .hero .cta {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--bg);
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .hero .cta:hover { opacity: 0.9; text-decoration: none; }
+
+        /* SECTION */
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+        .section-title {
+            font-size: 1.5rem;
             margin-bottom: 8px;
             color: var(--gold);
         }
-        .subtitle {
+        .section-subtitle {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 48px;
+            font-size: 1rem;
+            margin-bottom: 40px;
         }
-        h2 {
-            font-size: 1.3rem;
-            margin: 48px 0 16px;
-            color: var(--gold);
-        }
-        p { margin-bottom: 16px; color: var(--text-muted); }
-        a { color: var(--gold); text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .cards {
+
+        /* WHAT WE BUILD */
+        .build-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 16px;
-            margin: 24px 0;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 32px 0;
         }
-        .card {
+        .build-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        .build-card .icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+        .build-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .build-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* COMPARISON */
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin: 32px 0;
+            background: var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .compare-side {
+            background: var(--surface);
+            padding: 32px;
+        }
+        .compare-side h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .compare-side.now h4 { color: var(--red); }
+        .compare-side.future h4 { color: var(--green); }
+        .compare-side ul {
+            list-style: none;
+            padding: 0;
+        }
+        .compare-side li {
+            padding: 8px 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .compare-side li:last-child { border: none; }
+        .compare-side li::before {
+            margin-right: 8px;
+        }
+        .compare-side.now li::before { content: "✗"; color: var(--red); }
+        .compare-side.future li::before { content: "✓"; color: var(--green); }
+
+        /* DESIGNS */
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+        .design-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .design-card:hover { border-color: var(--gold); text-decoration: none; }
+        .design-preview {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .design-preview.a { background: linear-gradient(135deg, #1a1612, #2e2a20); }
+        .design-preview.b { background: linear-gradient(135deg, #f5f3ef, #d4cfc7); }
+        .design-preview.c { background: linear-gradient(135deg, #0f0f12, #18181f); }
+        .design-info {
+            padding: 20px;
+        }
+        .design-info h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .design-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            position: relative;
+            margin: 32px 0;
+            padding-left: 32px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        .timeline-item {
+            position: relative;
+            padding: 0 0 32px 24px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 2px solid var(--bg);
+        }
+        .timeline-item h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .timeline-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .timeline-item .time {
+            font-size: 0.8rem;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+
+        /* DOCS */
+        .docs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 32px 0;
+        }
+        .doc-card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 24px;
+            text-decoration: none;
+            color: var(--text);
             transition: border-color 0.2s;
         }
-        .card:hover { border-color: var(--gold); }
-        .card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-        .card p { font-size: 0.9rem; margin-bottom: 0; }
-        .badge {
+        .doc-card:hover { border-color: var(--gold); text-decoration: none; }
+        .doc-card h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        .doc-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .doc-card .tag {
             display: inline-block;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             padding: 2px 8px;
             border-radius: 4px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            background: var(--surface-elevated);
+            color: var(--text-muted);
         }
-        .badge-a { background: #b8945a22; color: #b8945a; border: 1px solid #b8945a44; }
-        .badge-b { background: #2c3e6b22; color: #5a7ab5; border: 1px solid #2c3e6b44; }
-        .badge-c { background: #c0392b22; color: #e74c3c; border: 1px solid #c0392b44; }
-        .badge-current { background: #c9a96e22; color: #c9a96e; border: 1px solid #c9a96e44; }
-        ul { margin: 16px 0; padding-left: 24px; }
-        li { margin-bottom: 8px; color: var(--text-muted); }
-        li a { color: var(--text); }
+
+        /* FOOTER */
         footer {
-            margin-top: 80px;
-            padding-top: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
             border-top: 1px solid var(--border);
             color: var(--text-muted);
             font-size: 0.85rem;
+            text-align: center;
+        }
+        footer a { color: var(--gold); text-decoration: none; }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2rem; }
+            .build-grid, .compare, .design-grid, .docs-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <h1>Архив СПбГТИ</h1>
-    <p class="subtitle">Документация и варианты оформления archive.ti200.ru</p>
 
-    <h2>Варианты дизайна</h2>
-    <p>Три концептуальных направления для презентации заказчику. Каждое — полностью рабочий интерфейс с demo-данными, фильтрами, лайтбоксом и переключением темы.</p>
-
-    <div class="cards">
-        <a href="gallery-preview-direction-a.html" class="card">
-            <span class="badge badge-a">Направление А</span>
-            <h3>Архивная мастерская</h3>
-            <p>Тёплая палитра (Aged Ebony), Source Serif 4, хронологический корешёк слева. Уютная библиотека исследователя.</p>
-        </a>
-        <a href="gallery-preview-direction-b.html" class="card">
-            <span class="badge badge-b">Направление Б</span>
-            <h3>Институциональное досье</h3>
-            <p>Светлая тема (Linen), PT Serif, метафора картотеки. Официальный документ с цветными табами.</p>
-        </a>
-        <a href="gallery-preview-direction-c.html" class="card">
-            <span class="badge badge-c">Направление В</span>
-            <h3>Хроника эпох</h3>
-            <p>Цветокод эпох (gold/red/blue), Cormorant Garamond, timeline-навигация. Каждая эпоха — свой визуальный мир.</p>
-        </a>
-        <a href="demo-current.html" class="card">
-            <span class="badge badge-current">Текущий</span>
-            <h3>Текущий demo</h3>
-            <p>Базовый вариант (dark + gold, Playfair Display). Для сравнения с новыми направлениями.</p>
-        </a>
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Архив СПбГТИ</h1>
+        <p class="tagline">Исторический каталог фото, видео и документов института с 1828 года.<br>Подготовка к 200-летию — 2028 год.</p>
+        <a href="#designs" class="cta">Смотреть варианты оформления</a>
     </div>
 
-    <h2>Документация</h2>
+    <!-- ЧТО ДЕЛАЕМ -->
+    <div class="section">
+        <h2 class="section-title">Что мы делаем</h2>
+        <p class="section-subtitle">Превращаем архив из простого хранилища в удобный портал для поиска и навигации</p>
 
-    <h3>Требования</h3>
-    <ul>
-        <li><a href="REQUIREMENTS_ANALYSIS.md">GAP-анализ</a> — что нужно vs что есть (~70% gap)</li>
-        <li><a href="TECHNICAL_REQUIREMENTS.md">Техническое задание</a> — модель данных, UI, API, деплой</li>
-        <li><a href="SPEC.md">Спецификация</a> — полная ТЗ (v3.0, разделы 17-18)</li>
-    </ul>
-
-    <h3>Дизайн</h3>
-    <ul>
-        <li><a href="DESIGN_CONSULTATION.md">Консультация по дизайну</a> — аудит текущего UI, 3 направления, сценарии использования, стратегия роста</li>
-        <li><a href="DESIGN.md">Дизайн-система</a> — токены, типографика, компоненты, motion</li>
-    </ul>
-
-    <h2>О проекте</h2>
-    <p>Исторический архив СПбГТИ — каталог фото, видео и документов института с 1828 года. В 2028 году институту исполняется 200 лет.</p>
-    <p><strong>Стек:</strong> Directus 10.12.0 + PostgreSQL 16 + nginx + FFmpeg</p>
-    <p><strong>Деплой:</strong> Docker на сервере 85.143.101.97 (прод) / Docker Compose (локально)</p>
-    <p><strong>Статус:</strong> v1.0.0, работает. 1000–10000 файлов, множество сотрудников и выпускников как загрузчики.</p>
-
-    <h2>Архитектура</h2>
-    <p>Из чего состоит система — все слои от интерфейса до сервера:</p>
-
-    <div class="cards">
-        <a href="architecture.html" class="card">
-            <h3>Обзор архитектуры</h3>
-            <p>Схема всех 4 слоёв, текущее vs целевое, режимы эксплуатации</p>
-        </a>
-        <a href="frontend.html" class="card">
-            <h3>Клиентская часть</h3>
-            <p>UI, галерея, фильтры, поиск, примеры интерфейсов</p>
-        </a>
-        <a href="api.html" class="card">
-            <h3>API слой</h3>
-            <p>Эндпоинты, авторизация, фильтрация, роли</p>
-        </a>
-        <a href="storage.html" class="card">
-            <h3>Хранилище и БД</h3>
-            <p>Модель данных, PostgreSQL, файлы, связи</p>
-        </a>
-        <a href="infrastructure.html" class="card">
-            <h3>Инфраструктура</h3>
-            <p>Docker, nginx, SSL, деплой, мониторинг</p>
-        </a>
+        <div class="build-grid">
+            <div class="build-card">
+                <div class="icon">🔍</div>
+                <h3>Умный поиск</h3>
+                <p>Найти фото по году, факультету, человеку, событию. Выпускник находит свой выпуск за 3 клика.</p>
+            </div>
+            <div class="build-card">
+                <div class="icon">👤</div>
+                <h3>Справочник людей</h3>
+                <p>Студенты, преподаватели, выпускники. Каждая запись связана с людьми, которые на ней.</p>
+            </div>
+            <div class="build-card">
+                <div class="icon">🏫</div>
+                <h3>Структура института</h3>
+                <p>9 факультетов с историей. Навигация по подразделениям и кафедрам.</p>
+            </div>
+            <div class="build-card">
+                <div class="icon">📅</div>
+                <h3>Хронология событий</h3>
+                <p>Выпускные, конференции, праздники. Временная лента от 1828 до наших дней.</p>
+            </div>
+        </div>
     </div>
 
+    <!-- СРАВНЕНИЕ -->
+    <div class="section">
+        <h2 class="section-title">Как сейчас и как будет</h2>
+        <p class="section-subtitle">Что уже работает и что мы добавим</p>
+
+        <div class="compare">
+            <div class="compare-side now">
+                <h4>Сейчас (v1.0.0)</h4>
+                <ul>
+                    <li>Простая галерея с фото</li>
+                    <li>4 фильтра (категория, десятилетие, поиск, год)</li>
+                    <li>Нет справочников людей</li>
+                    <li>Нет связей между записями</li>
+                    <li>Нет навигации по факультетам</li>
+                    <li>Тёмная тема, не настроена под институт</li>
+                </ul>
+            </div>
+            <div class="compare-side future">
+                <h4>Будет (v2.0)</h4>
+                <ul>
+                    <li>Полноценный каталог с метаданными</li>
+                    <li>6 фильтров + персональный поиск</li>
+                    <li>Справочник персон (500+ карточек)</li>
+                    <li>Связи: фото ↔ люди ↔ события ↔ факультеты</li>
+                    <li>Навигация по 5 осям (хронология, структура, люди)</li>
+                    <li>3 варианта дизайна на выбор</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВАРИАНТЫ ДИЗАЙНА -->
+    <div class="section" id="designs">
+        <h2 class="section-title">Варианты оформления</h2>
+        <p class="section-subtitle">Три концепции дизайна. Каждая — рабочий интерфейс с demo-данными.</p>
+
+        <div class="design-grid">
+            <a href="gallery-preview-direction-a.html" class="design-card">
+                <div class="design-preview a">📚</div>
+                <div class="design-info">
+                    <h4>Архивная мастерская</h4>
+                    <p>Тёплые тона, дерево, бумага. Уютная библиотека исследователя.</p>
+                </div>
+            </a>
+            <a href="gallery-preview-direction-b.html" class="design-card">
+                <div class="design-preview b">📋</div>
+                <div class="design-info">
+                    <h4>Институциональное досье</h4>
+                    <p>Светлая тема, строгий стиль. Как official document с цветными табами.</p>
+                </div>
+            </a>
+            <a href="gallery-preview-direction-c.html" class="design-card">
+                <div class="design-preview c">⏳</div>
+                <div class="design-info">
+                    <h4>Хроника эпох</h4>
+                    <p>Цветовая кодировка эпох. Timeline как основная навигация.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- СРОКИ -->
+    <div class="section">
+        <h2 class="section-title">Этапы работы</h2>
+        <p class="section-subtitle">Порядок действий от текущего состояния до результата</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="time">Этап 1 — 2 недели</div>
+                <h4>Модель данных</h4>
+                <p>Создаём справочники (факультеты, люди, события, теги) и связи между ними.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="time">Этап 2 — 3 недели</div>
+                <h4>Интерфейс</h4>
+                <p>Разрабатываем галерею, загрузку и админ-панель по выбранному дизайну.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="time">Этап 3 — 2 недели</div>
+                <h4>Наполнение</h4>
+                <p>Заполняем справочники, связываем записи, загружаем метаданные.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="time">Этап 4 — 1 неделя</div>
+                <h4>Запуск</h4>
+                <p>Тестирование, настройка доступа, обучение сотрудников.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ДОКУМЕНТАЦИЯ -->
+    <div class="section">
+        <h2 class="section-title">Документация</h2>
+        <p class="section-subtitle">Подробные материалы для内部使用 (мы + техническая команда)</p>
+
+        <div class="docs-grid">
+            <a href="architecture.html" class="doc-card">
+                <span class="tag">Для понимания</span>
+                <h4>Как устроена система</h4>
+                <p>Простая схема: интерфейс → сервер → база данных</p>
+            </a>
+            <a href="TECHNICAL_REQUIREMENTS.md" class="doc-card">
+                <span class="tag">Требования</span>
+                <h4>Техническое задание</h4>
+                <p>Что нужно сделать: модель данных, интерфейсы, права</p>
+            </a>
+            <a href="DESIGN_CONSULTATION.md" class="doc-card">
+                <span class="tag">Дизайн</span>
+                <h4>Аудит и рекомендации</h4>
+                <p>Анализ текущего UI, 3 направления, сценарии использования</p>
+            </a>
+            <a href="SPEC.md" class="doc-card">
+                <span class="tag">Спецификация</span>
+                <h4>Полная ТЗ</h4>
+                <p>Детальное описание всех функций и требований</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
     <footer>
         <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
-        <p style="margin-top: 8px;"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
     </footer>
+
 </body>
 </html>

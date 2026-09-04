@@ -3,119 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Хранилище и базы данных — Архив СПбГТИ</title>
+    <title>Данные — Архив СПбГТИ</title>
     <style>
-        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35}
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35;--green:#4ade80;--red:#f87171}
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:60px 24px;max-width:900px;margin:0 auto}
-        a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
-        h1{font-size:2.2rem;margin-bottom:8px;color:var(--gold)}
-        h2{font-size:1.3rem;margin:48px 0 16px;color:var(--gold)}
-        .subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:48px}
-        .breadcrumb{margin-bottom:32px;font-size:0.9rem}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+        .breadcrumb{max-width:900px;margin:0 auto;padding:24px 24px 0;font-size:0.9rem}
+        .breadcrumb a{color:var(--gold);text-decoration:none}
+        .hero{padding:40px 24px;max-width:900px;margin:0 auto}
+        .hero h1{font-size:2rem;margin-bottom:8px;color:var(--gold)}
+        .hero p{color:var(--text-muted);font-size:1rem}
+        .section{max-width:900px;margin:0 auto;padding:40px 24px}
+        .section h2{font-size:1.3rem;margin-bottom:8px;color:var(--gold)}
+        .section .sub{color:var(--text-muted);margin-bottom:32px}
         p{margin-bottom:16px;color:var(--text-muted)}
-        .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
-        .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
-        .card h4{margin-bottom:8px;color:var(--text)}
-        .card p{margin:0;font-size:0.9rem}
-        table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.9rem}
-        th{text-align:left;padding:12px 16px;background:var(--surface);border:1px solid var(--border);color:var(--gold);font-weight:500}
-        td{padding:12px 16px;border:1px solid var(--border);color:var(--text-muted)}
-        .er-diagram{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0;font-family:monospace;font-size:0.8rem;color:var(--text-muted);overflow-x:auto;white-space:pre;line-height:1.8}
-        ul{margin:12px 0;padding-left:24px}
-        li{margin-bottom:8px;color:var(--text-muted)}
-        footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem}
-        @media(max-width:640px){.cards{grid-template-columns:1fr}}
+
+        .compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start;margin:24px 0}
+        .compare-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .compare-box h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+        .compare-box.now h4{color:var(--red)}
+        .compare-box.future h4{color:var(--green)}
+        .compare-box ul{list-style:none;padding:0}
+        .compare-box li{padding:6px 0;font-size:0.9rem;color:var(--text-muted);border-bottom:1px solid var(--border)}
+        .compare-box li:last-child{border:none}
+        .compare-box.now li::before{content:"✗ ";color:var(--red)}
+        .compare-box.future li::before{content:"✓ ";color:var(--green)}
+        .compare-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.5rem;padding-top:40px}
+
+        .er-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+        .er-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+        .er-card h4{font-size:0.95rem;margin-bottom:8px;color:var(--gold)}
+        .er-card ul{list-style:none;padding:0}
+        .er-card li{font-size:0.85rem;color:var(--text-muted);padding:3px 0}
+        .er-card li::before{content:"• ";color:var(--border)}
+
+        footer{max-width:900px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;text-align:center}
+        footer a{color:var(--gold);text-decoration:none}
+        @media(max-width:640px){.compare-row,.er-grid{grid-template-columns:1fr}.compare-arrow{transform:rotate(90deg);padding:8px 0}}
     </style>
 </head>
 <body>
-    <div class="breadcrumb"><a href="architecture.html">← К архитектуре</a></div>
+    <div class="breadcrumb"><a href="architecture.html">← Как устроена система</a></div>
 
-    <h1>Хранилище и базы данных</h1>
-    <p class="subtitle">Где лежат данные: записи, справочники, файлы</p>
+    <div class="hero">
+        <h1>Данные</h1>
+        <p>Где хранятся записи, справочники, связи и файлы</p>
+    </div>
 
-    <h2>Два типа хранилища</h2>
+    <div class="section">
+        <h2>Что храним</h2>
+        <p class="sub">Две группы: справочники (справочная информация) и записи (сами файлы)</p>
 
-    <div class="cards">
-        <div class="card">
-            <h4>💾 База данных (PostgreSQL)</h4>
-            <p>Хранит записи, справочники, связи, пользователей. Это «мозг» системы: кто загрузил, когда, куда привязано.</p>
-        </div>
-        <div class="card">
-            <h4>📁 Файловое хранилище</h4>
-            <p>Хранит сами файлы (фото, видео, документы). Это «тело»: JPEG, MP4, PDF на диске сервера.</p>
+        <div class="er-grid">
+            <div class="er-card">
+                <h4>📋 Записи</h4>
+                <ul>
+                    <li>Название</li>
+                    <li>Описание</li>
+                    <li>Год</li>
+                    <li>Категория (фото/видео/документ)</li>
+                    <li>Файл на диске</li>
+                    <li>Кто загрузил</li>
+                </ul>
+            </div>
+            <div class="er-card">
+                <h4>👥 Люди</h4>
+                <ul>
+                    <li>ФИО</li>
+                    <li>Годы жизни</li>
+                    <li>Роль (студент/преподаватель/выпускник)</li>
+                    <li>Факультет</li>
+                    <li>Фото профиля</li>
+                </ul>
+            </div>
+            <div class="er-card">
+                <h4>🏛 Факультеты</h4>
+                <ul>
+                    <li>Название</li>
+                    <li>Год основания</li>
+                    <li>Описание</li>
+                    <li>Декан</li>
+                    <li>Кафедры</li>
+                </ul>
+            </div>
+            <div class="er-card">
+                <h4>📅 События</h4>
+                <ul>
+                    <li>Название</li>
+                    <li>Дата</li>
+                    <li>Описание</li>
+                    <li>Тип (выпускной/конференция/праздник)</li>
+                </ul>
+            </div>
+            <div class="er-card">
+                <h4>🏷 Теги</h4>
+                <ul>
+                    <li>Название</li>
+                    <li>Категория</li>
+                </ul>
+            </div>
+            <div class="er-card">
+                <h4>🔗 Связи</h4>
+                <ul>
+                    <li>Запись ↔ Люди</li>
+                    <li>Запись ↔ Событие</li>
+                    <li>Запись ↔ Факультет</li>
+                    <li>Запись ↔ Теги</li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <h2>Текущее состояние</h2>
-    <ul>
-        <li><strong>1 таблица:</strong> Archive (id, title, file, category, date_taken, decade, location, people, status)</li>
-        <li><strong>Файлы:</strong> /var/lib/directus/uploads (управляется Directus)</li>
-        <li><strong>Нет справочников:</strong> факультеты, персоны, события — только текстовые поля</li>
-        <li><strong>Нет связей:</strong> между записями</li>
-        <li><strong>people:</strong> текстовое поле (не структурированное)</li>
-    </ul>
+    <div class="section">
+        <h2>Как сейчас и как будет</h2>
+        <p class="sub">Текущая модель → расширенная модель</p>
 
-    <h2>Целевая модель данных</h2>
+        <div class="compare-row">
+            <div class="compare-box now">
+                <h4>Сейчас (1 таблица)</h4>
+                <ul>
+                    <li>Только записи (название, файл, категория)</li>
+                    <li>Нет справочников</li>
+                    <li>Нет связей</li>
+                    <li>Метаданные в описании текстом</li>
+                </ul>
+            </div>
+            <div class="compare-arrow">→</div>
+            <div class="compare-box future">
+                <h4>Будет (7+ таблиц)</h4>
+                <ul>
+                    <li>Записи с полями для поиска</li>
+                    <li>Справочники: люди, факультеты, события</li>
+                    <li>Связи между всеми таблицами</li>
+                    <li>Структурированные метаданные</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-    <div class="er-diagram">┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│  faculties  │◄────│   persons    │────►│   Archive   │
-│  (9 записей)│     │   (люди)     │     │  (записи)   │
-└─────────────┘     └──────────────┘     └──────┬──────┘
-                                                │
-                              ┌─────────────────┼─────────────────┐
-                              │                 │                 │
-                        ┌─────▼─────┐    ┌──────▼──────┐   ┌─────▼─────┐
-                        │  events   │    │  archive_   │   │  archive_ │
-                        │ (события) │    │  persons    │   │   tags    │
-                        └───────────┘    └─────────────┘   └───────────┘
-                                                │
-                                          ┌─────▼─────┐
-                                          │   tags    │
-                                          │  (теги)   │
-                                          └───────────┘</div>
+    <div class="section">
+        <h2>Где лежат файлы</h2>
+        <p class="sub">Сами фото, видео и документы — на диске сервера</p>
 
-    <h2>Справочники</h2>
-    <table>
-        <tr><th>Таблица</th><th>Записей</th><th>Назначение</th></tr>
-        <tr><td><strong>faculties</strong></td><td>9</td><td>Факультеты института</td></tr>
-        <tr><td><strong>persons</strong></td><td>~500</td><td>Студенты, преподаватели, выпускники</td></tr>
-        <tr><td><strong>events</strong></td><td>~100</td><td>Выпускные, конференции, мероприятия</td></tr>
-        <tr><td><strong>tags</strong></td><td>8</td><td>Тематические метки</td></tr>
-    </table>
-
-    <h2>Записи</h2>
-    <table>
-        <tr><th>Таблица</th><th>Записей</th><th>Назначение</th></tr>
-        <tr><td><strong>Archive</strong></td><td>1000–10000</td><td>Основные записи (фото, видео, документы)</td></tr>
-    </table>
-
-    <h2>Связи (many-to-many)</h2>
-    <table>
-        <tr><th>Таблица</th><th>Тип</th><th>Описание</th></tr>
-        <tr><td><strong>archive_persons</strong></td><td>M2M</td><td>Запись ↔ Персона (тип: автор / на фото / упомянут)</td></tr>
-        <tr><td><strong>archive_events</strong></td><td>M2M</td><td>Запись ↔ Событие</td></tr>
-        <tr><td><strong>archive_tags</strong></td><td>M2M</td><td>Запись ↔ Тег</td></tr>
-    </table>
-
-    <h2>Файлы</h2>
-    <ul>
-        <li><strong>Текущее:</strong> файлы в /var/lib/directus/uploads, управляются Directus</li>
-        <li><strong>Целевое:</strong> то же хранилище + миниатюры (FFmpeg) + CDN для публичного доступа</li>
-        <li><strong>Лимит:</strong> 128MB на файл</li>
-        <li><strong>Типы:</strong> фото (JPEG, PNG, TIFF), видео (MP4, WebM), документы (PDF)</li>
-    </ul>
-
-    <h2>Текущее vs Целевое</h2>
-    <table>
-        <tr><th>Аспект</th><th>Сейчас</th><th>Целевое</th></tr>
-        <tr><td>Таблиц</td><td>1</td><td>7 + 3 связей</td></tr>
-        <tr><td>Связи</td><td>Нет</td><td>M2M (персоны, события, теги)</td></tr>
-        <tr><td>Справочники</td><td>Текстовые поля</td><td>Отдельные таблицы с FK</td></tr>
-        <tr><td>Индексы</td><td>Нет</td><td>По имени, году, факультету</td></tr>
-        <tr><td>Начальные данные</td><td>Нет</td><td>9 факультетов, 8 тегов</td></tr>
-        <tr><td>Бэкапы</td><td>Нет</td><td>Ежедневные (pg_dump + uploads)</td></tr>
-    </table>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0;font-family:monospace;font-size:0.85rem;color:var(--text-muted)">
+            <div style="margin-bottom:8px;color:var(--gold)">📁 uploads/</div>
+            <div style="padding-left:16px">📁 2024/</div>
+            <div style="padding-left:32px">📁 photo/</div>
+            <div style="padding-left:48px">📄 img_001.jpg</div>
+            <div style="padding-left:48px">📄 img_002.jpg</div>
+            <div style="padding-left:32px">📁 video/</div>
+            <div style="padding-left:48px">📄 vid_001.mp4</div>
+            <div style="padding-left:32px">📁 docs/</div>
+            <div style="padding-left:48px">📄 diploma_001.pdf</div>
+            <div style="padding-left:16px">📁 2023/</div>
+            <div style="padding-left:32px">📁 photo/ ...</div>
+        </div>
+    </div>
 
     <footer>
         <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>

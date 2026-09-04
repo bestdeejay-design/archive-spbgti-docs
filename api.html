@@ -3,96 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API слой — Архив СПбГТИ</title>
+    <title>Сервер — Архив СПбГТИ</title>
     <style>
-        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35}
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35;--green:#4ade80;--red:#f87171}
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:60px 24px;max-width:900px;margin:0 auto}
-        a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
-        h1{font-size:2.2rem;margin-bottom:8px;color:var(--gold)}
-        h2{font-size:1.3rem;margin:48px 0 16px;color:var(--gold)}
-        .subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:48px}
-        .breadcrumb{margin-bottom:32px;font-size:0.9rem}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+        .breadcrumb{max-width:900px;margin:0 auto;padding:24px 24px 0;font-size:0.9rem}
+        .breadcrumb a{color:var(--gold);text-decoration:none}
+        .hero{padding:40px 24px;max-width:900px;margin:0 auto}
+        .hero h1{font-size:2rem;margin-bottom:8px;color:var(--gold)}
+        .hero p{color:var(--text-muted);font-size:1rem}
+        .section{max-width:900px;margin:0 auto;padding:40px 24px}
+        .section h2{font-size:1.3rem;margin-bottom:8px;color:var(--gold)}
+        .section .sub{color:var(--text-muted);margin-bottom:32px}
         p{margin-bottom:16px;color:var(--text-muted)}
-        .explain-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0}
-        .explain-box strong{color:var(--text)}
-        table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.9rem}
-        th{text-align:left;padding:12px 16px;background:var(--surface);border:1px solid var(--border);color:var(--gold);font-weight:500}
-        td{padding:12px 16px;border:1px solid var(--border);color:var(--text-muted)}
-        .code-block{background:var(--surface-elevated);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0;font-family:monospace;font-size:0.85rem;color:var(--text-muted);overflow-x:auto}
-        .code-label{font-size:0.8rem;color:var(--gold);margin-bottom:4px;font-family:-apple-system,sans-serif}
-        ul{margin:12px 0;padding-left:24px}
-        li{margin-bottom:8px;color:var(--text-muted)}
-        footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem}
+
+        .compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start;margin:24px 0}
+        .compare-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .compare-box h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+        .compare-box.now h4{color:var(--red)}
+        .compare-box.future h4{color:var(--green)}
+        .compare-box ul{list-style:none;padding:0}
+        .compare-box li{padding:6px 0;font-size:0.9rem;color:var(--text-muted);border-bottom:1px solid var(--border)}
+        .compare-box li:last-child{border:none}
+        .compare-box.now li::before{content:"✗ ";color:var(--red)}
+        .compare-box.future li::before{content:"✓ ";color:var(--green)}
+        .compare-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.5rem;padding-top:40px}
+
+        .flow{display:flex;flex-direction:column;gap:4px;margin:24px 0;max-width:500px}
+        .flow-step{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
+        .flow-step .num{width:32px;height:32px;background:var(--gold);color:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;flex-shrink:0}
+        .flow-step .info h4{font-size:0.95rem;margin-bottom:2px}
+        .flow-step .info p{font-size:0.85rem;color:var(--text-muted);margin:0}
+        .flow-arrow{text-align:center;color:var(--border);font-size:1rem}
+
+        footer{max-width:900px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;text-align:center}
+        footer a{color:var(--gold);text-decoration:none}
+        @media(max-width:640px){.compare-row{grid-template-columns:1fr}.compare-arrow{transform:rotate(90deg);padding:8px 0}}
     </style>
 </head>
 <body>
-    <div class="breadcrumb"><a href="architecture.html">← К архитектуре</a></div>
+    <div class="breadcrumb"><a href="architecture.html">← Как устроена система</a></div>
 
-    <h1>API слой</h1>
-    <p class="subtitle">Как интерфейс «говорит» с базой данных</p>
-
-    <h2>Что такое API</h2>
-    <div class="explain-box">
-        <p><strong>API</strong> — это «язык» между интерфейсом и базой данных. Когда вы ищете фото по факультету, интерфейс отправляет запрос через API, а API возвращает подходящие записи.</p>
-        <p style="margin:0">Представьте: вы звоните в справочное бюро и говорите «Покажите мне все фото ФЭТ за 1985 год». API — это оператор, который принимает ваш запрос и возвращает результат.</p>
+    <div class="hero">
+        <h1>Сервер</h1>
+        <p>Обрабатывает запросы: «найди фото», «загрузи файл», «кто на этом фото»</p>
     </div>
 
-    <h2>Текущее состояние</h2>
-    <p>Сейчас API отвечает только на запросы по записям и файлам:</p>
+    <div class="section">
+        <h2>Как работает поиск</h2>
+        <p class="sub">Пользователь нажимает «Найти» → сервер ищет → возвращает результат</p>
 
-    <table>
-        <tr><th>Метод</th><th>Эндпоинт</th><th>Описание</th><th>Доступ</th></tr>
-        <tr><td>GET</td><td>/items/Archive</td><td>Список записей</td><td>Публичный</td></tr>
-        <tr><td>GET</td><td>/items/Archive/:id</td><td>Детали записи</td><td>Публичный</td></tr>
-        <tr><td>POST</td><td>/auth/login</td><td>Авторизация</td><td>Открытый</td></tr>
-        <tr><td>POST</td><td>/files</td><td>Загрузка файла</td><td>Авторизованный</td></tr>
-        <tr><td>GET</td><td>/files</td><td>Список файлов</td><td>Авторизованный</td></tr>
-    </table>
+        <div class="flow">
+            <div class="flow-step">
+                <div class="num">1</div>
+                <div class="info">
+                    <h4>Запрос</h4>
+                    <p>«Фото ФЭТ за 1985 год, выпускные»</p>
+                </div>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">
+                <div class="num">2</div>
+                <div class="info">
+                    <h4>Обработка</h4>
+                    <p>Сервер разбирает запрос на части: факультет, год, категория</p>
+                </div>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">
+                <div class="num">3</div>
+                <div class="info">
+                    <h4>Поиск в базе</h4>
+                    <p>Ищет записи, которые совпадают со всеми условиями</p>
+                </div>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step">
+                <div class="num">4</div>
+                <div class="info">
+                    <h4>Результат</h4>
+                    <p>Возвращает список: превью, название, год, ссылки</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h2>Целевой API</h2>
-    <p>Расширенный API с группировкой по назначению:</p>
+    <div class="section">
+        <h2>Кто что может</h2>
+        <p class="sub">Разные пользователи — разные права</p>
 
-    <table>
-        <tr><th>Группа</th><th>Эндпоинты</th><th>Описание</th></tr>
-        <tr><td><strong>Записи</strong></td><td>/items/Archive</td><td>CRUD + фильтры (год, факультет, тип, персона, событие, теги)</td></tr>
-        <tr><td><strong>Персоны</strong></td><td>/items/persons</td><td>Справочник людей (студенты, преподаватели, выпускники)</td></tr>
-        <tr><td><strong>Факультеты</strong></td><td>/items/faculties</td><td>Справочник факультетов (9 шт.)</td></tr>
-        <tr><td><strong>События</strong></td><td>/items/events</td><td>Справочник событий (выпускные, конференции)</td></tr>
-        <tr><td><strong>Теги</strong></td><td>/items/tags</td><td>Тематические метки (8 шт.)</td></tr>
-        <tr><td><strong>Связи</strong></td><td>/items/archive_persons, archive_events, archive_tags</td><td>Many-to-many связи</td></tr>
-    </table>
+        <div class="compare-row">
+            <div class="compare-box now">
+                <h4>Сейчас</h4>
+                <ul>
+                    <li>2 роли: гость и админ</li>
+                    <li>Простая авторизация</li>
+                    <li>Нет ограничений по загрузке</li>
+                </ul>
+            </div>
+            <div class="compare-arrow">→</div>
+            <div class="compare-box future">
+                <h4>Будет</h4>
+                <ul>
+                    <li>4 роли: гость, пользователь, редактор, админ</li>
+                    <li>Вход по email/пароль</li>
+                    <li>Ограничения по объёму и типам</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-    <h2>Фильтрация</h2>
-    <p>API поддерживает комбинированные запросы:</p>
+    <div class="section">
+        <h2>Какие роли</h2>
+        <p class="sub">Каждый видит и делает только то, что ему положено</p>
 
-    <div class="code-label">Поиск по году:</div>
-    <div class="code-block">GET /items/Archive?filter[date_taken][_gte]=1980&filter[date_taken][_lte]=1989</div>
-
-    <div class="code-label">Поиск по факультету:</div>
-    <div class="code-block">GET /items/Archive?filter[faculty_id][_eq]=&lt;uuid&gt;</div>
-
-    <div class="code-label">Комбинированный поиск:</div>
-    <div class="code-block">GET /items/Archive?filter[faculty_id][_eq]=&lt;uuid&gt;&filter[tags][_in]=&lt;tag_uuid&gt;</div>
-
-    <h2>Авторизация и доступ</h2>
-    <table>
-        <tr><th>Роль</th><th>Доступ</th><th>Описание</th></tr>
-        <tr><td><strong>Гость</strong></td><td>Чтение галереи</td><td>Просмотр опубликованных записей</td></tr>
-        <tr><td><strong>Uploader</strong></td><td>Загрузка</td><td>Загрузка файлов (статус draft)</td></tr>
-        <tr><td><strong>Editor</strong></td><td>Полный CRUD</td><td>Создание, редактирование, публикация</td></tr>
-        <tr><td><strong>Admin</strong></td><td>Управление системой</td><td>Настройка прав, справочников, пользователей</td></tr>
-    </table>
-
-    <h2>Текущее vs Целевое</h2>
-    <table>
-        <tr><th>Аспект</th><th>Сейчас</th><th>Целевое</th></tr>
-        <tr><td>Эндпоинты</td><td>5</td><td>15+</td></tr>
-        <tr><td>Фильтры</td><td>4 (категория, десятилетие, поиск, год)</td><td>6 (год, факультет, тип, персона, событие, теги)</td></tr>
-        <tr><td>Связи</td><td>Нет</td><td>M2M (записи ↔ персоны, события, теги)</td></tr>
-        <tr><td>Документация</td><td>Нет</td><td>OpenAPI 3.0 (автогенерация)</td></tr>
-        <tr><td>Rate limiting</td><td>Нет</td><td>100 req/min</td></tr>
-    </table>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0">
+            <div class="flow-step" style="flex-direction:column;align-items:flex-start;padding:20px">
+                <div style="font-size:1.5rem;margin-bottom:8px">👁</div>
+                <h4 style="font-size:0.95rem;margin-bottom:4px">Гость</h4>
+                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Смотрит галерею, ищет</p>
+            </div>
+            <div class="flow-step" style="flex-direction:column;align-items:flex-start;padding:20px">
+                <div style="font-size:1.5rem;margin-bottom:8px">📤</div>
+                <h4 style="font-size:0.95rem;margin-bottom:4px">Пользователь</h4>
+                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Загружает файлы, заполняет поля</p>
+            </div>
+            <div class="flow-step" style="flex-direction:column;align-items:flex-start;padding:20px">
+                <div style="font-size:1.5rem;margin-bottom:8px">✏️</div>
+                <h4 style="font-size:0.95rem;margin-bottom:4px">Редактор</h4>
+                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Правит записи, связывает, удаляет</p>
+            </div>
+            <div class="flow-step" style="flex-direction:column;align-items:flex-start;padding:20px">
+                <div style="font-size:1.5rem;margin-bottom:8px">⚙️</div>
+                <h4 style="font-size:0.95rem;margin-bottom:4px">Админ</h4>
+                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Управляет пользователями, настройками</p>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>

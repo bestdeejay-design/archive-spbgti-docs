@@ -3,127 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Инфраструктура — Архив СПбГТИ</title>
+    <title>Сервер и безопасность — Архив СПбГТИ</title>
     <style>
-        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35}
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35;--green:#4ade80;--red:#f87171}
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:60px 24px;max-width:900px;margin:0 auto}
-        a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
-        h1{font-size:2.2rem;margin-bottom:8px;color:var(--gold)}
-        h2{font-size:1.3rem;margin:48px 0 16px;color:var(--gold)}
-        .subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:48px}
-        .breadcrumb{margin-bottom:32px;font-size:0.9rem}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+        .breadcrumb{max-width:900px;margin:0 auto;padding:24px 24px 0;font-size:0.9rem}
+        .breadcrumb a{color:var(--gold);text-decoration:none}
+        .hero{padding:40px 24px;max-width:900px;margin:0 auto}
+        .hero h1{font-size:2rem;margin-bottom:8px;color:var(--gold)}
+        .hero p{color:var(--text-muted);font-size:1rem}
+        .section{max-width:900px;margin:0 auto;padding:40px 24px}
+        .section h2{font-size:1.3rem;margin-bottom:8px;color:var(--gold)}
+        .section .sub{color:var(--text-muted);margin-bottom:32px}
         p{margin-bottom:16px;color:var(--text-muted)}
-        .diagram{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0;font-family:monospace;font-size:0.8rem;color:var(--text-muted);overflow-x:auto;white-space:pre;line-height:1.8}
-        .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
-        .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
-        .card h4{margin-bottom:8px;color:var(--text)}
-        .card p{margin:0;font-size:0.9rem}
-        table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.9rem}
-        th{text-align:left;padding:12px 16px;background:var(--surface);border:1px solid var(--border);color:var(--gold);font-weight:500}
-        td{padding:12px 16px;border:1px solid var(--border);color:var(--text-muted)}
-        ul{margin:12px 0;padding-left:24px}
-        li{margin-bottom:8px;color:var(--text-muted)}
-        footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem}
-        @media(max-width:640px){.cards{grid-template-columns:1fr}}
+
+        .compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start;margin:24px 0}
+        .compare-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .compare-box h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+        .compare-box.now h4{color:var(--red)}
+        .compare-box.future h4{color:var(--green)}
+        .compare-box ul{list-style:none;padding:0}
+        .compare-box li{padding:6px 0;font-size:0.9rem;color:var(--text-muted);border-bottom:1px solid var(--border)}
+        .compare-box li:last-child{border:none}
+        .compare-box.now li::before{content:"✗ ";color:var(--red)}
+        .compare-box.future li::before{content:"✓ ";color:var(--green)}
+        .compare-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.5rem;padding-top:40px}
+
+        .simple-diagram{display:flex;flex-direction:column;gap:4px;margin:24px 0;max-width:500px}
+        .simple-layer{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
+        .simple-layer .emoji{font-size:1.8rem;flex-shrink:0}
+        .simple-layer .info h4{font-size:1rem;margin-bottom:2px}
+        .simple-layer .info p{font-size:0.85rem;color:var(--text-muted);margin:0}
+        .arrow{text-align:center;color:var(--border);font-size:1.2rem}
+
+        .modes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+        .mode{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .mode h4{margin-bottom:8px}
+        .mode p{font-size:0.9rem;margin:0}
+        .mode .tag{display:inline-block;font-size:0.7rem;padding:2px 8px;border-radius:4px;margin-bottom:8px}
+        .mode .tag.current{background:#f8717122;color:var(--red);border:1px solid #f8717144}
+        .mode .tag.target{background:#4ade8022;color:var(--green);border:1px solid #4ade8044}
+
+        footer{max-width:900px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;text-align:center}
+        footer a{color:var(--gold);text-decoration:none}
+        @media(max-width:640px){.compare-row,.modes{grid-template-columns:1fr}.compare-arrow{transform:rotate(90deg);padding:8px 0}}
     </style>
 </head>
 <body>
-    <div class="breadcrumb"><a href="architecture.html">← К архитектуре</a></div>
+    <div class="breadcrumb"><a href="architecture.html">← Как устроена система</a></div>
 
-    <h1>Инфраструктура</h1>
-    <p class="subtitle">Сервер, Docker, nginx, SSL — как всё работает под капотом</p>
+    <div class="hero">
+        <h1>Сервер и безопасность</h1>
+        <p>Где работает система, как защищена, кто имеет доступ</p>
+    </div>
 
-    <h2>Как всё работает</h2>
+    <div class="section">
+        <h2>Как устроено</h2>
+        <p class="sub">Всё работает на одном сервере, каждая часть — в своём контейнере</p>
 
-    <div class="diagram">Пользователь (браузер)
-     │
-     ▼
-┌─────────────┐     ┌──────────────┐
-│    nginx    │────►│   Directus   │
-│  (порт 443) │     │  (порт 8055) │
-│  SSL + HTTP │     │  API + UI    │
-└─────────────┘     └──────┬───────┘
-                           │
-                    ┌──────▼───────┐     ┌──────────────┐
-                    │  PostgreSQL  │     │  thumbnails  │
-                    │  (порт 5432) │     │  (FFmpeg)    │
-                    └──────────────┘     └──────────────┘</div>
-
-    <h2>Текущее состояние</h2>
-    <ul>
-        <li><strong>Сервер:</strong> Ubuntu 24.04 LTS на 85.143.101.97</li>
-        <li><strong>Docker Compose:</strong> 3 сервиса (nginx, directus, directus-db) + 1 внутренний (thumbnails)</li>
-        <li><strong>SSL:</strong> Let's Encrypt (до сентября 2026)</li>
-        <li><strong>Домен:</strong> archive.ti200.ru</li>
-        <li><strong>Образы:</strong> Directus 10.12.0, PostgreSQL 16-alpine, nginx:alpine, FFmpeg (alpine)</li>
-        <li><strong>Объёмы:</strong> 3 Docker volume (db-data, uploads, database)</li>
-        <li><strong>Нет health-checks</strong></li>
-        <li><strong>Нет автоматических бэкапов</strong></li>
-        <li><strong>Нет мониторинга</strong></li>
-    </ul>
-
-    <h2>Целевая инфраструктура</h2>
-    <ul>
-        <li>Docker Compose с health-checks для всех сервисов</li>
-        <li>Автоматические бэкапы: PostgreSQL (pg_dump) + uploads (rsync) — ежедневно</li>
-        <li>SSL: автоматическое обновление (certbot)</li>
-        <li>Мониторинг: uptime + disk space + Docker stats</li>
-        <li>Rate limiting на nginx (100 req/min для API)</li>
-        <li>CORS: настроен для archive.ti200.ru</li>
-        <li>Кэширование: статика (1 год), API (no-cache)</li>
-    </ul>
-
-    <h2>Два режима</h2>
-
-    <div class="cards">
-        <div class="card">
-            <h4>🔒 Внутренний архив</h4>
-            <p><strong>Текущий режим</strong></p>
-            <ul style="margin:8px 0;padding-left:20px">
-                <li>Доступ: VPN / локальная сеть</li>
-                <li>Пользователи: 5–10 сотрудников</li>
-                <li>Авторизация: статический токен</li>
-                <li>SSL: не обязателен</li>
-                <li>Бэкап: ручной</li>
-                <li>Мониторинг: нет</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h4>🌐 Публичный архив</h4>
-            <p><strong>Целевой режим</strong></p>
-            <ul style="margin:8px 0;padding-left:20px">
-                <li>Доступ: интернет (archive.ti200.ru)</li>
-                <li>Пользователи: 50–200</li>
-                <li>Авторизация: JWT + роли</li>
-                <li>SSL: обязателен (Let's Encrypt)</li>
-                <li>Бэкап: ежедневный автоматический</li>
-                <li>Мониторинг: uptime, disk, Docker</li>
-                <li>Rate limiting: 100 req/min</li>
-            </ul>
+        <div class="simple-diagram">
+            <div class="simple-layer">
+                <div class="emoji">🌐</div>
+                <div class="info">
+                    <h4>Интернет → nginx</h4>
+                    <p>Вход в систему, SSL-сертификат (https), раздача статики</p>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+            <div class="simple-layer">
+                <div class="emoji">⚡</div>
+                <div class="info">
+                    <h4>Directus</h4>
+                    <p>Сервер приложений: API + админка + интерфейс</p>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+            <div class="simple-layer">
+                <div class="emoji">🗄</div>
+                <div class="info">
+                    <h4>PostgreSQL</h4>
+                    <p>База данных: справочники, записи, связи, пользователи</p>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+            <div class="simple-layer">
+                <div class="emoji">💾</div>
+                <div class="info">
+                    <h4>Диск сервера</h4>
+                    <p>Файлы: фото, видео, документы, бэкапы</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <h2>Docker-сервисы</h2>
-    <table>
-        <tr><th>Сервис</th><th>Образ</th><th>Порт</th><th>Назначение</th><th>Память</th></tr>
-        <tr><td><strong>nginx</strong></td><td>nginx:alpine</td><td>80, 443</td><td>Веб-сервер, SSL, прокси</td><td>~5MB</td></tr>
-        <tr><td><strong>directus</strong></td><td>directus/directus:10.12.0</td><td>8055</td><td>API + админка</td><td>~177MB</td></tr>
-        <tr><td><strong>directus-db</strong></td><td>postgres:16-alpine</td><td>5432</td><td>PostgreSQL</td><td>~47MB</td></tr>
-        <tr><td><strong>thumbnails</strong></td><td>alpine + ffmpeg</td><td>—</td><td>Генератор превью видео</td><td>&lt;1MB</td></tr>
-    </table>
+    <div class="section">
+        <h2>Два режима доступа</h2>
+        <p class="sub">Сейчас и после запуска — разные сценарии</p>
 
-    <h2>Текущее vs Целевое</h2>
-    <table>
-        <tr><th>Аспект</th><th>Сейчас</th><th>Целевое</th></tr>
-        <tr><td>Health-checks</td><td>Нет</td><td>Да (все сервисы)</td></tr>
-        <tr><td>Бэкапы</td><td>Ручной</td><td>Ежедневный автоматический</td></tr>
-        <tr><td>SSL</td><td>Let's Encrypt (ручной)</td><td>Let's Encrypt (автообновление)</td></tr>
-        <tr><td>Rate limiting</td><td>Нет</td><td>100 req/min</td></tr>
-        <tr><td>Мониторинг</td><td>Нет</td><td>Uptime + disk + Docker</td></tr>
-        <tr><td>Логи</td><td>stdout</td><td>Файловые + ротация</td></tr>
-        <tr><td>CI/CD</td><td>GitHub Actions (deploy)</td><td>+ тесты + linting</td></tr>
-    </table>
+        <div class="modes">
+            <div class="mode">
+                <span class="tag current">Сейчас</span>
+                <h4>Для сотрудников</h4>
+                <p>Доступ только из локальной сети института. 5–10 человек. Без SSL. Простой пароль.</p>
+            </div>
+            <div class="mode">
+                <span class="tag target">Целевой</span>
+                <h4>Для всех</h4>
+                <p>Доступ из интернета для alumni и сотрудников. 50–200 пользователей. SSL. Роли.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Бэкапы</h2>
+        <p class="sub">Каждый день — резервная копия базы и файлов</p>
+
+        <div class="compare-row">
+            <div class="compare-box now">
+                <h4>Сейчас</h4>
+                <ul>
+                    <li>Ручные бэкапы</li>
+                    <li>Нет автоматизации</li>
+                    <li>Нет проверки целостности</li>
+                </ul>
+            </div>
+            <div class="compare-arrow">→</div>
+            <div class="compare-box future">
+                <h4>Будет</h4>
+                <ul>
+                    <li>Автоматический бэкап раз в сутки</li>
+                    <li>Хранение 30 дней</li>
+                    <li>Проверка и уведомления</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>SSL и безопасность</h2>
+        <p class="sub">Защита данных и шифрование</p>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0">
+            <div class="simple-layer" style="flex-direction:column;align-items:flex-start;padding:20px">
+                <div style="font-size:1.5rem;margin-bottom:8px">🔒</div>
+                <h4 style="font-size:0.95rem;margin-bottom:4px">SSL-сертификат</h4>
+                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">HTTPS для всех страниц. Шифрование трафика.</p>
+            </div>
+            <div class="simple-layer" style="flex-direction:column;align-items:flex-start;padding:20px">
+                <div style="font-size:1.5rem;margin-bottom:8px">🛡</div>
+                <h4 style="font-size:0.95rem;margin-bottom:4px">Роли доступа</h4>
+                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Гость видит, пользователь загружает, редактор правит.</p>
+            </div>
+            <div class="simple-layer" style="flex-direction:column;align-items:flex-start;padding:20px">
+                <div style="font-size:1.5rem;margin-bottom:8px">📝</div>
+                <h4 style="font-size:0.95rem;margin-bottom:4px">Логи</h4>
+                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Кто, когда, что делал. История изменений.</p>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>

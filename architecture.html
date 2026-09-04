@@ -3,100 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Архитектура проекта — Архив СПбГТИ</title>
+    <title>Как устроена система — Архив СПбГТИ</title>
     <style>
-        :root { --bg:#0a0a0f; --surface:#12121a; --surface-elevated:#1a1a25; --text:#f5f5f5; --text-muted:#a0a0a8; --gold:#c9a96e; --border:#2a2a35; }
+        :root{--bg:#0a0a0f;--surface:#12121a;--surface-elevated:#1a1a25;--text:#f5f5f5;--text-muted:#a0a0a8;--gold:#c9a96e;--border:#2a2a35;--green:#4ade80;--red:#f87171}
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:60px 24px;max-width:900px;margin:0 auto}
-        a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
-        h1{font-size:2.2rem;margin-bottom:8px;color:var(--gold)}
-        h2{font-size:1.3rem;margin:48px 0 16px;color:var(--gold)}
-        h3{font-size:1.1rem;margin:24px 0 12px;color:var(--text)}
-        .subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:48px}
-        .breadcrumb{margin-bottom:32px;font-size:0.9rem}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+        .hero{padding:60px 24px 40px;text-align:center;max-width:800px;margin:0 auto}
+        .hero h1{font-size:2rem;margin-bottom:8px;color:var(--gold)}
+        .hero p{color:var(--text-muted);font-size:1rem}
+        .breadcrumb{max-width:900px;margin:0 auto;padding:0 24px;font-size:0.9rem;margin-top:24px}
+        .breadcrumb a{color:var(--gold);text-decoration:none}
+        .section{max-width:900px;margin:0 auto;padding:40px 24px}
+        .section h2{font-size:1.3rem;margin-bottom:8px;color:var(--gold)}
+        .section .sub{color:var(--text-muted);margin-bottom:32px}
         p{margin-bottom:16px;color:var(--text-muted)}
-        .layer-diagram{display:flex;flex-direction:column;gap:2px;margin:24px 0}
-        .layer{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;transition:border-color 0.2s}
-        .layer:hover{border-color:var(--gold)}
-        .layer a{display:block;color:var(--text)}
-        .layer-icon{font-size:1.5rem;margin-bottom:8px}
-        .layer-title{font-weight:600;color:var(--text);margin-bottom:4px}
-        .layer-desc{font-size:0.9rem;color:var(--text-muted)}
-        table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.9rem}
-        th{text-align:left;padding:12px 16px;background:var(--surface);border:1px solid var(--border);color:var(--gold);font-weight:500}
-        td{padding:12px 16px;border:1px solid var(--border);color:var(--text-muted)}
-        .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
-        .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
-        .card h4{margin-bottom:8px;color:var(--text)}
-        .card p{margin:0;font-size:0.9rem}
-        ul{margin:12px 0;padding-left:24px}
-        li{margin-bottom:8px;color:var(--text-muted)}
-        footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem}
-        @media(max-width:640px){.cards{grid-template-columns:1fr}h1{font-size:1.6rem}}
+
+        /* SIMPLE DIAGRAM */
+        .simple-diagram{display:flex;flex-direction:column;gap:4px;margin:24px 0;max-width:500px}
+        .simple-layer{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
+        .simple-layer .emoji{font-size:1.8rem;flex-shrink:0}
+        .simple-layer .info h4{font-size:1rem;margin-bottom:2px}
+        .simple-layer .info p{font-size:0.85rem;color:var(--text-muted);margin:0}
+        .arrow{text-align:center;color:var(--border);font-size:1.2rem}
+
+        /* COMPARISON */
+        .compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start;margin:16px 0}
+        .compare-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .compare-box h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+        .compare-box.now h4{color:var(--red)}
+        .compare-box.future h4{color:var(--green)}
+        .compare-box ul{list-style:none;padding:0}
+        .compare-box li{padding:6px 0;font-size:0.9rem;color:var(--text-muted);border-bottom:1px solid var(--border)}
+        .compare-box li:last-child{border:none}
+        .compare-box.now li::before{content:"✗ ";color:var(--red)}
+        .compare-box.future li::before{content:"✓ ";color:var(--green)}
+        .compare-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.5rem;padding-top:40px}
+
+        /* MODES */
+        .modes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+        .mode{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .mode h4{margin-bottom:8px}
+        .mode p{font-size:0.9rem;margin:0}
+        .mode .tag{display:inline-block;font-size:0.7rem;padding:2px 8px;border-radius:4px;margin-bottom:8px}
+        .mode .tag.current{background:#f8717122;color:var(--red);border:1px solid #f8717144}
+        .mode .tag.target{background:#4ade8022;color:var(--green);border:1px solid #4ade8044}
+
+        /* LINKS */
+        .link-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+        .link-card{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;color:var(--text);text-decoration:none;transition:border-color 0.2s}
+        .link-card:hover{border-color:var(--gold);text-decoration:none}
+        .link-card .icon{font-size:1.5rem}
+        .link-card .text h4{font-size:0.95rem;margin-bottom:2px}
+        .link-card .text p{font-size:0.8rem;color:var(--text-muted);margin:0}
+
+        footer{max-width:900px;margin:0 auto;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.85rem;text-align:center}
+        footer a{color:var(--gold);text-decoration:none}
+        @media(max-width:640px){.compare-row,.modes,.link-grid{grid-template-columns:1fr}.compare-arrow{transform:rotate(90deg);padding:8px 0}}
     </style>
 </head>
 <body>
     <div class="breadcrumb"><a href="index.html">← На главную</a></div>
 
-    <h1>Архитектура проекта</h1>
-    <p class="subtitle">Из чего состоит система archive.ti200.ru — все слои от интерфейса до сервера</p>
-
-    <h2>Обзор системы</h2>
-    <p>Проект состоит из 4 слоёв, каждый из которых отвечает за свою задачу:</p>
-
-    <div class="layer-diagram">
-        <a href="frontend.html" class="layer">
-            <div class="layer-icon">🖥</div>
-            <div class="layer-title">Клиентская часть</div>
-            <div class="layer-desc">Галерея · Загрузка · Поиск · Фильтры</div>
-        </a>
-        <a href="api.html" class="layer">
-            <div class="layer-icon">🔌</div>
-            <div class="layer-title">API слой</div>
-            <div class="layer-desc">Авторизация · Фильтры · CRUD · Роли</div>
-        </a>
-        <a href="storage.html" class="layer">
-            <div class="layer-icon">💾</div>
-            <div class="layer-title">Хранилище и базы данных</div>
-            <div class="layer-desc">Записи · Справочники · Связи · Файлы</div>
-        </a>
-        <a href="infrastructure.html" class="layer">
-            <div class="layer-icon">🏗</div>
-            <div class="layer-title">Инфраструктура</div>
-            <div class="layer-desc">Сервер · Docker · nginx · SSL</div>
-        </a>
+    <div class="hero">
+        <h1>Как устроена система</h1>
+        <p>Простая схема: что видит пользователь → где данные → на чём работает</p>
     </div>
 
-    <h2>Текущее состояние vs Целевое</h2>
+    <div class="section">
+        <h2>Из чего состоит</h2>
+        <p class="sub">4 слоя, каждый отвечает за свою задачу</p>
 
-    <table>
-        <tr><th>Слой</th><th>Сейчас (v1.0.0)</th><th>Целевое состояние</th></tr>
-        <tr><td><strong>Клиентская часть</strong></td><td>Базовая галерея с 4 фильтрами, vanilla JS, Playfair + Inter</td><td>Кастомный UI с 6 фильтрами, персональный поиск, timeline-навигация</td></tr>
-        <tr><td><strong>API</strong></td><td>Directus REST API (только Archive + Files)</td><td>Расширенный API: персоны, факультеты, события, теги, M2M-связи</td></tr>
-        <tr><td><strong>Хранилище</strong></td><td>1 таблица (Archive), нет справочников</td><td>7 таблиц + 3 таблицы связей, индексы, начальные данные</td></tr>
-        <tr><td><strong>Инфраструктура</strong></td><td>3 контейнера (nginx, Directus, PostgreSQL) + FFmpeg</td><td>Health-checks, backup-скрипты, мониторинг, rate limiting</td></tr>
-    </table>
-
-    <h2>Режимы эксплуатации</h2>
-
-    <div class="cards">
-        <div class="card">
-            <h4>🔒 Внутренний архив</h4>
-            <p>Текущий режим. Доступ через VPN или локальную сеть. 5–10 сотрудников. Базовая авторизация.</p>
-        </div>
-        <div class="card">
-            <h4>🌐 Публичный архив</h4>
-            <p>Целевой режим. Доступ из интернета. 50–200 пользователей (выпускники, студенты). JWT, rate limiting, CDN.</p>
+        <div class="simple-diagram">
+            <div class="simple-layer">
+                <div class="emoji">🖥</div>
+                <div class="info">
+                    <h4>Интерфейс</h4>
+                    <p>То, что видит пользователь: галерея, поиск, фильтры</p>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+            <div class="simple-layer">
+                <div class="emoji">🔌</div>
+                <div class="info">
+                    <h4>Сервер приложений</h4>
+                    <p>Обрабатывает запросы: «найди фото ФЭТ за 1985 год»</p>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+            <div class="simple-layer">
+                <div class="emoji">💾</div>
+                <div class="info">
+                    <h4>База данных</h4>
+                    <p>Хранит записи, справочники, связи между ними</p>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+            <div class="simple-layer">
+                <div class="emoji">📁</div>
+                <div class="info">
+                    <h4>Файлы</h4>
+                    <p>Сами фото, видео, документы на диске сервера</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <h2>Навигация по слоям</h2>
-    <ul>
-        <li><a href="frontend.html">Клиентская часть →</a> — UI, поиск, фильтры, галерея</li>
-        <li><a href="api.html">API слой →</a> — эндпоинты, авторизация, фильтрация</li>
-        <li><a href="storage.html">Хранилище и базы данных →</a> — модель данных, PostgreSQL, файлы</li>
-        <li><a href="infrastructure.html">Инфраструктура →</a> — Docker, nginx, SSL, деплой</li>
-    </ul>
+    <div class="section">
+        <h2>Как сейчас и как будет</h2>
+        <p class="sub">Что уже работает и что мы добавим</p>
+
+        <div class="compare-row">
+            <div class="compare-box now">
+                <h4>Сейчас</h4>
+                <ul>
+                    <li>Простая галерея с фото</li>
+                    <li>4 фильтра</li>
+                    <li>Нет справочников</li>
+                    <li>Нет связей</li>
+                </ul>
+            </div>
+            <div class="compare-arrow">→</div>
+            <div class="compare-box future">
+                <h4>Будет</h4>
+                <ul>
+                    <li>Полноценный каталог</li>
+                    <li>6 фильтров + поиск по людям</li>
+                    <li>Справочник (500+ карточек)</li>
+                    <li>Связи: фото ↔ люди ↔ события</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Режимы работы</h2>
+        <p class="sub">Два варианта доступа — на выбор</p>
+
+        <div class="modes">
+            <div class="mode">
+                <span class="tag current">Текущий</span>
+                <h4>Для сотрудников</h4>
+                <p>Доступ через локальную сеть. 5–10 человек. Простая авторизация.</p>
+            </div>
+            <div class="mode">
+                <span class="tag target">Целевой</span>
+                <h4>Для всех</h4>
+                <p>Доступ из интернета. 50–200 пользователей. Безопасность и скорость.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Подробнее</h2>
+        <p class="sub">Страницы с деталями по каждому слою</p>
+
+        <div class="link-grid">
+            <a href="frontend.html" class="link-card">
+                <div class="icon">🖥</div>
+                <div class="text">
+                    <h4>Интерфейс</h4>
+                    <p>Галерея, поиск, фильтры, макеты</p>
+                </div>
+            </a>
+            <a href="api.html" class="link-card">
+                <div class="icon">🔌</div>
+                <div class="text">
+                    <h4>Сервер</h4>
+                    <p>Запросы, авторизация, роли</p>
+                </div>
+            </a>
+            <a href="storage.html" class="link-card">
+                <div class="icon">💾</div>
+                <div class="text">
+                    <h4>Данные</h4>
+                    <p>Таблицы, связи, файлы</p>
+                </div>
+            </a>
+            <a href="infrastructure.html" class="link-card">
+                <div class="icon">🏗</div>
+                <div class="text">
+                    <h4>Сервер</h4>
+                    <p>Docker, SSL, бэкапы</p>
+                </div>
+            </a>
+        </div>
+    </div>
 
     <footer>
         <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
