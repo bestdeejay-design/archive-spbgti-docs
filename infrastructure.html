@@ -7,7 +7,8 @@
     <title>Сервер и безопасность — Архив СПбГТИ</title>
 </head>
 <body>
-    <div class="layout">    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+    <div class="layout">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -49,7 +50,7 @@
                     <li><a href="gallery-preview-direction-c.html">Хроника эпох</a></li>
                 </ul>
             </div>
-            <div class="nav-section">
+            <div class="nav-section open">
                 <div class="nav-section-title" onclick="toggleSection(this)">Документы</div>
                 <ul class="nav-links">
                     <li><a href="technical-requirements.html">Техническое задание</a></li>
@@ -60,124 +61,123 @@
         </nav>
     </aside>
         <main class="main">
-            
+            <div class="hero">
+            <h1>Сервер и безопасность</h1>
+            <p>Где работает система, как защищена, кто имеет доступ</p>
+            </div>
 
-    <div class="hero">
-        <h1>Сервер и безопасность</h1>
-        <p>Где работает система, как защищена, кто имеет доступ</p>
-    </div>
+            <div class="article">
+            <h2>Как устроено</h2>
+            <p class="sub">Всё работает на одном сервере, каждая часть — в своём контейнере</p>
 
-    <div class="section">
-        <h2>Как устроено</h2>
-        <p class="sub">Всё работает на одном сервере, каждая часть — в своём контейнере</p>
-
-        <div class="simple-diagram">
+            <div class="simple-diagram">
             <div class="simple-layer">
-                <div class="emoji">🌐</div>
-                <div class="info">
-                    <h4>Интернет → nginx</h4>
-                    <p>Вход в систему, SSL-сертификат (https), раздача статики</p>
-                </div>
+            <div class="emoji">🌐</div>
+            <div class="info">
+            <h4>Интернет → nginx</h4>
+            <p>Вход в систему, SSL-сертификат (https), раздача статики</p>
+            </div>
             </div>
             <div class="arrow">↓</div>
             <div class="simple-layer">
-                <div class="emoji">⚡</div>
-                <div class="info">
-                    <h4>Directus</h4>
-                    <p>Сервер приложений: API + админка + интерфейс</p>
-                </div>
+            <div class="emoji">⚡</div>
+            <div class="info">
+            <h4>Directus</h4>
+            <p>Сервер приложений: API + админка + интерфейс</p>
+            </div>
             </div>
             <div class="arrow">↓</div>
             <div class="simple-layer">
-                <div class="emoji">🗄</div>
-                <div class="info">
-                    <h4>PostgreSQL</h4>
-                    <p>База данных: справочники, записи, связи, пользователи</p>
-                </div>
+            <div class="emoji">🗄</div>
+            <div class="info">
+            <h4>PostgreSQL</h4>
+            <p>База данных: справочники, записи, связи, пользователи</p>
+            </div>
             </div>
             <div class="arrow">↓</div>
             <div class="simple-layer">
-                <div class="emoji">💾</div>
-                <div class="info">
-                    <h4>Диск сервера</h4>
-                    <p>Файлы: фото, видео, документы, бэкапы</p>
-                </div>
+            <div class="emoji">💾</div>
+            <div class="info">
+            <h4>Диск сервера</h4>
+            <p>Файлы: фото, видео, документы, бэкапы</p>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Два режима доступа</h2>
-        <p class="sub">Сейчас и после запуска — разные сценарии</p>
+            <div class="article">
+            <h2>Два режима доступа</h2>
+            <p class="sub">Сейчас и после запуска — разные сценарии</p>
 
-        <div class="modes">
+            <div class="modes">
             <div class="mode">
-                <span class="tag current">Сейчас</span>
-                <h4>Для сотрудников</h4>
-                <p>Доступ только из локальной сети института. 5–10 человек. Без SSL. Простой пароль.</p>
+            <span class="tag current">Сейчас</span>
+            <h4>Для сотрудников</h4>
+            <p>Доступ только из локальной сети института. 5–10 человек. Без SSL. Простой пароль.</p>
             </div>
             <div class="mode">
-                <span class="tag target">Целевой</span>
-                <h4>Для всех</h4>
-                <p>Доступ из интернета для alumni и сотрудников. 50–200 пользователей. SSL. Роли.</p>
+            <span class="tag target">Целевой</span>
+            <h4>Для всех</h4>
+            <p>Доступ из интернета для alumni и сотрудников. 50–200 пользователей. SSL. Роли.</p>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Бэкапы</h2>
-        <p class="sub">Каждый день — резервная копия базы и файлов</p>
+            <div class="article">
+            <h2>Бэкапы</h2>
+            <p class="sub">Каждый день — резервная копия базы и файлов</p>
 
-        <div class="compare-row">
+            <div class="compare-row">
             <div class="compare-box now">
-                <h4>Сейчас</h4>
-                <ul>
-                    <li>Ручные бэкапы</li>
-                    <li>Нет автоматизации</li>
-                    <li>Нет проверки целостности</li>
-                </ul>
+            <h4>Сейчас</h4>
+            <ul>
+            <li>Ручные бэкапы</li>
+            <li>Нет автоматизации</li>
+            <li>Нет проверки целостности</li>
+            </ul>
             </div>
             <div class="compare-arrow">→</div>
             <div class="compare-box future">
-                <h4>Будет</h4>
-                <ul>
-                    <li>Автоматический бэкап раз в сутки</li>
-                    <li>Хранение 30 дней</li>
-                    <li>Проверка и уведомления</li>
-                </ul>
+            <h4>Будет</h4>
+            <ul>
+            <li>Автоматический бэкап раз в сутки</li>
+            <li>Хранение 30 дней</li>
+            <li>Проверка и уведомления</li>
+            </ul>
             </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>SSL и безопасность</h2>
-        <p class="sub">Защита данных и шифрование</p>
-
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0">
-            <div class="simple-layer" style="flex-direction:column;align-items:flex-start;padding:20px">
-                <div style="font-size:1.5rem;margin-bottom:8px">🔒</div>
-                <h4 style="font-size:0.95rem;margin-bottom:4px">SSL-сертификат</h4>
-                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">HTTPS для всех страниц. Шифрование трафика.</p>
             </div>
+            </div>
+
+            <div class="article">
+            <h2>SSL и безопасность</h2>
+            <p class="sub">Защита данных и шифрование</p>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0">
             <div class="simple-layer" style="flex-direction:column;align-items:flex-start;padding:20px">
-                <div style="font-size:1.5rem;margin-bottom:8px">🛡</div>
-                <h4 style="font-size:0.95rem;margin-bottom:4px">Роли доступа</h4>
-                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Гость видит, пользователь загружает, редактор правит.</p>
+            <div style="font-size:1.5rem;margin-bottom:8px">🔒</div>
+            <h4 style="font-size:0.95rem;margin-bottom:4px">SSL-сертификат</h4>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin:0">HTTPS для всех страниц. Шифрование трафика.</p>
             </div>
             <div class="simple-layer" style="flex-direction:column;align-items:flex-start;padding:20px">
-                <div style="font-size:1.5rem;margin-bottom:8px">📝</div>
-                <h4 style="font-size:0.95rem;margin-bottom:4px">Логи</h4>
-                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Кто, когда, что делал. История изменений.</p>
+            <div style="font-size:1.5rem;margin-bottom:8px">🛡</div>
+            <h4 style="font-size:0.95rem;margin-bottom:4px">Роли доступа</h4>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Гость видит, пользователь загружает, редактор правит.</p>
             </div>
-        </div>
-    </div>
+            <div class="simple-layer" style="flex-direction:column;align-items:flex-start;padding:20px">
+            <div style="font-size:1.5rem;margin-bottom:8px">📝</div>
+            <h4 style="font-size:0.95rem;margin-bottom:4px">Логи</h4>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Кто, когда, что делал. История изменений.</p>
+            </div>
+            </div>
+            </div>
 
-    <footer>
-        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
-        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
-    </footer>
+            <footer>
+            <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+            <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+            </footer>
         </main>
-    </div>    <script>
+    </div>
+    <script>
     function toggleSidebar() {
         document.querySelector('.sidebar').classList.toggle('open');
         document.querySelector('.sidebar-overlay').classList.toggle('open');

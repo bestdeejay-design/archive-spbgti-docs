@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Данные — Архив СПбГТИ</title>
+    <title>Данные и файлы — Архив СПбГТИ</title>
 </head>
 <body>
-    <div class="layout">    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+    <div class="layout">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -49,7 +50,7 @@
                     <li><a href="gallery-preview-direction-c.html">Хроника эпох</a></li>
                 </ul>
             </div>
-            <div class="nav-section">
+            <div class="nav-section open">
                 <div class="nav-section-title" onclick="toggleSection(this)">Документы</div>
                 <ul class="nav-links">
                     <li><a href="technical-requirements.html">Техническое задание</a></li>
@@ -60,109 +61,107 @@
         </nav>
     </aside>
         <main class="main">
-            
+            <div class="hero">
+            <h1>Данные</h1>
+            <p>Где хранятся записи, справочники, связи и файлы</p>
+            </div>
 
-    <div class="hero">
-        <h1>Данные</h1>
-        <p>Где хранятся записи, справочники, связи и файлы</p>
-    </div>
+            <div class="article">
+            <h2>Что храним</h2>
+            <p class="sub">Две группы: справочники (справочная информация) и записи (сами файлы)</p>
 
-    <div class="section">
-        <h2>Что храним</h2>
-        <p class="sub">Две группы: справочники (справочная информация) и записи (сами файлы)</p>
+            <div class="er-grid">
+            <div class="er-card">
+            <h4>📋 Записи</h4>
+            <ul>
+            <li>Название</li>
+            <li>Описание</li>
+            <li>Год</li>
+            <li>Категория (фото/видео/документ)</li>
+            <li>Файл на диске</li>
+            <li>Кто загрузил</li>
+            </ul>
+            </div>
+            <div class="er-card">
+            <h4>👥 Люди</h4>
+            <ul>
+            <li>ФИО</li>
+            <li>Годы жизни</li>
+            <li>Роль (студент/преподаватель/выпускник)</li>
+            <li>Факультет</li>
+            <li>Фото профиля</li>
+            </ul>
+            </div>
+            <div class="er-card">
+            <h4>🏛 Факультеты</h4>
+            <ul>
+            <li>Название</li>
+            <li>Год основания</li>
+            <li>Описание</li>
+            <li>Декан</li>
+            <li>Кафедры</li>
+            </ul>
+            </div>
+            <div class="er-card">
+            <h4>📅 События</h4>
+            <ul>
+            <li>Название</li>
+            <li>Дата</li>
+            <li>Описание</li>
+            <li>Тип (выпускной/конференция/праздник)</li>
+            </ul>
+            </div>
+            <div class="er-card">
+            <h4>🏷 Теги</h4>
+            <ul>
+            <li>Название</li>
+            <li>Категория</li>
+            </ul>
+            </div>
+            <div class="er-card">
+            <h4>🔗 Связи</h4>
+            <ul>
+            <li>Запись ↔ Люди</li>
+            <li>Запись ↔ Событие</li>
+            <li>Запись ↔ Факультет</li>
+            <li>Запись ↔ Теги</li>
+            </ul>
+            </div>
+            </div>
+            </div>
 
-        <div class="er-grid">
-            <div class="er-card">
-                <h4>📋 Записи</h4>
-                <ul>
-                    <li>Название</li>
-                    <li>Описание</li>
-                    <li>Год</li>
-                    <li>Категория (фото/видео/документ)</li>
-                    <li>Файл на диске</li>
-                    <li>Кто загрузил</li>
-                </ul>
-            </div>
-            <div class="er-card">
-                <h4>👥 Люди</h4>
-                <ul>
-                    <li>ФИО</li>
-                    <li>Годы жизни</li>
-                    <li>Роль (студент/преподаватель/выпускник)</li>
-                    <li>Факультет</li>
-                    <li>Фото профиля</li>
-                </ul>
-            </div>
-            <div class="er-card">
-                <h4>🏛 Факультеты</h4>
-                <ul>
-                    <li>Название</li>
-                    <li>Год основания</li>
-                    <li>Описание</li>
-                    <li>Декан</li>
-                    <li>Кафедры</li>
-                </ul>
-            </div>
-            <div class="er-card">
-                <h4>📅 События</h4>
-                <ul>
-                    <li>Название</li>
-                    <li>Дата</li>
-                    <li>Описание</li>
-                    <li>Тип (выпускной/конференция/праздник)</li>
-                </ul>
-            </div>
-            <div class="er-card">
-                <h4>🏷 Теги</h4>
-                <ul>
-                    <li>Название</li>
-                    <li>Категория</li>
-                </ul>
-            </div>
-            <div class="er-card">
-                <h4>🔗 Связи</h4>
-                <ul>
-                    <li>Запись ↔ Люди</li>
-                    <li>Запись ↔ Событие</li>
-                    <li>Запись ↔ Факультет</li>
-                    <li>Запись ↔ Теги</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+            <div class="article">
+            <h2>Как сейчас и как будет</h2>
+            <p class="sub">Текущая модель → расширенная модель</p>
 
-    <div class="section">
-        <h2>Как сейчас и как будет</h2>
-        <p class="sub">Текущая модель → расширенная модель</p>
-
-        <div class="compare-row">
+            <div class="compare-row">
             <div class="compare-box now">
-                <h4>Сейчас (1 таблица)</h4>
-                <ul>
-                    <li>Только записи (название, файл, категория)</li>
-                    <li>Нет справочников</li>
-                    <li>Нет связей</li>
-                    <li>Метаданные в описании текстом</li>
-                </ul>
+            <h4>Сейчас (1 таблица)</h4>
+            <ul>
+            <li>Только записи (название, файл, категория)</li>
+            <li>Нет справочников</li>
+            <li>Нет связей</li>
+            <li>Метаданные в описании текстом</li>
+            </ul>
             </div>
             <div class="compare-arrow">→</div>
             <div class="compare-box future">
-                <h4>Будет (7+ таблиц)</h4>
-                <ul>
-                    <li>Записи с полями для поиска</li>
-                    <li>Справочники: люди, факультеты, события</li>
-                    <li>Связи между всеми таблицами</li>
-                    <li>Структурированные метаданные</li>
-                </ul>
+            <h4>Будет (7+ таблиц)</h4>
+            <ul>
+            <li>Записи с полями для поиска</li>
+            <li>Справочники: люди, факультеты, события</li>
+            <li>Связи между всеми таблицами</li>
+            <li>Структурированные метаданные</li>
+            </ul>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Где лежат файлы</h2>
-        <p class="sub">Сами фото, видео и документы — на диске сервера</p>
+            <div class="article">
+            <h2>Где лежат файлы</h2>
+            <p class="sub">Сами фото, видео и документы — на диске сервера</p>
 
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0;font-family:monospace;font-size:0.85rem;color:var(--text-muted)">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0;font-family:monospace;font-size:0.85rem;color:var(--text-muted)">
             <div style="margin-bottom:8px;color:var(--gold)">📁 uploads/</div>
             <div style="padding-left:16px">📁 2024/</div>
             <div style="padding-left:32px">📁 photo/</div>
@@ -174,15 +173,16 @@
             <div style="padding-left:48px">📄 diploma_001.pdf</div>
             <div style="padding-left:16px">📁 2023/</div>
             <div style="padding-left:32px">📁 photo/ ...</div>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <footer>
-        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
-        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
-    </footer>
+            <footer>
+            <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+            <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+            </footer>
         </main>
-    </div>    <script>
+    </div>
+    <script>
     function toggleSidebar() {
         document.querySelector('.sidebar').classList.toggle('open');
         document.querySelector('.sidebar-overlay').classList.toggle('open');

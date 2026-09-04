@@ -7,7 +7,8 @@
     <title>Конфиденциальность и персональные данные — Архив СПбГТИ</title>
 </head>
 <body>
-    <div class="layout">    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+    <div class="layout">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -31,7 +32,7 @@
                     <li><a href="article-strategy.html">Стратегия и план</a></li>
                 </ul>
             </div>
-            <div class="nav-section">
+            <div class="nav-section open">
                 <div class="nav-section-title" onclick="toggleSection(this)">Архитектура</div>
                 <ul class="nav-links">
                     <li><a href="architecture.html">Обзор системы</a></li>
@@ -49,7 +50,7 @@
                     <li><a href="gallery-preview-direction-c.html">Хроника эпох</a></li>
                 </ul>
             </div>
-            <div class="nav-section">
+            <div class="nav-section open">
                 <div class="nav-section-title" onclick="toggleSection(this)">Документы</div>
                 <ul class="nav-links">
                     <li><a href="technical-requirements.html">Техническое задание</a></li>
@@ -59,19 +60,16 @@
             </div>
         </nav>
     </aside>
-    <div class="layout">
-    <div class="breadcrumb"><a href="index.html">← На главную</a> · <a href="article-best-practices.html">← Статья 1</a></div>
-
-    <main class="main">
+        <main class="main">
             <div class="hero">
-        <div class="label">Статья 2 из 5</div>
-        <h1>Конфиденциальность и персональные данные</h1>
-        <p class="meta">Почему нельзя публиковать весь архив, какие данные защищены законом и как защитить институт от штрафов</p>
-    </div>
+            <div class="label">Статья 2 из 5</div>
+            <h1>Конфиденциальность и персональные данные</h1>
+            <p class="meta">Почему нельзя публиковать весь архив, какие данные защищены законом и как защитить институт от штрафов</p>
+            </div>
 
-    <nav class="toc">
-        <h3>Содержание</h3>
-        <ol>
+            <nav class="toc">
+            <h3>Содержание</h3>
+            <ol>
             <li><a href="#why-privacy">Зачем это важно</a></li>
             <li><a href="#laws">Законы: ФЗ-152 и GDPR</a></li>
             <li><a href="#personal-data">Что считается персональными данными</a></li>
@@ -79,266 +77,260 @@
             <li><a href="#matrix">Матрица доступа: что → кому</a></li>
             <li><a href="#consent">Согласие субъектов</a></li>
             <li><a href="#recommendations">Рекомендации для СПбГТИ</a></li>
-        </ol>
-    </nav>
+            </ol>
+            </nav>
 
-    <article class="article">
+            <article class="article">
 
-        <h2 id="why-privacy">1. Зачем это важно</h2>
+            <h2 id="why-privacy">1. Зачем это важно</h2>
 
-        <p>Публикация архива без учёта персональных данных — это не просто этическая проблема. Это <strong>юридическая ответственность</strong>: штрафы до 100 000 рублей за нарушение ФЗ-152, исковые заявления от граждан, репутационные потери для института.</p>
+            <p>Публикация архива без учёта персональных данных — это не просто этическая проблема. Это <strong>юридическая ответственность</strong>: штрафы до 100 000 рублей за нарушение ФЗ-152, исковые заявления от граждан, репутационные потери для института.</p>
 
-        <div class="callout danger">
+            <div class="callout danger">
             <p><strong>Реальный кейс:</strong> В 2019 году один российский вуз опубликовал фото выпускников с полными ФИО и годами обучения без согласия. Результат: 12 обращений граждан, проверка Роскомнадзора, публичные извинения. Стоимость урегулирования — около 500 000 рублей + репутация.</p>
-        </div>
+            </div>
 
-        <p>Цель этой статьи — помочь принять <strong>взвешенное решение</strong>: что публиковать свободно, что показывать только сотрудникам, а что держать под замком.</p>
+            <p>Цель этой статьи — помочь принять <strong>взвешенное решение</strong>: что публиковать свободно, что показывать только сотрудникам, а что держать под замком.</p>
 
-        <h2 id="laws">2. Законы: ФЗ-152 и GDPR</h2>
+            <h2 id="laws">2. Законы: ФЗ-152 и GDPR</h2>
 
-        <h3>Федеральный закон №152-ФЗ «О персональных данных» (Россия)</h3>
+            <h3>Федеральный закон №152-ФЗ «О персональных данных» (Россия)</h3>
 
-        <p>Основной закон, который регулирует обработку персональных данных в России. Ключевые положения:</p>
+            <p>Основной закон, который регулирует обработку персональных данных в России. Ключевые положения:</p>
 
-        <ul>
+            <ul>
             <li><strong>Статья 3:</strong> Персональные данные — любая информация, относящаяся к физическому лицу (ФИО, фото, дата рождения, место работы, образование)</li>
             <li><strong>Статья 6:</strong> Обработка ПДн допускается только с согласия субъекта или по закону</li>
             <li><strong>Статья 9:</strong> Согласие должно быть конкретным, информированным и сознательным</li>
             <li><strong>Статья 14:</strong> Субъект имеет право на доступ к своим данным и их удаление</li>
             <li><strong>Статья 24:</strong> Запрещается обработка ПДн без согласия (если нет иного законного основания)</li>
-        </ul>
+            </ul>
 
-        <div class="callout">
+            <div class="callout">
             <p><strong>Важно:</strong> Фотография человека + его ФИО + контекст (место/время/роль) = персональные данные. Даже «общее фото группы» является ПДн, если можно идентифицировать людей.</p>
-        </div>
+            </div>
 
-        <h3>GDPR (Европейский регламент)</h3>
+            <h3>GDPR (Европейский регламент)</h3>
 
-        <p>Если архив доступен из ЕС (интернет), GDPR тоже применим:</p>
+            <p>Если архив доступен из ЕС (интернет), GDPR тоже применим:</p>
 
-        <ul>
+            <ul>
             <li><strong>Право на забвение (Article 17):</strong> человек может потребовать удалить свои данные</li>
             <li><strong>Согласие (Article 7):</strong> должно быть явным, отдельным, отозванным в любой момент</li>
             <li><strong>DPIA (Article 35):</strong> оценка влияния на隐私 при обработке ПДн в больших масштабах</li>
-        </ul>
+            </ul>
 
-        <h2 id="personal-data">3. Что считается персональными данными в архиве</h2>
+            <h2 id="personal-data">3. Что считается персональными данными в архиве</h2>
 
-        <table>
+            <table>
             <thead>
-                <tr>
-                    <th>Тип данных</th>
-                    <th>Это ПДн?</th>
-                    <th>Почему</th>
-                </tr>
+            <tr>
+            <th>Тип данных</th>
+            <th>Это ПДн?</th>
+            <th>Почему</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Фото с ФИО на обороте</td>
-                    <td style="color:var(--red)">Да</td>
-                    <td>Фото + ФИО = идентификация</td>
-                </tr>
-                <tr>
-                    <td>Фото выпускного (общий план)</td>
-                    <td style="color:var(--red)">Да</td>
-                    <td>Лица + контекст = идентификация</td>
-                </tr>
-                <tr>
-                    <td>Фото здания, аудитории</td>
-                    <td style="color:var(--green)">Нет</td>
-                    <td>Нет людей — нет ПДн</td>
-                </tr>
-                <tr>
-                    <td>Пресс-релиз с именами</td>
-                    <td style="color:var(--gold)">Условно</td>
-                    <td>Публичная информация, но требует осторожности</td>
-                </tr>
-                <tr>
-                    <td>Приказ о назначении декана</td>
-                    <td style="color:var(--gold)">Условно</td>
-                    <td>Служебная информация, доступ — внутренний</td>
-                </tr>
-                <tr>
-                    <td>Диплом с оценками</td>
-                    <td style="color:var(--red)">Да</td>
-                    <td>ФИО + образование + оценки =_sensitive ПДн</td>
-                </tr>
-                <tr>
-                    <td>Трудовая книжка</td>
-                    <td style="color:var(--red)">Да</td>
-                    <td>Строго ограниченный доступ</td>
-                </tr>
-                <tr>
-                    <td>Фото несовершеннолетнего</td>
-                    <td style="color:var(--red)">Да (особые правила)</td>
-                    <td>Требуется согласие родителей/законных представителей</td>
-                </tr>
+            <tr>
+            <td>Фото с ФИО на обороте</td>
+            <td style="color:var(--red)">Да</td>
+            <td>Фото + ФИО = идентификация</td>
+            </tr>
+            <tr>
+            <td>Фото выпускного (общий план)</td>
+            <td style="color:var(--red)">Да</td>
+            <td>Лица + контекст = идентификация</td>
+            </tr>
+            <tr>
+            <td>Фото здания, аудитории</td>
+            <td style="color:var(--green)">Нет</td>
+            <td>Нет людей — нет ПДн</td>
+            </tr>
+            <tr>
+            <td>Пресс-релиз с именами</td>
+            <td style="color:var(--gold)">Условно</td>
+            <td>Публичная информация, но требует осторожности</td>
+            </tr>
+            <tr>
+            <td>Приказ о назначении декана</td>
+            <td style="color:var(--gold)">Условно</td>
+            <td>Служебная информация, доступ — внутренний</td>
+            </tr>
+            <tr>
+            <td>Диплом с оценками</td>
+            <td style="color:var(--red)">Да</td>
+            <td>ФИО + образование + оценки =_sensitive ПДн</td>
+            </tr>
+            <tr>
+            <td>Трудовая книжка</td>
+            <td style="color:var(--red)">Да</td>
+            <td>Строго ограниченный доступ</td>
+            </tr>
+            <tr>
+            <td>Фото несовершеннолетнего</td>
+            <td style="color:var(--red)">Да (особые правила)</td>
+            <td>Требуется согласие родителей/законных представителей</td>
+            </tr>
             </tbody>
-        </table>
+            </table>
 
-        <h2 id="risks">4. Риски публикации</h2>
+            <h2 id="risks">4. Риски публикации</h2>
 
-        <h3>Юридические риски</h3>
-        <ul>
+            <h3>Юридические риски</h3>
+            <ul>
             <li><strong>Штрафы Роскомнадзора:</strong> до 100 000 рублей за нарушение ФЗ-152</li>
             <li><strong>Исковые заявления:</strong> граждане могут потребовать компенсацию морального вреда</li>
             <li><strong>Проверки:</strong> жалоба → проверка → штрафы → публичный скандал</li>
-        </ul>
+            </ul>
 
-        <h3>Репутационные риски</h3>
-        <ul>
+            <h3>Репутационные риски</h3>
+            <ul>
             <li><strong>Скандал в прессе:</strong> «Вуз опубликовал фото выпускников без согласия»</li>
             <li><strong>Доверие:</strong> студенты и сотрудники перестанут доверять институту</li>
             <li><strong>Спонсоры:</strong> инвесторы не хотят быть связанными с нарушителями закона</li>
-        </ul>
+            </ul>
 
-        <h3>Практические риски</h3>
-        <ul>
+            <h3>Практические риски</h3>
+            <ul>
             <li><strong>Удаление:</strong> если кто-то потребует удалить фото — придётся искать и удалять вручную</li>
             <li><strong>Устаревшие записи:</strong> через 10 лет никто не вспомнит, кто дал согласие</li>
             <li><strong>Миграция:</strong> при переходе на новую систему метаданные о согласиях могут потеряться</li>
-        </ul>
+            </ul>
 
-        <h2 id="matrix">5. Матрица доступа</h2>
+            <h2 id="matrix">5. Матрица доступа</h2>
 
-        <p>Рекомендуемая модель: каждый тип данных имеет свой уровень доступа.</p>
+            <p>Рекомендуемая модель: каждый тип данных имеет свой уровень доступа.</p>
 
-        <table>
+            <table>
             <thead>
-                <tr>
-                    <th>Тип данных</th>
-                    <th>Публично</th>
-                    <th>Сотрудники</th>
-                    <th>Архивисты</th>
-                    <th>Основание</th>
-                </tr>
+            <tr>
+            <th>Тип данных</th>
+            <th>Публично</th>
+            <th>Сотрудники</th>
+            <th>Архивисты</th>
+            <th>Основание</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Фото зданий, корпусов</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td>Нет ПДн</td>
-                </tr>
-                <tr>
-                    <td>Пресс-релизы, буклеты</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td>Публичная информация</td>
-                </tr>
-                <tr>
-                    <td>Общие фото событий</td>
-                    <td style="color:var(--gold)">С согласием</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td>Согласие на публикацию</td>
-                </tr>
-                <tr>
-                    <td>Индивидуальные фото</td>
-                    <td style="color:var(--gold)">С согласием</td>
-                    <td style="color:var(--gold)">С согласием</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td>Согласие субъекта</td>
-                </tr>
-                <tr>
-                    <td>Фото несовершеннолетних</td>
-                    <td style="color:var(--red)">✗</td>
-                    <td style="color:var(--gold)">С согласием родителей</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td>ФЗ-152 + СК РФ</td>
-                </tr>
-                <tr>
-                    <td>Приказы, распоряжения</td>
-                    <td style="color:var(--red)">✗</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td style="color:var(--green)">✓</td>
-                    <td>Служебная информация</td>
-                </tr>
-                <tr>
-                    <td>Личные дела</td>
-                    <td style="color:var(--red)">✗</td>
-                    <td style="color:var(--red)">✗</td>
-                    <td style="color:var(--gold)">С согласием</td>
-                    <td>Строго ограничено</td>
-                </tr>
-                <tr>
-                    <td>Дипломы, оценки</td>
-                    <td style="color:var(--red)">✗</td>
-                    <td style="color:var(--red)">✗</td>
-                    <td style="color:var(--gold)">С согласием</td>
-                    <td>Сensitive ПДн</td>
-                </tr>
+            <tr>
+            <td>Фото зданий, корпусов</td>
+            <td style="color:var(--green)">✓</td>
+            <td style="color:var(--green)">✓</td>
+            <td style="color:var(--green)">✓</td>
+            <td>Нет ПДн</td>
+            </tr>
+            <tr>
+            <td>Пресс-релизы, буклеты</td>
+            <td style="color:var(--green)">✓</td>
+            <td style="color:var(--green)">✓</td>
+            <td style="color:var(--green)">✓</td>
+            <td>Публичная информация</td>
+            </tr>
+            <tr>
+            <td>Общие фото событий</td>
+            <td style="color:var(--gold)">С согласием</td>
+            <td style="color:var(--green)">✓</td>
+            <td style="color:var(--green)">✓</td>
+            <td>Согласие на публикацию</td>
+            </tr>
+            <tr>
+            <td>Индивидуальные фото</td>
+            <td style="color:var(--gold)">С согласием</td>
+            <td style="color:var(--gold)">С согласием</td>
+            <td style="color:var(--green)">✓</td>
+            <td>Согласие субъекта</td>
+            </tr>
+            <tr>
+            <td>Фото несовершеннолетних</td>
+            <td style="color:var(--red)">✗</td>
+            <td style="color:var(--gold)">С согласием родителей</td>
+            <td style="color:var(--green)">✓</td>
+            <td>ФЗ-152 + СК РФ</td>
+            </tr>
+            <tr>
+            <td>Приказы, распоряжения</td>
+            <td style="color:var(--red)">✗</td>
+            <td style="color:var(--green)">✓</td>
+            <td style="color:var(--green)">✓</td>
+            <td>Служебная информация</td>
+            </tr>
+            <tr>
+            <td>Личные дела</td>
+            <td style="color:var(--red)">✗</td>
+            <td style="color:var(--red)">✗</td>
+            <td style="color:var(--gold)">С согласием</td>
+            <td>Строго ограничено</td>
+            </tr>
+            <tr>
+            <td>Дипломы, оценки</td>
+            <td style="color:var(--red)">✗</td>
+            <td style="color:var(--red)">✗</td>
+            <td style="color:var(--gold)">С согласием</td>
+            <td>Сensitive ПДн</td>
+            </tr>
             </tbody>
-        </table>
+            </table>
 
-        <h2 id="consent">6. Система согласий</h2>
+            <h2 id="consent">6. Система согласий</h2>
 
-        <p>Ключевой вопрос: <strong>как получить и отслеживать согласия?</strong></p>
+            <p>Ключевой вопрос: <strong>как получить и отслеживать согласия?</strong></p>
 
-        <h3>Форма согласия</h3>
+            <h3>Форма согласия</h3>
 
-        <div class="callout">
+            <div class="callout">
             <p><strong>Пример текста согласия:</strong><br>
             «Я, [ФИО], даю согласие ГБОУ ВПО СПбГТИ (ТО) на обработку моих персональных данных (фотография, ФИО, год обучения/работы) для целей публикации в открытом архиве института. Настоящее согласие может быть отозвано в любой момент путём обращения в архивный отдел.»</p>
-        </div>
+            </div>
 
-        <h3>Что должно быть в системе</h3>
+            <h3>Что должно быть в системе</h3>
 
-        <ul>
+            <ul>
             <li><strong>Дата получения согласия</strong> — когда подписано</li>
             <li><strong>Объём согласия</strong> — какие данные, какая публикация</li>
             <li><strong>Срок действия</strong> — бессрочно или до определённой даты</li>
             <li><strong>Возможность отзыва</strong> — как отозвать, что происходит с данными</li>
             <li><strong>Привязка к записям</strong> — какое фото/документ касается этого согласия</li>
-        </ul>
+            </ul>
 
-        <div class="callout danger">
+            <div class="callout danger">
             <p><strong>Чего НЕЛЬЗЯ делать:</strong> Считать, что молчание = согласие. Нельзя написать «если вы не возражаете в течение 30 дней...». Согласие должно быть <em>явным</em>.</p>
-        </div>
+            </div>
 
-        <h2 id="recommendations">7. Рекомендации для СПбГТИ</h2>
+            <h2 id="recommendations">7. Рекомендации для СПбГТИ</h2>
 
-        <div class="recommendation">
+            <div class="recommendation">
             <h4>Шаг 1: Разделить архив на 3 зоны</h4>
             <p><strong>Зона 1 — Публичная (20%):</strong> маркетинговые фото, здания, общие планы, пресс-релизы. Без ограничений.<br>
             <strong>Зона 2 — Внутренняя (70%):</strong> фото сотрудников и студентов с согласиями. Доступ — по вузовскому email.<br>
             <strong>Зона 3 — Закрытая (10%):</strong> личные дела, дипломы, приказы. Только архивисты.</p>
-        </div>
+            </div>
 
-        <div class="recommendation">
+            <div class="recommendation">
             <h4>Шаг 2: Разработать положение о персональных данных</h4>
             <p>Внутренний нормативный акт, который определяет: кто обрабатывает, на каком основании, как хранит, как уничтожает. Юрист + IT-специалист + архивист.</p>
-        </div>
+            </div>
 
-        <div class="recommendation">
+            <div class="recommendation">
             <h4>Шаг 3: Начать с публичных материалов</h4>
             <p>Первыми выставлять фото зданий, буклеты, пресс-релизы — то, где нет ПДн. Это даёт результат без рисков. Параллельно собирать согласия на остальное.</p>
-        </div>
+            </div>
 
-        <div class="recommendation">
+            <div class="recommendation">
             <h4>Шаг 4: Автоматизировать согласия</h4>
             <p>При загрузке фото в архив — автоматическая форма: «Есть ли согласие? Дата? Кто дал?» Без этой информации запись не публикуется.</p>
-        </div>
+            </div>
 
-        <div class="callout success">
+            <div class="callout success">
             <p><strong>Главный принцип:</strong> Лучше показать меньше с соблюдением закона, чем показать всё с риском штрафа. Закон защищает институт, если он действует осторожно.</p>
-        </div>
+            </div>
 
-        <div class="callout">
+            <div class="callout">
             <p><strong>Следующая статья:</strong> <a href="article-access-models.html" style="color:var(--gold)">Модели доступа: кому что можно показывать →</a></p>
-        </div>
+            </div>
 
-    </article>
-
-    <footer>
-        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
-        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
-    </footer>
+            </article>
         </main>
     </div>
-    
     <script>
     function toggleSidebar() {
         document.querySelector('.sidebar').classList.toggle('open');

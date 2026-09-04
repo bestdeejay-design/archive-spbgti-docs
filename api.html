@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Сервер — Архив СПбГТИ</title>
+    <title>Сервер и поиск — Архив СПбГТИ</title>
 </head>
 <body>
-    <div class="layout">    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+    <div class="layout">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -49,7 +50,7 @@
                     <li><a href="gallery-preview-direction-c.html">Хроника эпох</a></li>
                 </ul>
             </div>
-            <div class="nav-section">
+            <div class="nav-section open">
                 <div class="nav-section-title" onclick="toggleSection(this)">Документы</div>
                 <ul class="nav-links">
                     <li><a href="technical-requirements.html">Техническое задание</a></li>
@@ -60,111 +61,110 @@
         </nav>
     </aside>
         <main class="main">
-            
+            <div class="hero">
+            <h1>Сервер</h1>
+            <p>Обрабатывает запросы: «найди фото», «загрузи файл», «кто на этом фото»</p>
+            </div>
 
-    <div class="hero">
-        <h1>Сервер</h1>
-        <p>Обрабатывает запросы: «найди фото», «загрузи файл», «кто на этом фото»</p>
-    </div>
+            <div class="article">
+            <h2>Как работает поиск</h2>
+            <p class="sub">Пользователь нажимает «Найти» → сервер ищет → возвращает результат</p>
 
-    <div class="section">
-        <h2>Как работает поиск</h2>
-        <p class="sub">Пользователь нажимает «Найти» → сервер ищет → возвращает результат</p>
-
-        <div class="flow">
+            <div class="flow">
             <div class="flow-step">
-                <div class="num">1</div>
-                <div class="info">
-                    <h4>Запрос</h4>
-                    <p>«Фото ФЭТ за 1985 год, выпускные»</p>
-                </div>
+            <div class="num">1</div>
+            <div class="info">
+            <h4>Запрос</h4>
+            <p>«Фото ФЭТ за 1985 год, выпускные»</p>
+            </div>
             </div>
             <div class="flow-arrow">↓</div>
             <div class="flow-step">
-                <div class="num">2</div>
-                <div class="info">
-                    <h4>Обработка</h4>
-                    <p>Сервер разбирает запрос на части: факультет, год, категория</p>
-                </div>
+            <div class="num">2</div>
+            <div class="info">
+            <h4>Обработка</h4>
+            <p>Сервер разбирает запрос на части: факультет, год, категория</p>
+            </div>
             </div>
             <div class="flow-arrow">↓</div>
             <div class="flow-step">
-                <div class="num">3</div>
-                <div class="info">
-                    <h4>Поиск в базе</h4>
-                    <p>Ищет записи, которые совпадают со всеми условиями</p>
-                </div>
+            <div class="num">3</div>
+            <div class="info">
+            <h4>Поиск в базе</h4>
+            <p>Ищет записи, которые совпадают со всеми условиями</p>
+            </div>
             </div>
             <div class="flow-arrow">↓</div>
             <div class="flow-step">
-                <div class="num">4</div>
-                <div class="info">
-                    <h4>Результат</h4>
-                    <p>Возвращает список: превью, название, год, ссылки</p>
-                </div>
+            <div class="num">4</div>
+            <div class="info">
+            <h4>Результат</h4>
+            <p>Возвращает список: превью, название, год, ссылки</p>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Кто что может</h2>
-        <p class="sub">Разные пользователи — разные права</p>
+            <div class="article">
+            <h2>Кто что может</h2>
+            <p class="sub">Разные пользователи — разные права</p>
 
-        <div class="compare-row">
+            <div class="compare-row">
             <div class="compare-box now">
-                <h4>Сейчас</h4>
-                <ul>
-                    <li>2 роли: гость и админ</li>
-                    <li>Простая авторизация</li>
-                    <li>Нет ограничений по загрузке</li>
-                </ul>
+            <h4>Сейчас</h4>
+            <ul>
+            <li>2 роли: гость и админ</li>
+            <li>Простая авторизация</li>
+            <li>Нет ограничений по загрузке</li>
+            </ul>
             </div>
             <div class="compare-arrow">→</div>
             <div class="compare-box future">
-                <h4>Будет</h4>
-                <ul>
-                    <li>4 роли: гость, пользователь, редактор, админ</li>
-                    <li>Вход по email/пароль</li>
-                    <li>Ограничения по объёму и типам</li>
-                </ul>
+            <h4>Будет</h4>
+            <ul>
+            <li>4 роли: гость, пользователь, редактор, админ</li>
+            <li>Вход по email/пароль</li>
+            <li>Ограничения по объёму и типам</li>
+            </ul>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Какие роли</h2>
-        <p class="sub">Каждый видит и делает только то, что ему положено</p>
+            <div class="article">
+            <h2>Какие роли</h2>
+            <p class="sub">Каждый видит и делает только то, что ему положено</p>
 
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0">
             <div class="flow-step" style="flex-direction:column;align-items:flex-start;padding:20px">
-                <div style="font-size:1.5rem;margin-bottom:8px">👁</div>
-                <h4 style="font-size:0.95rem;margin-bottom:4px">Гость</h4>
-                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Смотрит галерею, ищет</p>
+            <div style="font-size:1.5rem;margin-bottom:8px">👁</div>
+            <h4 style="font-size:0.95rem;margin-bottom:4px">Гость</h4>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Смотрит галерею, ищет</p>
             </div>
             <div class="flow-step" style="flex-direction:column;align-items:flex-start;padding:20px">
-                <div style="font-size:1.5rem;margin-bottom:8px">📤</div>
-                <h4 style="font-size:0.95rem;margin-bottom:4px">Пользователь</h4>
-                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Загружает файлы, заполняет поля</p>
+            <div style="font-size:1.5rem;margin-bottom:8px">📤</div>
+            <h4 style="font-size:0.95rem;margin-bottom:4px">Пользователь</h4>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Загружает файлы, заполняет поля</p>
             </div>
             <div class="flow-step" style="flex-direction:column;align-items:flex-start;padding:20px">
-                <div style="font-size:1.5rem;margin-bottom:8px">✏️</div>
-                <h4 style="font-size:0.95rem;margin-bottom:4px">Редактор</h4>
-                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Правит записи, связывает, удаляет</p>
+            <div style="font-size:1.5rem;margin-bottom:8px">✏️</div>
+            <h4 style="font-size:0.95rem;margin-bottom:4px">Редактор</h4>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Правит записи, связывает, удаляет</p>
             </div>
             <div class="flow-step" style="flex-direction:column;align-items:flex-start;padding:20px">
-                <div style="font-size:1.5rem;margin-bottom:8px">⚙️</div>
-                <h4 style="font-size:0.95rem;margin-bottom:4px">Админ</h4>
-                <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Управляет пользователями, настройками</p>
+            <div style="font-size:1.5rem;margin-bottom:8px">⚙️</div>
+            <h4 style="font-size:0.95rem;margin-bottom:4px">Админ</h4>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin:0">Управляет пользователями, настройками</p>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <footer>
-        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
-        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
-    </footer>
+            <footer>
+            <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+            <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+            </footer>
         </main>
-    </div>    <script>
+    </div>
+    <script>
     function toggleSidebar() {
         document.querySelector('.sidebar').classList.toggle('open');
         document.querySelector('.sidebar-overlay').classList.toggle('open');

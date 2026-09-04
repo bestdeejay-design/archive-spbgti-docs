@@ -7,7 +7,8 @@
     <title>Спецификация проекта — Архив СПбГТИ</title>
 </head>
 <body>
-    <div class="layout">    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+    <div class="layout">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -31,7 +32,7 @@
                     <li><a href="article-strategy.html">Стратегия и план</a></li>
                 </ul>
             </div>
-            <div class="nav-section">
+            <div class="nav-section open">
                 <div class="nav-section-title" onclick="toggleSection(this)">Архитектура</div>
                 <ul class="nav-links">
                     <li><a href="architecture.html">Обзор системы</a></li>
@@ -60,486 +61,490 @@
         </nav>
     </aside>
         <main class="main">
-            <div class="article">
-                <h1>Спецификация проекта</h1>
-                
-<h2>1. Назначение проекта</h2>
-
-<p>Система для сбора, хранения, каталогизации и публичного показа исторических материалов Санкт-Петербургского государственного технологического института (СПбГТИ). Представляет собой публичную галерею и административный интерфейс на базе Directus (REST API + PostgreSQL + файловое хранилище).</p>
-
-<p><strong>Домен:</strong> https://archive.ti200.ru</p>
-<p><strong>Статус:</strong> Запущен, работает в продакшене</p>
-<p><strong>Версия:</strong> v1.0.0</p>
-
-<p>---</p>
-
-<h2>2. Архитектура</h2>
-
-<h3>2.1. Общая схема</h3>
-
-<p>```</p>
-<p>Пользователь → DNS (archive.ti200.ru → 85.143.101.97)</p>
-<p>↓ HTTPS</p>
-<p>univerid.ru nginx (static-site, порт 443, SSL Let's Encrypt)</p>
-<p>↓                                  ↓</p>
-<p>/ → root /var/www/archive-gallery     /api/*, /admin/*</p>
-<p>(gallery/index.html, upload.html,     → proxy_pass http://directus:8055</p>
-<p>assets, plyr, admin-overlay)</p>
-<p>↓</p>
-<p>┌───────── Directus ──────────────────────┐</p>
-<p>│  PostgreSQL (архив, пользователи, роли)   │</p>
-<p>│  Файловое хранилище (/uploads)           │</p>
-<p>│  REST API (/items/Archive, /files,       │</p>
-<p>│            /users, /roles, /auth)        │</p>
-<p>└──────────────────────────────────────────┘</p>
-<p>↓</p>
-<p>┌─────────── thumbnails ──────────────────┐</p>
-<p>│  FFmpeg-сервис                          │</p>
-<p>│  Периодический опрос API → извлечение   │</p>
-<p>│  кадра на 1 сек → загрузка → обновление │</p>
-<p>│  metadata.thumbnail у файла              │</p>
-<p>└──────────────────────────────────────────┘</p>
-<p>```</p>
-
-<h3>2.2. Компоненты</h3>
-
-
-<h3>2.3. Стек технологий</h3>
-
-
-<p>---</p>
-
-<h2>3. Файловая структура проекта</h2>
-
-<p>```</p>
-<p>archive.ti200.ru/</p>
-<p>├── .github/workflows/deploy.yml      # CI/CD pipeline</p>
-<p>├── .gitignore</p>
-<p>├── docker-compose.yml                # 3 сервиса</p>
-<p>├── docker-compose.dev.yml            # Dev overrides</p>
-<p>├── DEPLOY.md                         # Инструкция по деплою</p>
-<p>├── VERSION                           # v1.0.0</p>
-<p>├── CHANGELOG.md                      # История версий</p>
-<p>├── SPEC.md                           # Настоящий документ</p>
-<p>│</p>
-<p>├── gallery/                          # Публичная часть</p>
-<p>│   ├── index.html                    # Галерея (441 строка)</p>
-<p>│   ├── upload.html                   # Форма загрузки</p>
-<p>│   ├── dns-check.html                # Тест DNS</p>
-<p>│   └── admin-overlay/                # Кастомизация админки Directus</p>
-<p>│       ├── index.html                # HTML-оболочка с CSS/JS</p>
-<p>│       ├── setup.sh / start.sh       # Скрипты установки</p>
-<p>│       ├── original.entry.js         # Оригинальный JS (бэкап)</p>
-<p>│       └── patched.entry.js          # Патченый JS (скрытие элементов)</p>
-<p>│</p>
-<p>├── thumbnails/                       # FFmpeg-сервис</p>
-<p>│   ├── Dockerfile                    # alpine + ffmpeg + curl + jq</p>
-<p>│   └── watch.sh                      # Скрипт периодического опроса</p>
-<p>│</p>
-<p>└── docker-compose.yml                # Docker Compose конфигурация</p>
-<p>```</p>
-
-<p>---</p>
-
-<h2>4. Docker-инфраструктура</h2>
-
-<h3>4.1. Сервисы</h3>
-
-
-<h3>4.2. Сети</h3>
-
-
-<p><strong>Ключевое:</strong> `directus` состоит в двух сетях — своей внутренней (для БД и thumbnails) и общей с внешним nginx (для приёма запросов с домена).</p>
-
-<h3>4.3. Переменные окружения Directus</h3>
-
-<p>```</p>
-<p>DB_CLIENT: pg</p>
-<p>DB_HOST: directus-db</p>
-<p>CORS_ENABLED: true</p>
-<p>CORS_ORIGIN: https://archive.ti200.ru</p>
-<p>PUBLIC_URL: https://archive.ti200.ru</p>
-<p>REFRESH_TOKEN_COOKIE_SAME_SITE: none</p>
-<p>REFRESH_TOKEN_COOKIE_SECURE: true</p>
-<p>STORAGE_LOCATIONS: local</p>
-<p>STORAGE_LOCAL_ROOT: /var/lib/directus/uploads</p>
-<p>TELEMETRY_DISABLED: true</p>
-<p>MARKETPLACE_DISABLED: true</p>
-<p>```</p>
-
-<h3>4.4. Тома Docker</h3>
-
-
-<h3>4.5. Монтирование файлов (bind mounts)</h3>
-
-
-<p>---</p>
-
-<h2>5. Галерея (gallery/index.html)</h2>
-
-<h3>5.1. Общее</h3>
-
-<ul>
-<li><strong>Язык:</strong> русский</li>
-<li><strong>Тема:</strong> тёмная (background #0a0a0f, акценты золотой #c9a96e)</li>
-<li><strong>Шрифты:</strong> Playfair Display (заголовки), Inter (основной)</li>
-<li><strong>Адаптивность:</strong> да (mobile, tablet, desktop)</li>
-<li><strong>Сборка:</strong> нет (vanilla HTML/CSS/JS)</li>
-<li><strong>Зависимости:</strong> нет (все ресурсы self-hosted)</li>
-</ul>
-
-<h3>5.2. Функции</h3>
-
-
-<h3>5.3. API-запросы</h3>
-
-<p><strong>Публичная галерея</strong> (без авторизации):</p>
-
-<p>```</p>
-<p>GET /items/Archive?filter[status][_eq]=published</p>
-<p>&fields[]=*</p>
-<p>&fields[]=file.id</p>
-<p>&fields[]=file.type</p>
-<p>&fields[]=file.metadata</p>
-<p>```</p>
-
-<p><strong>Авторизованная галерея</strong> (статический токен `pub-archive-read-2f8a3b1c`):</p>
-
-<p>```</p>
-<p>GET /items/Archive?filter[status][_eq]=published</p>
-<p>&fields[]=*</p>
-<p>&fields[]=file.id</p>
-<p>&fields[]=file.type</p>
-<p>&fields[]=file.metadata</p>
-<p>Headers: Authorization: Bearer pub-archive-read-2f8a3b1c</p>
-<p>```</p>
-
-<h3>5.4. Видео</h3>
-
-<ul>
-<li><strong>Определение:</strong> через `file.type` из API (video/mp4, video/webm, etc.)</li>
-<li><strong>Превью:</strong> `file.metadata.thumbnail` (UUID миниатюры, если сгенерирована)</li>
-<li><strong>Плеер:</strong> кастомный HTML/JS (не Plyr):</li>
-<li>Кнопка play/pause</li>
-<li>Прогресс-бар (перемотка)</li>
-<li>Таймер (текущее / общее время)</li>
-<li>Авто-скрытие контролов (3 сек бездействия)</li>
-<li>Play/pause по клику на видео и пробелу</li>
-<li><strong>В слайд-шоу:</strong> видео пропускаются, показываются только фото</li>
-</ul>
-
-<h3>5.5. Параметры изображений</h3>
-
-
-<p>---</p>
-
-<h2>6. Форма загрузки (gallery/upload.html)</h2>
-
-<h3>6.1. Общее</h3>
-
-<ul>
-<li><strong>Доступ:</strong> только для авторизованных пользователей (roles: Uploader, Editor, Admin)</li>
-<li><strong>Авторизация:</strong> JWT через Directus (логин/пароль)</li>
-<li><strong>Статус новых записей:</strong> draft (требуют публикации редактором)</li>
-</ul>
-
-<h3>6.2. Поля записи</h3>
-
-
-<h3>6.3. Процесс загрузки</h3>
-
-<p>1. Авторизация (JWT) → получение токена и userId</p>
-<p>2. Выбор файлов через input или drag & drop</p>
-<p>3. Множественная загрузка (очередь)</p>
-<p>4. POST /files → загрузка файла в Directus</p>
-<p>5. POST /items/Archive → создание записи с привязкой к файлу</p>
-
-<p>---</p>
-
-<h2>7. Административный интерфейс (admin-overlay)</h2>
-
-<h3>7.1. Описание</h3>
-
-<p>Стандартная админка Directus используется как есть, с минимальными модификациями:</p>
-
-<ul>
-<li><strong>Замена HTML-оболочки:</strong> кастомный `index.html` с дополнительными CSS-правилами</li>
-<li><strong>Патч entry.js:</strong> скрытие элементов (Marketplace, Report Bug, GitHub/Discord ссылки)</li>
-</ul>
-
-<h3>7.2. Скрытые элементы UI</h3>
-
-
-<h3>7.3. Версия</h3>
-
-<p>В правом нижнем углу админки отображается `Архив СПбГТИ · v1.0.0` (через CSS body::after).</p>
-
-<p>---</p>
-
-<h2>8. FFmpeg — сервис миниатюр (thumbnails/)</h2>
-
-<h3>8.1. Описание</h3>
-
-<p>Отдельный Docker-контейнер, который периодически опрашивает Directus API на предмет новых видеофайлов. Для каждого нового видео:</p>
-
-<p>1. Извлекает кадр на 1-й секунде (`ffmpeg -ss 00:00:01 -vframes 1`)</p>
-<p>2. Загружает полученное изображение в Directus (`POST /files`)</p>
-<p>3. Обновляет metadata исходного файла: `{"thumbnail": "<uuid>"}` (`PATCH /files/:id`)</p>
-
-<h3>8.2. Конфигурация</h3>
-
-<ul>
-<li><strong>Базовый образ:</strong> alpine:3.19</li>
-<li><strong>Пакеты:</strong> ffmpeg, curl, jq</li>
-<li><strong>Период опроса:</strong> 30 секунд</li>
-<li><strong>Эндпоинт:</strong> `http://directus:8055/files?limit=50&sort=-uploaded_on`</li>
-<li><strong>Фильтр:</strong> `select(.type | startswith("video/"))`</li>
-<li><strong>Состояние:</strong> файл `/tmp/processed_thumbs.txt` (чтобы не обрабатывать повторно)</li>
-<li><strong>Переменные окружения:</strong> ADMIN_EMAIL, ADMIN_PASSWORD (передаются из docker-compose)</li>
-</ul>
-
-<p>---</p>
-
-<h2>9. Роли и права</h2>
-
-<h3>9.1. Роли Directus</h3>
-
-
-<h3>9.2. Права на коллекции</h3>
-
-<p><strong>Uploader:</strong></p>
-<ul>
-<li>`Archive`: create (свои), read, update (свои)</li>
-<li>`directus_files`: create, read</li>
-</ul>
-
-<p><strong>Editor:</strong></p>
-<ul>
-<li>`Archive`: create, read, update, delete</li>
-<li>`directus_files`: create, read, update, delete</li>
-<li>Доступ к админ-панели (app_access: true)</li>
-<li>Settings/Users/Permissions скрыты через CSS</li>
-</ul>
-
-<p><strong>Gallery API (статический токен):</strong></p>
-<ul>
-<li>`Archive`: read</li>
-<li>`directus_files`: read</li>
-<li>Токен: `pub-archive-read-2f8a3b1c`</li>
-<li>Пользователь: `gallery@ti200.ru`</li>
-</ul>
-
-<p>---</p>
-
-<h2>10. API Directus</h2>
-
-<h3>10.1. Используемые эндпоинты</h3>
-
-
-<h3>10.2. Параметры запросов</h3>
-
-<p>```</p>
-<p>GET /items/Archive?filter[category][_eq]=students</p>
-<p>GET /items/Archive?filter[status][_eq]=published</p>
-<p>GET /items/Archive?filter[status][_eq]=draft</p>
-
-<p>GET /items/Archive?sort=-date_created</p>
-<p>GET /items/Archive?sort=date_taken</p>
-
-<p>GET /items/Archive?limit=25&page=1</p>
-
-<p>GET /items/Archive?search=текст</p>
-
-<p>GET /items/Archive?fields[]=file.id&fields[]=file.type&fields[]=file.metadata</p>
-<p>```</p>
-
-<p>---</p>
-
-<h2>11. База данных</h2>
-
-<h3>11.1. Коллекция Archive</h3>
-
-
-<h3>11.2. Категории</h3>
-
-
-<p>---</p>
-
-<h2>12. Пользователи (тестовые/рабочие)</h2>
-
-
-<p>---</p>
-
-<h2>13. CI/CD</h2>
-
-<h3>13.1. GitHub Actions</h3>
-
-<p><strong>Репозиторий:</strong> `github.com/bestdeejay-design/archive-spbgti`</p>
-<p><strong>Ветка:</strong> main</p>
-<p><strong>Триггер:</strong> push на main + workflow_dispatch</p>
-
-<p><strong>Шаги:</strong></p>
-<p>1. `actions/checkout@v4`</p>
-<p>2. Создание `.env` на сервере (из Secrets)</p>
-<p>3. <strong>Build Docker-образа thumbnails</strong> (linux/amd64, сохранить в tar.gz)</p>
-<p>4. `rsync -avz --delete` на сервер (исключая `.git*`, `.github`, `.env`, `docker-compose.dev.yml`)</p>
-<p>5. <strong>Загрузка Docker-образа</strong> на сервер (через tar.gz)</p>
-<p>6. <strong>Load image + docker compose up -d</strong></p>
-
-<h3>13.2. Secrets</h3>
-
-
-<h3>13.3. Исключения rsync</h3>
-
-<ul>
-<li>`.git*`, `.github`, `.env` — безопасность</li>
-<li>`docker-compose.dev.yml` — dev-конфиг</li>
-</ul>
-
-<p>---</p>
-
-<h2>14. Сервер</h2>
-
-<ul>
-<li><strong>Хостинг:</strong> Выделенный сервер</li>
-<li><strong>IP:</strong> 85.143.101.97</li>
-<li><strong>ОС:</strong> Ubuntu 24.04.4 LTS</li>
-<li><strong>Пользователь:</strong> archive</li>
-<li><strong>Доступ:</strong> SSH по ключу</li>
-<li><strong>Интернет:</strong> Исходящие соединения заблокированы</li>
-<li><strong>Docker:</strong> v29.6.1</li>
-<li><strong>Docker Compose:</strong> v5.2.0</li>
-<li><strong>Образы Docker:</strong> загружаются офлайн (через OrbStack → SCP)</li>
-<li><strong>SSL:</strong> Let's Encrypt (обновляются вручную, срок до сентября 2026)</li>
-<li><strong>Диск:</strong> 243G (14G занято)</li>
-<li><strong>ОЗУ:</strong> 7.8G</li>
-</ul>
-
-<h3>14.1. Схема DNS</h3>
-
-
-<p>---</p>
-
-<h2>15. Версионирование</h2>
-
-<ul>
-<li><strong>VERSION:</strong> Общая версия проекта</li>
-<li><strong>CHANGELOG.md:</strong> История изменений</li>
-<li><strong>git tag:</strong> Каждый релиз тегируется (v1.0.0, ...)</li>
-<li><strong>Версия в галерее:</strong> Внизу страницы (`Архив СПбГТИ · gallery v1.0.0`)</li>
-</ul>
-
-<p>---</p>
-
-<h2>16. Выполненные работы</h2>
-
-<ul>
-<li>[x] Установка и настройка Directus 10.12.0 (PostgreSQL, файловое хранилище)</li>
-<li>[x] Docker-инфраструктура (docker-compose, сети, volumes)</li>
-<li>[x] CI/CD GitHub Actions (rsync + build образа)</li>
-<li>[x] Публичная галерея с masonry-сеткой, фильтрами, лайтбоксом</li>
-<li>[x] Видеоподдержка: загрузка, кастомный плеер, миниатюры FFmpeg</li>
-<li>[x] Слайд-шоу с пропуском видео</li>
-<li>[x] Форма загрузки файлов (multi-file, drag & drop, категории)</li>
-<li>[x] Роли: Editor, Uploader, API-reader (с правами и токенами)</li>
-<li>[x] Admin-overlay (скрытие лишних элементов админки)</li>
-<li>[x] Сервис генерации миниатюр FFmpeg (Docker-контейнер)</li>
-<li>[x] nginx-конфигурация (прокси, статика, SSL)</li>
-<li>[x] Let's Encrypt SSL-сертификаты</li>
-<li>[x] Версионирование (VERSION, CHANGELOG, git tags)</li>
-</ul>
-
-<p>---</p>
-
-<h2>17. Расширенная модель данных (по требованиям 03.09.2026)</h2>
-
-<h3>17.1. Новые коллекции</h3>
-
-<p>Для поддержки 5 осей классификации и Requirements Analysis.md добавлены:</p>
-
-
-<h3>17.2. Связи many-to-many</h3>
-
-
-<h3>17.3. Дополнительные поля Archive</h3>
-
-
-<h3>17.4. Начальные данные</h3>
-
-<ul>
-<li>9 исторических факультетов СПбГТИ</li>
-<li>8 тематических тегов</li>
-</ul>
-
-<h3>17.5. Представления (Views)</h3>
-
-<ul>
-<li>`v_archive_by_faculty` — статистика по факультетам</li>
-<li>`v_archive_by_person` — статистика по персонам</li>
-<li>`v_archive_stats` — общая статистика архива</li>
-</ul>
-
-<h3>17.6. Миграция</h3>
-
-<p>Файл: `migrations/001_add_collections.sql`</p>
-<p>Скрипт: `migrations/run_migration.sh`</p>
-<p>Инструкция: `migrations/README.md`</p>
-
-<p>---</p>
-
-<h2>18. Планируемые доработки</h2>
-
-<h3>18.1. Приоритет 1 (Расширение модели данных)</h3>
-<ul>
-<li>[x] Создание коллекций: faculties, persons, events, tags</li>
-<li>[x] Создание связей many-to-many</li>
-<li>[x] Начальные данные (факультеты, теги)</li>
-<li>[ ] Настройка коллекций в Directus Admin</li>
-<li>[ ] Создание ролей: Contributor, Viewer</li>
-<li>[ ] Настройка прав доступа</li>
-</ul>
-
-<h3>18.2. Приоритет 2 (Кастомный фронтенд)</h3>
-<ul>
-<li>[ ] Страница просмотра (`/browse`) — галерея с фильтрами</li>
-<li>[ ] Страница загрузки (`/upload`) — форма с метаданными</li>
-<li>[ ] Админ-панель (`/admin`) — управление персонами, событиями, тегами</li>
-<li>[ ] Фильтры: год, факультет, тип контента, персона, событие</li>
-</ul>
-
-<h3>18.3. Приоритет 3 (Интерактив для выпускников)</h3>
-<ul>
-<li>[ ] Личный кабинет выпускника</li>
-<li>[ ] Альбомы выпусков</li>
-<li>[ ] Раздел «Благодарности»</li>
-<li>[ ] Комментарии/обсуждения</li>
-</ul>
-
-<h3>18.4. Приоритет 4 (Продвинутые функции)</h3>
-<ul>
-<li>[ ] Полнотекстовый поиск по документам (OCR)</li>
-<li>[ ] Поиск по лицу (Face Recognition)</li>
-<li>[ ] Мобильное приложение</li>
-</ul>
-
-<h3>18.5. Инфраструктура</h3>
-<ul>
-<li>[ ] Полный административный интерфейс (альтернатива стандартной админке Directus)</li>
-<li>[ ] Поиск по названию и описанию в галерее</li>
-<li>[ ] Статистика и дашборд</li>
-<li>[ ] Экспорт данных (CSV, JSON)</li>
-<li>[ ] Бэкапы БД и файлов</li>
-<li>[ ] Мониторинг (healthcheck, uptime)</li>
-</ul>
-
-<p>---</p>
-
-<h2>История изменений документа</h2>
-
-
+            <div class="hero">
+            <div class="label">Документ</div>
+            <h1>Спецификация проекта</h1>
+            <p class="meta">Полное описание функциональных требований</p>
             </div>
+
+            <article class="article">
+            <h1>Спецификация проекта</h1>
+
+            <h2>1. Назначение проекта</h2>
+
+            <p>Система для сбора, хранения, каталогизации и публичного показа исторических материалов Санкт-Петербургского государственного технологического института (СПбГТИ). Представляет собой публичную галерею и административный интерфейс на базе Directus (REST API + PostgreSQL + файловое хранилище).</p>
+
+            <p><strong>Домен:</strong> https://archive.ti200.ru</p>
+            <p><strong>Статус:</strong> Запущен, работает в продакшене</p>
+            <p><strong>Версия:</strong> v1.0.0</p>
+
+            <p>---</p>
+
+            <h2>2. Архитектура</h2>
+
+            <h3>2.1. Общая схема</h3>
+
+            <p>```</p>
+            <p>Пользователь → DNS (archive.ti200.ru → 85.143.101.97)</p>
+            <p>↓ HTTPS</p>
+            <p>univerid.ru nginx (static-site, порт 443, SSL Let's Encrypt)</p>
+            <p>↓                                  ↓</p>
+            <p>/ → root /var/www/archive-gallery     /api/*, /admin/*</p>
+            <p>(gallery/index.html, upload.html,     → proxy_pass http://directus:8055</p>
+            <p>assets, plyr, admin-overlay)</p>
+            <p>↓</p>
+            <p>┌───────── Directus ──────────────────────┐</p>
+            <p>│  PostgreSQL (архив, пользователи, роли)   │</p>
+            <p>│  Файловое хранилище (/uploads)           │</p>
+            <p>│  REST API (/items/Archive, /files,       │</p>
+            <p>│            /users, /roles, /auth)        │</p>
+            <p>└──────────────────────────────────────────┘</p>
+            <p>↓</p>
+            <p>┌─────────── thumbnails ──────────────────┐</p>
+            <p>│  FFmpeg-сервис                          │</p>
+            <p>│  Периодический опрос API → извлечение   │</p>
+            <p>│  кадра на 1 сек → загрузка → обновление │</p>
+            <p>│  metadata.thumbnail у файла              │</p>
+            <p>└──────────────────────────────────────────┘</p>
+            <p>```</p>
+
+            <h3>2.2. Компоненты</h3>
+
+
+            <h3>2.3. Стек технологий</h3>
+
+
+            <p>---</p>
+
+            <h2>3. Файловая структура проекта</h2>
+
+            <p>```</p>
+            <p>archive.ti200.ru/</p>
+            <p>├── .github/workflows/deploy.yml      # CI/CD pipeline</p>
+            <p>├── .gitignore</p>
+            <p>├── docker-compose.yml                # 3 сервиса</p>
+            <p>├── docker-compose.dev.yml            # Dev overrides</p>
+            <p>├── DEPLOY.md                         # Инструкция по деплою</p>
+            <p>├── VERSION                           # v1.0.0</p>
+            <p>├── CHANGELOG.md                      # История версий</p>
+            <p>├── SPEC.md                           # Настоящий документ</p>
+            <p>│</p>
+            <p>├── gallery/                          # Публичная часть</p>
+            <p>│   ├── index.html                    # Галерея (441 строка)</p>
+            <p>│   ├── upload.html                   # Форма загрузки</p>
+            <p>│   ├── dns-check.html                # Тест DNS</p>
+            <p>│   └── admin-overlay/                # Кастомизация админки Directus</p>
+            <p>│       ├── index.html                # HTML-оболочка с CSS/JS</p>
+            <p>│       ├── setup.sh / start.sh       # Скрипты установки</p>
+            <p>│       ├── original.entry.js         # Оригинальный JS (бэкап)</p>
+            <p>│       └── patched.entry.js          # Патченый JS (скрытие элементов)</p>
+            <p>│</p>
+            <p>├── thumbnails/                       # FFmpeg-сервис</p>
+            <p>│   ├── Dockerfile                    # alpine + ffmpeg + curl + jq</p>
+            <p>│   └── watch.sh                      # Скрипт периодического опроса</p>
+            <p>│</p>
+            <p>└── docker-compose.yml                # Docker Compose конфигурация</p>
+            <p>```</p>
+
+            <p>---</p>
+
+            <h2>4. Docker-инфраструктура</h2>
+
+            <h3>4.1. Сервисы</h3>
+
+
+            <h3>4.2. Сети</h3>
+
+
+            <p><strong>Ключевое:</strong> `directus` состоит в двух сетях — своей внутренней (для БД и thumbnails) и общей с внешним nginx (для приёма запросов с домена).</p>
+
+            <h3>4.3. Переменные окружения Directus</h3>
+
+            <p>```</p>
+            <p>DB_CLIENT: pg</p>
+            <p>DB_HOST: directus-db</p>
+            <p>CORS_ENABLED: true</p>
+            <p>CORS_ORIGIN: https://archive.ti200.ru</p>
+            <p>PUBLIC_URL: https://archive.ti200.ru</p>
+            <p>REFRESH_TOKEN_COOKIE_SAME_SITE: none</p>
+            <p>REFRESH_TOKEN_COOKIE_SECURE: true</p>
+            <p>STORAGE_LOCATIONS: local</p>
+            <p>STORAGE_LOCAL_ROOT: /var/lib/directus/uploads</p>
+            <p>TELEMETRY_DISABLED: true</p>
+            <p>MARKETPLACE_DISABLED: true</p>
+            <p>```</p>
+
+            <h3>4.4. Тома Docker</h3>
+
+
+            <h3>4.5. Монтирование файлов (bind mounts)</h3>
+
+
+            <p>---</p>
+
+            <h2>5. Галерея (gallery/index.html)</h2>
+
+            <h3>5.1. Общее</h3>
+
+            <ul>
+            <li><strong>Язык:</strong> русский</li>
+            <li><strong>Тема:</strong> тёмная (background #0a0a0f, акценты золотой #c9a96e)</li>
+            <li><strong>Шрифты:</strong> Playfair Display (заголовки), Inter (основной)</li>
+            <li><strong>Адаптивность:</strong> да (mobile, tablet, desktop)</li>
+            <li><strong>Сборка:</strong> нет (vanilla HTML/CSS/JS)</li>
+            <li><strong>Зависимости:</strong> нет (все ресурсы self-hosted)</li>
+            </ul>
+
+            <h3>5.2. Функции</h3>
+
+
+            <h3>5.3. API-запросы</h3>
+
+            <p><strong>Публичная галерея</strong> (без авторизации):</p>
+
+            <p>```</p>
+            <p>GET /items/Archive?filter[status][_eq]=published</p>
+            <p>&fields[]=*</p>
+            <p>&fields[]=file.id</p>
+            <p>&fields[]=file.type</p>
+            <p>&fields[]=file.metadata</p>
+            <p>```</p>
+
+            <p><strong>Авторизованная галерея</strong> (статический токен `pub-archive-read-2f8a3b1c`):</p>
+
+            <p>```</p>
+            <p>GET /items/Archive?filter[status][_eq]=published</p>
+            <p>&fields[]=*</p>
+            <p>&fields[]=file.id</p>
+            <p>&fields[]=file.type</p>
+            <p>&fields[]=file.metadata</p>
+            <p>Headers: Authorization: Bearer pub-archive-read-2f8a3b1c</p>
+            <p>```</p>
+
+            <h3>5.4. Видео</h3>
+
+            <ul>
+            <li><strong>Определение:</strong> через `file.type` из API (video/mp4, video/webm, etc.)</li>
+            <li><strong>Превью:</strong> `file.metadata.thumbnail` (UUID миниатюры, если сгенерирована)</li>
+            <li><strong>Плеер:</strong> кастомный HTML/JS (не Plyr):</li>
+            <li>Кнопка play/pause</li>
+            <li>Прогресс-бар (перемотка)</li>
+            <li>Таймер (текущее / общее время)</li>
+            <li>Авто-скрытие контролов (3 сек бездействия)</li>
+            <li>Play/pause по клику на видео и пробелу</li>
+            <li><strong>В слайд-шоу:</strong> видео пропускаются, показываются только фото</li>
+            </ul>
+
+            <h3>5.5. Параметры изображений</h3>
+
+
+            <p>---</p>
+
+            <h2>6. Форма загрузки (gallery/upload.html)</h2>
+
+            <h3>6.1. Общее</h3>
+
+            <ul>
+            <li><strong>Доступ:</strong> только для авторизованных пользователей (roles: Uploader, Editor, Admin)</li>
+            <li><strong>Авторизация:</strong> JWT через Directus (логин/пароль)</li>
+            <li><strong>Статус новых записей:</strong> draft (требуют публикации редактором)</li>
+            </ul>
+
+            <h3>6.2. Поля записи</h3>
+
+
+            <h3>6.3. Процесс загрузки</h3>
+
+            <p>1. Авторизация (JWT) → получение токена и userId</p>
+            <p>2. Выбор файлов через input или drag & drop</p>
+            <p>3. Множественная загрузка (очередь)</p>
+            <p>4. POST /files → загрузка файла в Directus</p>
+            <p>5. POST /items/Archive → создание записи с привязкой к файлу</p>
+
+            <p>---</p>
+
+            <h2>7. Административный интерфейс (admin-overlay)</h2>
+
+            <h3>7.1. Описание</h3>
+
+            <p>Стандартная админка Directus используется как есть, с минимальными модификациями:</p>
+
+            <ul>
+            <li><strong>Замена HTML-оболочки:</strong> кастомный `index.html` с дополнительными CSS-правилами</li>
+            <li><strong>Патч entry.js:</strong> скрытие элементов (Marketplace, Report Bug, GitHub/Discord ссылки)</li>
+            </ul>
+
+            <h3>7.2. Скрытые элементы UI</h3>
+
+
+            <h3>7.3. Версия</h3>
+
+            <p>В правом нижнем углу админки отображается `Архив СПбГТИ · v1.0.0` (через CSS body::after).</p>
+
+            <p>---</p>
+
+            <h2>8. FFmpeg — сервис миниатюр (thumbnails/)</h2>
+
+            <h3>8.1. Описание</h3>
+
+            <p>Отдельный Docker-контейнер, который периодически опрашивает Directus API на предмет новых видеофайлов. Для каждого нового видео:</p>
+
+            <p>1. Извлекает кадр на 1-й секунде (`ffmpeg -ss 00:00:01 -vframes 1`)</p>
+            <p>2. Загружает полученное изображение в Directus (`POST /files`)</p>
+            <p>3. Обновляет metadata исходного файла: `{"thumbnail": "<uuid>"}` (`PATCH /files/:id`)</p>
+
+            <h3>8.2. Конфигурация</h3>
+
+            <ul>
+            <li><strong>Базовый образ:</strong> alpine:3.19</li>
+            <li><strong>Пакеты:</strong> ffmpeg, curl, jq</li>
+            <li><strong>Период опроса:</strong> 30 секунд</li>
+            <li><strong>Эндпоинт:</strong> `http://directus:8055/files?limit=50&sort=-uploaded_on`</li>
+            <li><strong>Фильтр:</strong> `select(.type | startswith("video/"))`</li>
+            <li><strong>Состояние:</strong> файл `/tmp/processed_thumbs.txt` (чтобы не обрабатывать повторно)</li>
+            <li><strong>Переменные окружения:</strong> ADMIN_EMAIL, ADMIN_PASSWORD (передаются из docker-compose)</li>
+            </ul>
+
+            <p>---</p>
+
+            <h2>9. Роли и права</h2>
+
+            <h3>9.1. Роли Directus</h3>
+
+
+            <h3>9.2. Права на коллекции</h3>
+
+            <p><strong>Uploader:</strong></p>
+            <ul>
+            <li>`Archive`: create (свои), read, update (свои)</li>
+            <li>`directus_files`: create, read</li>
+            </ul>
+
+            <p><strong>Editor:</strong></p>
+            <ul>
+            <li>`Archive`: create, read, update, delete</li>
+            <li>`directus_files`: create, read, update, delete</li>
+            <li>Доступ к админ-панели (app_access: true)</li>
+            <li>Settings/Users/Permissions скрыты через CSS</li>
+            </ul>
+
+            <p><strong>Gallery API (статический токен):</strong></p>
+            <ul>
+            <li>`Archive`: read</li>
+            <li>`directus_files`: read</li>
+            <li>Токен: `pub-archive-read-2f8a3b1c`</li>
+            <li>Пользователь: `gallery@ti200.ru`</li>
+            </ul>
+
+            <p>---</p>
+
+            <h2>10. API Directus</h2>
+
+            <h3>10.1. Используемые эндпоинты</h3>
+
+
+            <h3>10.2. Параметры запросов</h3>
+
+            <p>```</p>
+            <p>GET /items/Archive?filter[category][_eq]=students</p>
+            <p>GET /items/Archive?filter[status][_eq]=published</p>
+            <p>GET /items/Archive?filter[status][_eq]=draft</p>
+
+            <p>GET /items/Archive?sort=-date_created</p>
+            <p>GET /items/Archive?sort=date_taken</p>
+
+            <p>GET /items/Archive?limit=25&page=1</p>
+
+            <p>GET /items/Archive?search=текст</p>
+
+            <p>GET /items/Archive?fields[]=file.id&fields[]=file.type&fields[]=file.metadata</p>
+            <p>```</p>
+
+            <p>---</p>
+
+            <h2>11. База данных</h2>
+
+            <h3>11.1. Коллекция Archive</h3>
+
+
+            <h3>11.2. Категории</h3>
+
+
+            <p>---</p>
+
+            <h2>12. Пользователи (тестовые/рабочие)</h2>
+
+
+            <p>---</p>
+
+            <h2>13. CI/CD</h2>
+
+            <h3>13.1. GitHub Actions</h3>
+
+            <p><strong>Репозиторий:</strong> `github.com/bestdeejay-design/archive-spbgti`</p>
+            <p><strong>Ветка:</strong> main</p>
+            <p><strong>Триггер:</strong> push на main + workflow_dispatch</p>
+
+            <p><strong>Шаги:</strong></p>
+            <p>1. `actions/checkout@v4`</p>
+            <p>2. Создание `.env` на сервере (из Secrets)</p>
+            <p>3. <strong>Build Docker-образа thumbnails</strong> (linux/amd64, сохранить в tar.gz)</p>
+            <p>4. `rsync -avz --delete` на сервер (исключая `.git*`, `.github`, `.env`, `docker-compose.dev.yml`)</p>
+            <p>5. <strong>Загрузка Docker-образа</strong> на сервер (через tar.gz)</p>
+            <p>6. <strong>Load image + docker compose up -d</strong></p>
+
+            <h3>13.2. Secrets</h3>
+
+
+            <h3>13.3. Исключения rsync</h3>
+
+            <ul>
+            <li>`.git*`, `.github`, `.env` — безопасность</li>
+            <li>`docker-compose.dev.yml` — dev-конфиг</li>
+            </ul>
+
+            <p>---</p>
+
+            <h2>14. Сервер</h2>
+
+            <ul>
+            <li><strong>Хостинг:</strong> Выделенный сервер</li>
+            <li><strong>IP:</strong> 85.143.101.97</li>
+            <li><strong>ОС:</strong> Ubuntu 24.04.4 LTS</li>
+            <li><strong>Пользователь:</strong> archive</li>
+            <li><strong>Доступ:</strong> SSH по ключу</li>
+            <li><strong>Интернет:</strong> Исходящие соединения заблокированы</li>
+            <li><strong>Docker:</strong> v29.6.1</li>
+            <li><strong>Docker Compose:</strong> v5.2.0</li>
+            <li><strong>Образы Docker:</strong> загружаются офлайн (через OrbStack → SCP)</li>
+            <li><strong>SSL:</strong> Let's Encrypt (обновляются вручную, срок до сентября 2026)</li>
+            <li><strong>Диск:</strong> 243G (14G занято)</li>
+            <li><strong>ОЗУ:</strong> 7.8G</li>
+            </ul>
+
+            <h3>14.1. Схема DNS</h3>
+
+
+            <p>---</p>
+
+            <h2>15. Версионирование</h2>
+
+            <ul>
+            <li><strong>VERSION:</strong> Общая версия проекта</li>
+            <li><strong>CHANGELOG.md:</strong> История изменений</li>
+            <li><strong>git tag:</strong> Каждый релиз тегируется (v1.0.0, ...)</li>
+            <li><strong>Версия в галерее:</strong> Внизу страницы (`Архив СПбГТИ · gallery v1.0.0`)</li>
+            </ul>
+
+            <p>---</p>
+
+            <h2>16. Выполненные работы</h2>
+
+            <ul>
+            <li>[x] Установка и настройка Directus 10.12.0 (PostgreSQL, файловое хранилище)</li>
+            <li>[x] Docker-инфраструктура (docker-compose, сети, volumes)</li>
+            <li>[x] CI/CD GitHub Actions (rsync + build образа)</li>
+            <li>[x] Публичная галерея с masonry-сеткой, фильтрами, лайтбоксом</li>
+            <li>[x] Видеоподдержка: загрузка, кастомный плеер, миниатюры FFmpeg</li>
+            <li>[x] Слайд-шоу с пропуском видео</li>
+            <li>[x] Форма загрузки файлов (multi-file, drag & drop, категории)</li>
+            <li>[x] Роли: Editor, Uploader, API-reader (с правами и токенами)</li>
+            <li>[x] Admin-overlay (скрытие лишних элементов админки)</li>
+            <li>[x] Сервис генерации миниатюр FFmpeg (Docker-контейнер)</li>
+            <li>[x] nginx-конфигурация (прокси, статика, SSL)</li>
+            <li>[x] Let's Encrypt SSL-сертификаты</li>
+            <li>[x] Версионирование (VERSION, CHANGELOG, git tags)</li>
+            </ul>
+
+            <p>---</p>
+
+            <h2>17. Расширенная модель данных (по требованиям 03.09.2026)</h2>
+
+            <h3>17.1. Новые коллекции</h3>
+
+            <p>Для поддержки 5 осей классификации и Requirements Analysis.md добавлены:</p>
+
+
+            <h3>17.2. Связи many-to-many</h3>
+
+
+            <h3>17.3. Дополнительные поля Archive</h3>
+
+
+            <h3>17.4. Начальные данные</h3>
+
+            <ul>
+            <li>9 исторических факультетов СПбГТИ</li>
+            <li>8 тематических тегов</li>
+            </ul>
+
+            <h3>17.5. Представления (Views)</h3>
+
+            <ul>
+            <li>`v_archive_by_faculty` — статистика по факультетам</li>
+            <li>`v_archive_by_person` — статистика по персонам</li>
+            <li>`v_archive_stats` — общая статистика архива</li>
+            </ul>
+
+            <h3>17.6. Миграция</h3>
+
+            <p>Файл: `migrations/001_add_collections.sql`</p>
+            <p>Скрипт: `migrations/run_migration.sh`</p>
+            <p>Инструкция: `migrations/README.md`</p>
+
+            <p>---</p>
+
+            <h2>18. Планируемые доработки</h2>
+
+            <h3>18.1. Приоритет 1 (Расширение модели данных)</h3>
+            <ul>
+            <li>[x] Создание коллекций: faculties, persons, events, tags</li>
+            <li>[x] Создание связей many-to-many</li>
+            <li>[x] Начальные данные (факультеты, теги)</li>
+            <li>[ ] Настройка коллекций в Directus Admin</li>
+            <li>[ ] Создание ролей: Contributor, Viewer</li>
+            <li>[ ] Настройка прав доступа</li>
+            </ul>
+
+            <h3>18.2. Приоритет 2 (Кастомный фронтенд)</h3>
+            <ul>
+            <li>[ ] Страница просмотра (`/browse`) — галерея с фильтрами</li>
+            <li>[ ] Страница загрузки (`/upload`) — форма с метаданными</li>
+            <li>[ ] Админ-панель (`/admin`) — управление персонами, событиями, тегами</li>
+            <li>[ ] Фильтры: год, факультет, тип контента, персона, событие</li>
+            </ul>
+
+            <h3>18.3. Приоритет 3 (Интерактив для выпускников)</h3>
+            <ul>
+            <li>[ ] Личный кабинет выпускника</li>
+            <li>[ ] Альбомы выпусков</li>
+            <li>[ ] Раздел «Благодарности»</li>
+            <li>[ ] Комментарии/обсуждения</li>
+            </ul>
+
+            <h3>18.4. Приоритет 4 (Продвинутые функции)</h3>
+            <ul>
+            <li>[ ] Полнотекстовый поиск по документам (OCR)</li>
+            <li>[ ] Поиск по лицу (Face Recognition)</li>
+            <li>[ ] Мобильное приложение</li>
+            </ul>
+
+            <h3>18.5. Инфраструктура</h3>
+            <ul>
+            <li>[ ] Полный административный интерфейс (альтернатива стандартной админке Directus)</li>
+            <li>[ ] Поиск по названию и описанию в галерее</li>
+            <li>[ ] Статистика и дашборд</li>
+            <li>[ ] Экспорт данных (CSV, JSON)</li>
+            <li>[ ] Бэкапы БД и файлов</li>
+            <li>[ ] Мониторинг (healthcheck, uptime)</li>
+            </ul>
+
+            <p>---</p>
+
+            <h2>История изменений документа</h2></article>
         </main>
-    </div>    <script>
+    </div>
+    <script>
     function toggleSidebar() {
         document.querySelector('.sidebar').classList.toggle('open');
         document.querySelector('.sidebar-overlay').classList.toggle('open');

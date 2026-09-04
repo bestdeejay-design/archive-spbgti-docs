@@ -7,7 +7,8 @@
     <title>Интерфейс — Архив СПбГТИ</title>
 </head>
 <body>
-    <div class="layout">    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+    <div class="layout">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -49,7 +50,7 @@
                     <li><a href="gallery-preview-direction-c.html">Хроника эпох</a></li>
                 </ul>
             </div>
-            <div class="nav-section">
+            <div class="nav-section open">
                 <div class="nav-section-title" onclick="toggleSection(this)">Документы</div>
                 <ul class="nav-links">
                     <li><a href="technical-requirements.html">Техническое задание</a></li>
@@ -60,132 +61,131 @@
         </nav>
     </aside>
         <main class="main">
-            
+            <div class="hero">
+            <h1>Интерфейс</h1>
+            <p>То, что видит пользователь: галерея, поиск, фильтры, загрузка</p>
+            </div>
 
-    <div class="hero">
-        <h1>Интерфейс</h1>
-        <p>То, что видит пользователь: галерея, поиск, фильтры, загрузка</p>
-    </div>
+            <div class="article">
+            <h2>Три основных экрана</h2>
+            <p class="sub">Каждый экран — отдельная страница со своей задачей</p>
 
-    <div class="section">
-        <h2>Три основных экрана</h2>
-        <p class="sub">Каждый экран — отдельная страница со своей задачей</p>
-
-        <div class="wireframes">
+            <div class="wireframes">
             <!-- ГАЛЕРЕЯ -->
             <div class="wireframe">
-                <div class="wireframe-header">/ (главная)</div>
-                <div class="wireframe-body">
-                    <div class="wireframe-title">📷 Галерея</div>
-                    <div class="mock-search">
-                        <div class="mock-input">Поиск по имени, году...</div>
-                        <div class="mock-btn">Найти</div>
-                    </div>
-                    <div class="mock-filters">
-                        <span class="mock-pill active">Все</span>
-                        <span class="mock-pill">Фото</span>
-                        <span class="mock-pill">Видео</span>
-                        <span class="mock-pill">Документы</span>
-                    </div>
-                    <div class="mock-grid">
-                        <div class="mock-card">📷</div>
-                        <div class="mock-card">🎬</div>
-                        <div class="mock-card">📷</div>
-                        <div class="mock-card">📷</div>
-                        <div class="mock-card">📄</div>
-                        <div class="mock-card">📷</div>
-                    </div>
-                </div>
+            <div class="wireframe-header">/ (главная)</div>
+            <div class="wireframe-body">
+            <div class="wireframe-title">📷 Галерея</div>
+            <div class="mock-search">
+            <div class="mock-input">Поиск по имени, году...</div>
+            <div class="mock-btn">Найти</div>
+            </div>
+            <div class="mock-filters">
+            <span class="mock-pill active">Все</span>
+            <span class="mock-pill">Фото</span>
+            <span class="mock-pill">Видео</span>
+            <span class="mock-pill">Документы</span>
+            </div>
+            <div class="mock-grid">
+            <div class="mock-card">📷</div>
+            <div class="mock-card">🎬</div>
+            <div class="mock-card">📷</div>
+            <div class="mock-card">📷</div>
+            <div class="mock-card">📄</div>
+            <div class="mock-card">📷</div>
+            </div>
+            </div>
             </div>
 
             <!-- ЗАГРУЗКА -->
             <div class="wireframe">
-                <div class="wireframe-header">/upload</div>
-                <div class="wireframe-body">
-                    <div class="wireframe-title">📤 Загрузка</div>
-                    <div style="border:2px dashed var(--border);border-radius:8px;padding:24px;text-align:center;margin-bottom:12px">
-                        <div style="font-size:2rem;margin-bottom:8px">📁</div>
-                        <div style="font-size:0.8rem;color:var(--text-muted)">Перетащите файлы сюда</div>
-                    </div>
-                    <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px">Название *</div>
-                    <div class="mock-input" style="width:100%;margin-bottom:8px">Фото выпускного 1985</div>
-                    <div style="display:flex;gap:8px">
-                        <div class="mock-input" style="flex:1">Год: 1985</div>
-                        <div class="mock-input" style="flex:1">Факультет: ФЭТ</div>
-                    </div>
-                </div>
+            <div class="wireframe-header">/upload</div>
+            <div class="wireframe-body">
+            <div class="wireframe-title">📤 Загрузка</div>
+            <div style="border:2px dashed var(--border);border-radius:8px;padding:24px;text-align:center;margin-bottom:12px">
+            <div style="font-size:2rem;margin-bottom:8px">📁</div>
+            <div style="font-size:0.8rem;color:var(--text-muted)">Перетащите файлы сюда</div>
+            </div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px">Название *</div>
+            <div class="mock-input" style="width:100%;margin-bottom:8px">Фото выпускного 1985</div>
+            <div style="display:flex;gap:8px">
+            <div class="mock-input" style="flex:1">Год: 1985</div>
+            <div class="mock-input" style="flex:1">Факультет: ФЭТ</div>
+            </div>
+            </div>
             </div>
 
             <!-- АДМИНКА -->
             <div class="wireframe">
-                <div class="wireframe-header">/admin</div>
-                <div class="wireframe-body">
-                    <div class="wireframe-title">⚙️ Управление</div>
-                    <div style="display:flex;flex-direction:column;gap:6px">
-                        <div class="mock-input" style="width:100%">👥 Люди (512)</div>
-                        <div class="mock-input" style="width:100%">🏛 Факультеты (9)</div>
-                        <div class="mock-input" style="width:100%">📅 События (87)</div>
-                        <div class="mock-input" style="width:100()">🏷 Теги (8)</div>
-                        <div class="mock-input" style="width:100%">📋 Записи (2,847)</div>
-                    </div>
-                </div>
+            <div class="wireframe-header">/admin</div>
+            <div class="wireframe-body">
+            <div class="wireframe-title">⚙️ Управление</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="mock-input" style="width:100%">👥 Люди (512)</div>
+            <div class="mock-input" style="width:100%">🏛 Факультеты (9)</div>
+            <div class="mock-input" style="width:100%">📅 События (87)</div>
+            <div class="mock-input" style="width:100()">🏷 Теги (8)</div>
+            <div class="mock-input" style="width:100%">📋 Записи (2,847)</div>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Как сейчас и как будет</h2>
-        <p class="sub">Что уже работает и что мы добавим</p>
+            <div class="article">
+            <h2>Как сейчас и как будет</h2>
+            <p class="sub">Что уже работает и что мы добавим</p>
 
-        <div class="compare-row">
+            <div class="compare-row">
             <div class="compare-box now">
-                <h4>Сейчас</h4>
-                <ul>
-                    <li>Простая сетка фото</li>
-                    <li>4 фильтра</li>
-                    <li>Нет поиска по людям</li>
-                    <li>Загрузка без метаданных</li>
-                </ul>
+            <h4>Сейчас</h4>
+            <ul>
+            <li>Простая сетка фото</li>
+            <li>4 фильтра</li>
+            <li>Нет поиска по людям</li>
+            <li>Загрузка без метаданных</li>
+            </ul>
             </div>
             <div class="compare-arrow">→</div>
             <div class="compare-box future">
-                <h4>Будет</h4>
-                <ul>
-                    <li>Умная сетка с превью</li>
-                    <li>6 фильтров + текстовый поиск</li>
-                    <li>Поиск «Найти себя по ФИО»</li>
-                    <li>Загрузка с заполнением полей</li>
-                </ul>
+            <h4>Будет</h4>
+            <ul>
+            <li>Умная сетка с превью</li>
+            <li>6 фильтров + текстовый поиск</li>
+            <li>Поиск «Найти себя по ФИО»</li>
+            <li>Загрузка с заполнением полей</li>
+            </ul>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Попробовать</h2>
-        <p class="sub">Три варианта дизайна — посмотрите, какой нравится</p>
+            <div class="article">
+            <h2>Попробовать</h2>
+            <p class="sub">Три варианта дизайна — посмотрите, какой нравится</p>
 
-        <div class="design-grid">
+            <div class="design-grid">
             <a href="gallery-preview-direction-a.html" class="design-link">
-                <h4>📚 Архивная мастерская</h4>
-                <p>Тёплые тона, дерево, уютная библиотека</p>
+            <h4>📚 Архивная мастерская</h4>
+            <p>Тёплые тона, дерево, уютная библиотека</p>
             </a>
             <a href="gallery-preview-direction-b.html" class="design-link">
-                <h4>📋 Институциональное досье</h4>
-                <p>Светлая тема, строгий официальный стиль</p>
+            <h4>📋 Институциональное досье</h4>
+            <p>Светлая тема, строгий официальный стиль</p>
             </a>
             <a href="gallery-preview-direction-c.html" class="design-link">
-                <h4>⏳ Хроника эпох</h4>
-                <p>Цветовая кодировка эпох, timeline</p>
+            <h4>⏳ Хроника эпох</h4>
+            <p>Цветовая кодировка эпох, timeline</p>
             </a>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <footer>
-        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
-        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
-    </footer>
+            <footer>
+            <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+            <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+            </footer>
         </main>
-    </div>    <script>
+    </div>
+    <script>
     function toggleSidebar() {
         document.querySelector('.sidebar').classList.toggle('open');
         document.querySelector('.sidebar-overlay').classList.toggle('open');

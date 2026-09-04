@@ -7,7 +7,8 @@
     <title>Как устроена система — Архив СПбГТИ</title>
 </head>
 <body>
-    <div class="layout">    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
+    <div class="layout">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Меню">☰</button>
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -49,7 +50,7 @@
                     <li><a href="gallery-preview-direction-c.html">Хроника эпох</a></li>
                 </ul>
             </div>
-            <div class="nav-section">
+            <div class="nav-section open">
                 <div class="nav-section-title" onclick="toggleSection(this)">Документы</div>
                 <ul class="nav-links">
                     <li><a href="technical-requirements.html">Техническое задание</a></li>
@@ -60,139 +61,138 @@
         </nav>
     </aside>
         <main class="main">
-            
+            <div class="hero">
+            <h1>Как устроена система</h1>
+            <p>Простая схема: что видит пользователь → где данные → на чём работает</p>
+            </div>
 
-    <div class="hero">
-        <h1>Как устроена система</h1>
-        <p>Простая схема: что видит пользователь → где данные → на чём работает</p>
-    </div>
+            <div class="article">
+            <h2>Из чего состоит</h2>
+            <p class="sub">4 слоя, каждый отвечает за свою задачу</p>
 
-    <div class="section">
-        <h2>Из чего состоит</h2>
-        <p class="sub">4 слоя, каждый отвечает за свою задачу</p>
-
-        <div class="simple-diagram">
+            <div class="simple-diagram">
             <div class="simple-layer">
-                <div class="emoji">🖥</div>
-                <div class="info">
-                    <h4>Интерфейс</h4>
-                    <p>То, что видит пользователь: галерея, поиск, фильтры</p>
-                </div>
+            <div class="emoji">🖥</div>
+            <div class="info">
+            <h4>Интерфейс</h4>
+            <p>То, что видит пользователь: галерея, поиск, фильтры</p>
+            </div>
             </div>
             <div class="arrow">↓</div>
             <div class="simple-layer">
-                <div class="emoji">🔌</div>
-                <div class="info">
-                    <h4>Сервер приложений</h4>
-                    <p>Обрабатывает запросы: «найди фото ФЭТ за 1985 год»</p>
-                </div>
+            <div class="emoji">🔌</div>
+            <div class="info">
+            <h4>Сервер приложений</h4>
+            <p>Обрабатывает запросы: «найди фото ФЭТ за 1985 год»</p>
+            </div>
             </div>
             <div class="arrow">↓</div>
             <div class="simple-layer">
-                <div class="emoji">💾</div>
-                <div class="info">
-                    <h4>База данных</h4>
-                    <p>Хранит записи, справочники, связи между ними</p>
-                </div>
+            <div class="emoji">💾</div>
+            <div class="info">
+            <h4>База данных</h4>
+            <p>Хранит записи, справочники, связи между ними</p>
+            </div>
             </div>
             <div class="arrow">↓</div>
             <div class="simple-layer">
-                <div class="emoji">📁</div>
-                <div class="info">
-                    <h4>Файлы</h4>
-                    <p>Сами фото, видео, документы на диске сервера</p>
-                </div>
+            <div class="emoji">📁</div>
+            <div class="info">
+            <h4>Файлы</h4>
+            <p>Сами фото, видео, документы на диске сервера</p>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Как сейчас и как будет</h2>
-        <p class="sub">Что уже работает и что мы добавим</p>
+            <div class="article">
+            <h2>Как сейчас и как будет</h2>
+            <p class="sub">Что уже работает и что мы добавим</p>
 
-        <div class="compare-row">
+            <div class="compare-row">
             <div class="compare-box now">
-                <h4>Сейчас</h4>
-                <ul>
-                    <li>Простая галерея с фото</li>
-                    <li>4 фильтра</li>
-                    <li>Нет справочников</li>
-                    <li>Нет связей</li>
-                </ul>
+            <h4>Сейчас</h4>
+            <ul>
+            <li>Простая галерея с фото</li>
+            <li>4 фильтра</li>
+            <li>Нет справочников</li>
+            <li>Нет связей</li>
+            </ul>
             </div>
             <div class="compare-arrow">→</div>
             <div class="compare-box future">
-                <h4>Будет</h4>
-                <ul>
-                    <li>Полноценный каталог</li>
-                    <li>6 фильтров + поиск по людям</li>
-                    <li>Справочник (500+ карточек)</li>
-                    <li>Связи: фото ↔ люди ↔ события</li>
-                </ul>
+            <h4>Будет</h4>
+            <ul>
+            <li>Полноценный каталог</li>
+            <li>6 фильтров + поиск по людям</li>
+            <li>Справочник (500+ карточек)</li>
+            <li>Связи: фото ↔ люди ↔ события</li>
+            </ul>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Режимы работы</h2>
-        <p class="sub">Два варианта доступа — на выбор</p>
+            <div class="article">
+            <h2>Режимы работы</h2>
+            <p class="sub">Два варианта доступа — на выбор</p>
 
-        <div class="modes">
+            <div class="modes">
             <div class="mode">
-                <span class="tag current">Текущий</span>
-                <h4>Для сотрудников</h4>
-                <p>Доступ через локальную сеть. 5–10 человек. Простая авторизация.</p>
+            <span class="tag current">Текущий</span>
+            <h4>Для сотрудников</h4>
+            <p>Доступ через локальную сеть. 5–10 человек. Простая авторизация.</p>
             </div>
             <div class="mode">
-                <span class="tag target">Целевой</span>
-                <h4>Для всех</h4>
-                <p>Доступ из интернета. 50–200 пользователей. Безопасность и скорость.</p>
+            <span class="tag target">Целевой</span>
+            <h4>Для всех</h4>
+            <p>Доступ из интернета. 50–200 пользователей. Безопасность и скорость.</p>
             </div>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <div class="section">
-        <h2>Подробнее</h2>
-        <p class="sub">Страницы с деталями по каждому слою</p>
+            <div class="article">
+            <h2>Подробнее</h2>
+            <p class="sub">Страницы с деталями по каждому слою</p>
 
-        <div class="link-grid">
+            <div class="link-grid">
             <a href="frontend.html" class="link-card">
-                <div class="icon">🖥</div>
-                <div class="text">
-                    <h4>Интерфейс</h4>
-                    <p>Галерея, поиск, фильтры, макеты</p>
-                </div>
+            <div class="icon">🖥</div>
+            <div class="text">
+            <h4>Интерфейс</h4>
+            <p>Галерея, поиск, фильтры, макеты</p>
+            </div>
             </a>
             <a href="api.html" class="link-card">
-                <div class="icon">🔌</div>
-                <div class="text">
-                    <h4>Сервер</h4>
-                    <p>Запросы, авторизация, роли</p>
-                </div>
+            <div class="icon">🔌</div>
+            <div class="text">
+            <h4>Сервер</h4>
+            <p>Запросы, авторизация, роли</p>
+            </div>
             </a>
             <a href="storage.html" class="link-card">
-                <div class="icon">💾</div>
-                <div class="text">
-                    <h4>Данные</h4>
-                    <p>Таблицы, связи, файлы</p>
-                </div>
+            <div class="icon">💾</div>
+            <div class="text">
+            <h4>Данные</h4>
+            <p>Таблицы, связи, файлы</p>
+            </div>
             </a>
             <a href="infrastructure.html" class="link-card">
-                <div class="icon">🏗</div>
-                <div class="text">
-                    <h4>Сервер</h4>
-                    <p>Docker, SSL, бэкапы</p>
-                </div>
+            <div class="icon">🏗</div>
+            <div class="text">
+            <h4>Сервер</h4>
+            <p>Docker, SSL, бэкапы</p>
+            </div>
             </a>
-        </div>
-    </div>
+            </div>
+            </div>
 
-    <footer>
-        <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
-        <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
-    </footer>
+            <footer>
+            <p>Архив СПбГТИ · 1828–2028 · 200 лет</p>
+            <p style="margin-top:8px"><a href="https://github.com/bestdeejay-design/archive-spbgti-docs">GitHub →</a></p>
+            </footer>
         </main>
-    </div>    <script>
+    </div>
+    <script>
     function toggleSidebar() {
         document.querySelector('.sidebar').classList.toggle('open');
         document.querySelector('.sidebar-overlay').classList.toggle('open');
